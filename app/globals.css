@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap');
+
+:root {
+  --ink: #0C0E12;
+  --ink2: #3A3D45;
+  --ink3: #7A7F8E;
+  --surface: #F7F8FA;
+  --blue: #1A56FF;
+  --line: rgba(12,14,18,0.08);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+::selection { background: #1A56FF; color: white; }
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-[#0C0E12] text-white rounded-xl text-sm font-medium transition-all duration-200 hover:bg-[#1e2330] hover:-translate-y-0.5 hover:shadow-lg active:scale-95;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-6 py-3 border border-[rgba(12,14,18,0.12)] text-[#3A3D45] rounded-xl text-sm font-medium transition-all duration-200 hover:bg-[#F7F8FA] active:scale-95;
+  }
+  .btn-blue {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-[#1A56FF] text-white rounded-xl text-sm font-medium transition-all duration-200 hover:bg-[#1444DD] hover:-translate-y-0.5 active:scale-95;
+  }
+  .input {
+    @apply w-full h-11 px-4 border border-[rgba(12,14,18,0.12)] rounded-xl text-sm bg-[#F7F8FA] text-[#0C0E12] placeholder-[#B0B5C3] outline-none transition-all focus:border-[#1A56FF] focus:bg-white focus:ring-4 focus:ring-[#1A56FF]/10;
+  }
+  .card {
+    @apply bg-white border border-[rgba(12,14,18,0.08)] rounded-2xl;
+  }
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border;
+  }
+}
