@@ -1,4 +1,3 @@
-notepad app\dashboard\crm\page.tsx
 
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
