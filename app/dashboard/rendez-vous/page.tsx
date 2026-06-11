@@ -1,5 +1,5 @@
-export const dynamic = 'force-dynamic'
 'use client'
+export const dynamic = 'force-dynamic'
 import { useState, useEffect } from 'react'
 import { formatDate, formatTime, STATUS_COLORS, STATUS_LABELS } from '@/lib/utils'
 
