@@ -1,7 +1,10 @@
 'use client'
-export const dynamic = 'force-dynamic'
-import { useState, useEffect } from 'react'
-import { initials, STATUS_COLORS, STATUS_LABELS } from '@/lib/utils'
+import { useState, useEffect, useCallback } from 'react'
+import { initials, STATUS_COLORS, STATUS_LABELS, avatarColor, formatDate } from '@/lib/utils'
+import { Modal } from '@/components/ui/modal'
+import { Confirm } from '@/components/ui/confirm'
+import { SkeletonRow } from '@/components/ui/skeleton'
+import { useToast } from '@/components/ui/toast'
 
 interface Client {
   id: string
@@ -13,92 +16,227 @@ interface Client {
   createdAt: string
 }
 
+const STATUS_OPTIONS = ['LEAD','ACTIVE','INACTIVE'] as const
+const EMPTY_FORM = { name: '', phone: '', email: '', notes: '', status: 'LEAD' }
+
 export default function CrmPage() {
+  const { toast } = useToast()
   const [clients, setClients] = useState<Client[]>([])
   const [loading, setLoading] = useState(true)
-  const [showForm, setShowForm] = useState(false)
-  const [form, setForm] = useState({ name:'', phone:'', email:'', notes:'' })
+  const [showAdd, setShowAdd] = useState(false)
+  const [editing, setEditing] = useState<Client | null>(null)
+  const [deleting, setDeleting] = useState<Client | null>(null)
+  const [form, setForm] = useState(EMPTY_FORM)
   const [saving, setSaving] = useState(false)
+  const [deletingId, setDeletingId] = useState(false)
   const [search, setSearch] = useState('')
+  const [filterStatus, setFilterStatus] = useState('')
 
-  useEffect(() => { fetchClients() }, [])
-
-  async function fetchClients() {
-    const res = await fetch('/api/clients')
+  const fetchClients = useCallback(async () => {
+    const params = new URLSearchParams()
+    if (search) params.set('q', search)
+    if (filterStatus) params.set('status', filterStatus)
+    const res = await fetch(`/api/clients?${params}`)
     if (res.ok) setClients(await res.json())
     setLoading(false)
+  }, [search, filterStatus])
+
+  useEffect(() => { fetchClients() }, [fetchClients])
+
+  function openAdd() { setForm(EMPTY_FORM); setShowAdd(true) }
+  function openEdit(c: Client) {
+    setEditing(c)
+    setForm({ name: c.name, phone: c.phone ?? '', email: c.email ?? '', notes: c.notes ?? '', status: c.status })
   }
+  function closeModal() { setShowAdd(false); setEditing(null) }
 
   async function saveClient(e: React.FormEvent) {
     e.preventDefault()
     setSaving(true)
-    await fetch('/api/clients', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(form) })
-    setShowForm(false)
-    setForm({ name:'', phone:'', email:'', notes:'' })
-    fetchClients()
-    setSaving(false)
+    try {
+      const url = editing ? `/api/clients/${editing.id}` : '/api/clients'
+      const method = editing ? 'PATCH' : 'POST'
+      const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error)
+      toast(editing ? 'Client mis à jour' : 'Client ajouté', 'success')
+      closeModal()
+      fetchClients()
+    } catch (e) {
+      toast(e instanceof Error ? e.message : 'Erreur', 'error')
+    } finally {
+      setSaving(false)
+    }
   }
 
-  const filtered = clients.filter(c =>
-    c.name.toLowerCase().includes(search.toLowerCase()) ||
-    c.phone?.includes(search) ||
-    c.email?.toLowerCase().includes(search.toLowerCase())
-  )
+  async function confirmDelete() {
+    if (!deleting) return
+    setDeletingId(true)
+    try {
+      const res = await fetch(`/api/clients/${deleting.id}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error()
+      toast('Client supprimé', 'success')
+      setDeleting(null)
+      fetchClients()
+    } catch {
+      toast('Erreur lors de la suppression', 'error')
+    } finally {
+      setDeletingId(false)
+    }
+  }
+
+  const leadCount   = clients.filter(c => c.status === 'LEAD').length
+  const activeCount = clients.filter(c => c.status === 'ACTIVE').length
 
   return (
-    <div className="p-8">
-      <div className="flex items-center justify-between mb-8">
+    <div className="p-6 lg:p-8 max-w-7xl mx-auto animate-fade-in">
+      {/* Header */}
+      <div className="page-header">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-[#0C0E12]">CRM Clients</h1>
-          <p className="text-sm text-[#7A7F8E] mt-1">{clients.length} clients au total</p>
+          <h1 className="page-title">CRM Clients</h1>
+          <p className="page-subtitle">{clients.length} client{clients.length !== 1 ? 's' : ''} · {leadCount} prospect{leadCount !== 1 ? 's' : ''} · {activeCount} actif{activeCount !== 1 ? 's' : ''}</p>
         </div>
-        <button onClick={()=>setShowForm(true)} className="btn-primary text-sm px-5 py-2.5">+ Nouveau client</button>
+        <button onClick={openAdd} className="btn-primary">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+          Nouveau client
+        </button>
       </div>
 
-      <div className="mb-6">
-        <input className="input max-w-sm" placeholder="Rechercher un client..." value={search} onChange={e=>setSearch(e.target.value)} />
-      </div>
-
-      {showForm && (
-        <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-6">
-          <div className="bg-white rounded-2xl p-8 w-full max-w-md border border-[rgba(12,14,18,0.08)]">
-            <h2 className="text-xl font-bold text-[#0C0E12] mb-6">Nouveau client</h2>
-            <form onSubmit={saveClient} className="space-y-4">
-              <div><label className="block text-sm font-medium text-[#3A3D45] mb-1.5">Nom</label><input className="input" value={form.name} onChange={e=>setForm(f=>({...f,name:e.target.value}))} required/></div>
-              <div><label className="block text-sm font-medium text-[#3A3D45] mb-1.5">Téléphone</label><input className="input" value={form.phone} onChange={e=>setForm(f=>({...f,phone:e.target.value}))}/></div>
-              <div><label className="block text-sm font-medium text-[#3A3D45] mb-1.5">Email</label><input type="email" className="input" value={form.email} onChange={e=>setForm(f=>({...f,email:e.target.value}))}/></div>
-              <div><label className="block text-sm font-medium text-[#3A3D45] mb-1.5">Notes</label><textarea className="input h-20 py-3 resize-none" value={form.notes} onChange={e=>setForm(f=>({...f,notes:e.target.value}))}/></div>
-              <div className="flex gap-3">
-                <button type="button" onClick={()=>setShowForm(false)} className="btn-secondary flex-1 py-3 justify-center">Annuler</button>
-                <button type="submit" disabled={saving} className="btn-primary flex-1 py-3 justify-center">
-                  {saving?<span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"/>:'Enregistrer'}
-                </button>
-              </div>
-            </form>
-          </div>
+      {/* Filters */}
+      <div className="flex flex-wrap gap-3 mb-6">
+        <div className="relative flex-1 min-w-[200px] max-w-sm">
+          <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-[#B0B5C3]" width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <circle cx="6" cy="6" r="4.5" stroke="currentColor" strokeWidth="1.3"/>
+            <path d="M9.5 9.5l3 3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+          </svg>
+          <input
+            className="input pl-9"
+            placeholder="Rechercher..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
         </div>
-      )}
-
-      <div className="grid gap-3">
-        {loading ? (
-          <div className="card p-12 text-center text-sm text-[#B0B5C3]">Chargement...</div>
-        ) : filtered.length === 0 ? (
-          <div className="card p-12 text-center text-sm text-[#B0B5C3]">
-            {search ? 'Aucun résultat' : 'Aucun client — ajoutez-en un !'}
-          </div>
-        ) : filtered.map(c => (
-          <div key={c.id} className="card p-4 flex items-center gap-4 hover:bg-[#F7F8FA] transition-colors">
-            <div className="w-10 h-10 rounded-xl bg-[#EEF2FF] flex items-center justify-center text-[#1A56FF] text-sm font-bold flex-shrink-0">
-              {initials(c.name)}
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="text-sm font-semibold text-[#0C0E12]">{c.name}</div>
-              <div className="text-xs text-[#7A7F8E]">{c.phone||c.email||'Aucun contact'}</div>
-            </div>
-            <span className={`badge text-[10px] ${STATUS_COLORS[c.status]||'bg-gray-50 text-gray-600 border-gray-200'}`}>{STATUS_LABELS[c.status]||c.status}</span>
-          </div>
-        ))}
+        <div className="flex gap-1.5">
+          {['', ...STATUS_OPTIONS].map(s => (
+            <button
+              key={s}
+              onClick={() => setFilterStatus(s)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${filterStatus === s ? 'bg-[#0C0E12] text-white' : 'bg-white border border-[rgba(12,14,18,0.08)] text-[#3A3D45] hover:bg-[#F7F8FA]'}`}
+            >
+              {s ? STATUS_LABELS[s] : 'Tous'}
+            </button>
+          ))}
+        </div>
       </div>
+
+      {/* Table */}
+      <div className="table-container">
+        <table className="w-full border-collapse">
+          <thead className="table-header">
+            <tr>
+              {['Client','Téléphone','Email','Statut','Ajouté le',''].map(h => (
+                <th key={h} className="th">{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {loading ? (
+              Array.from({length: 5}).map((_, i) => <tr key={i}><td colSpan={6}><SkeletonRow /></td></tr>)
+            ) : clients.length === 0 ? (
+              <tr>
+                <td colSpan={6}>
+                  <div className="empty-state">
+                    <div className="empty-icon">👥</div>
+                    <div className="empty-title">{search ? 'Aucun résultat' : 'Aucun client pour l\'instant'}</div>
+                    <div className="empty-desc mt-2">
+                      {!search && <button onClick={openAdd} className="text-[#1A56FF] hover:underline">Ajouter votre premier client</button>}
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            ) : clients.map(c => (
+              <tr key={c.id} className="tr-hover">
+                <td className="td">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-xs font-bold flex-shrink-0 ${avatarColor(c.name)}`}>
+                      {initials(c.name)}
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold text-[#0C0E12]">{c.name}</div>
+                      {c.notes && <div className="text-xs text-[#B0B5C3] truncate max-w-[160px]">{c.notes}</div>}
+                    </div>
+                  </div>
+                </td>
+                <td className="td text-[#3A3D45]">{c.phone ?? '—'}</td>
+                <td className="td text-[#3A3D45]">{c.email ?? '—'}</td>
+                <td className="td">
+                  <span className={`badge text-[10px] ${STATUS_COLORS[c.status] ?? 'bg-gray-50 text-gray-600 border-gray-200'}`}>
+                    {STATUS_LABELS[c.status] ?? c.status}
+                  </span>
+                </td>
+                <td className="td text-[#7A7F8E]">{formatDate(c.createdAt)}</td>
+                <td className="td">
+                  <div className="flex items-center gap-1 justify-end">
+                    <button onClick={() => openEdit(c)} className="btn-icon" title="Modifier">
+                      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M9.5 1.5l2 2L4 11H2v-2L9.5 1.5z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/></svg>
+                    </button>
+                    <button onClick={() => setDeleting(c)} className="btn-icon text-red-400 hover:text-red-500 hover:bg-red-50" title="Supprimer">
+                      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 3.5h9M5 3.5V2.5a.5.5 0 01.5-.5h2a.5.5 0 01.5.5v1M5.5 6v3.5M7.5 6v3.5M3 3.5l.5 7a1 1 0 001 1h4a1 1 0 001-1l.5-7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Add / Edit modal */}
+      <Modal open={showAdd || !!editing} onClose={closeModal} title={editing ? 'Modifier le client' : 'Nouveau client'}>
+        <form onSubmit={saveClient} className="space-y-4">
+          <div>
+            <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Nom complet *</label>
+            <input className="input" placeholder="Mohammed Alami" value={form.name} onChange={e => setForm(f => ({...f, name: e.target.value}))} required />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Téléphone</label>
+              <input className="input" placeholder="06 00 00 00 00" value={form.phone} onChange={e => setForm(f => ({...f, phone: e.target.value}))} />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Email</label>
+              <input type="email" className="input" placeholder="email@exemple.com" value={form.email} onChange={e => setForm(f => ({...f, email: e.target.value}))} />
+            </div>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Statut</label>
+            <select className="select" value={form.status} onChange={e => setForm(f => ({...f, status: e.target.value}))}>
+              {STATUS_OPTIONS.map(s => <option key={s} value={s}>{STATUS_LABELS[s]}</option>)}
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Notes</label>
+            <textarea className="textarea" rows={3} placeholder="Notes, observations..." value={form.notes} onChange={e => setForm(f => ({...f, notes: e.target.value}))} />
+          </div>
+          <div className="flex gap-3 pt-1">
+            <button type="button" onClick={closeModal} className="btn-secondary flex-1 justify-center">Annuler</button>
+            <button type="submit" disabled={saving} className="btn-primary flex-1 justify-center">
+              {saving ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"/> : (editing ? 'Mettre à jour' : 'Ajouter')}
+            </button>
+          </div>
+        </form>
+      </Modal>
+
+      <Confirm
+        open={!!deleting}
+        onClose={() => setDeleting(null)}
+        onConfirm={confirmDelete}
+        title="Supprimer le client"
+        message={`Êtes-vous sûr de vouloir supprimer ${deleting?.name} ? Cette action est irréversible.`}
+        confirmLabel="Supprimer"
+        danger
+        loading={deletingId}
+      />
     </div>
   )
 }
