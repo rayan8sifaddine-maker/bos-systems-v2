@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 'use client'
 import { useState, useEffect } from 'react'
 import { initials, STATUS_COLORS, STATUS_LABELS } from '@/lib/utils'
