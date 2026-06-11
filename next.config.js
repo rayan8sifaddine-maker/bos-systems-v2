@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  serverExternalPackages: ['@prisma/client', 'prisma'],
+  serverExternalPackages: ['@prisma/client', 'prisma', 'bcryptjs', 'next-auth'],
   experimental: { serverActions: { allowedOrigins: ['*'] } },
   images: { remotePatterns: [] },
   headers: async () => [
