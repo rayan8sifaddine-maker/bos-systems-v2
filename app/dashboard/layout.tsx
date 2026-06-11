@@ -1,7 +1,8 @@
 import { redirect } from 'next/navigation'
 import { auth } from '@/lib/auth'
-import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
+
+export const dynamic = 'force-dynamic'
 
 const NAV = [
   { href: '/dashboard', label: 'Dashboard', icon: 'grid' },
@@ -14,7 +15,7 @@ const NAV = [
 function Icon({ name }: { name: string }) {
   if (name === 'grid') return <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5"/></svg>
   if (name === 'cal') return <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="13" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M5 1v3M11 1v3M1 7h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
-  if (name === 'users') return <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.5"/><path d="M1 13c0-2.761 2.239-5 5-5s5 2.239 5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><path d="M11 7.5c1.5 0 3 1.2 3 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="11" cy="4.5" r="2" stroke="currentColor" strokeWidth="1.5"/></svg>
+  if (name === 'users') return <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.5"/><path d="M1 13c0-2.761 2.239-5 5-5s5 2.239 5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
   if (name === 'chat') return <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4a1 1 0 011-1h10a1 1 0 011 1v7a1 1 0 01-1 1H5l-3 2V4z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/></svg>
   return <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" strokeWidth="1.5"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
 }
@@ -22,10 +23,7 @@ function Icon({ name }: { name: string }) {
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const session = await auth()
   if (!session?.user?.id) redirect('/connexion')
-
-  const clinic = await prisma.clinic.findFirst({ where: { userId: session.user.id } })
-  if (!clinic) redirect('/inscription')
-
+  const clinicName = session.user.name || 'Ma Clinique'
   return (
     <div className="flex h-screen bg-[#F7F8FA]">
       <aside className="w-[220px] bg-white border-r border-[rgba(12,14,18,0.06)] flex flex-col sticky top-0 h-screen flex-shrink-0">
@@ -43,11 +41,11 @@ export default async function DashboardLayout({ children }: { children: React.Re
         <div className="px-3 py-3 border-b border-[rgba(12,14,18,0.06)]">
           <div className="flex items-center gap-2.5 p-2 rounded-xl">
             <div className="w-8 h-8 rounded-lg bg-[#EEF2FF] flex items-center justify-center text-[#1A56FF] text-sm font-bold flex-shrink-0">
-              {clinic.name.charAt(0)}
+              {clinicName.charAt(0)}
             </div>
             <div className="min-w-0">
-              <div className="text-xs font-semibold text-[#0C0E12] truncate">{clinic.name}</div>
-              <div className="text-[10px] text-[#1A56FF] font-medium">{clinic.plan}</div>
+              <div className="text-xs font-semibold text-[#0C0E12] truncate">{clinicName}</div>
+              <div className="text-[10px] text-[#1A56FF] font-medium">PRO</div>
             </div>
           </div>
         </div>
