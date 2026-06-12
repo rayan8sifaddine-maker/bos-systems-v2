@@ -1,29 +1,22 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { getToken } from 'next-auth/jwt'
 
-export async function middleware(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-
   if (!pathname.startsWith('/dashboard')) return NextResponse.next()
 
-  try {
-    const token = await getToken({
-      req: request,
-      secret: process.env.NEXTAUTH_SECRET,
-      cookieName: '__Secure-next-auth.session-token',
-    })
+  // Check for any NextAuth session cookie (works on both HTTP and HTTPS)
+  const sessionToken =
+    request.cookies.get('__Secure-next-auth.session-token')?.value ||
+    request.cookies.get('next-auth.session-token')?.value
 
-    if (!token) {
-      const loginUrl = new URL('/connexion', request.url)
-      loginUrl.searchParams.set('from', pathname)
-      return NextResponse.redirect(loginUrl)
-    }
-
-    return NextResponse.next()
-  } catch (e) {
-    return new NextResponse(JSON.stringify({ error: String(e), secret: !!process.env.NEXTAUTH_SECRET }), { status: 500, headers: { 'content-type': 'application/json' } })
+  if (!sessionToken) {
+    const loginUrl = new URL('/connexion', request.url)
+    loginUrl.searchParams.set('from', pathname)
+    return NextResponse.redirect(loginUrl)
   }
+
+  return NextResponse.next()
 }
 
 export const config = {
