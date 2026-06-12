@@ -62,14 +62,7 @@ export default function HomePage() {
       {/* NAV */}
       <nav className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-6 md:px-12 bg-white/90 backdrop-blur-xl border-b border-[rgba(12,14,18,0.06)]">
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 bg-[#0C0E12] rounded-lg flex items-center justify-center">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <rect x="1" y="1" width="6" height="6" rx="1.5" fill="white"/>
-              <rect x="9" y="1" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
-              <rect x="1" y="9" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
-              <rect x="9" y="9" width="6" height="6" rx="1.5" fill="white"/>
-            </svg>
-          </div>
+          <img src="/logo.svg" alt="BOS" className="w-8 h-8" />
           <span className="font-bold text-[15px] tracking-wide font-display">BOS SYSTEMS</span>
         </Link>
         <div className="hidden md:flex items-center gap-1">
