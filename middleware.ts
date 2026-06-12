@@ -8,7 +8,11 @@ export async function middleware(request: NextRequest) {
   if (!pathname.startsWith('/dashboard')) return NextResponse.next()
 
   try {
-    const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET })
+    const token = await getToken({
+      req: request,
+      secret: process.env.NEXTAUTH_SECRET,
+      cookieName: '__Secure-next-auth.session-token',
+    })
 
     if (!token) {
       const loginUrl = new URL('/connexion', request.url)
