@@ -400,6 +400,92 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── AVANT / APRÈS ── */}
+      <section className="py-24 px-6 md:px-12 relative overflow-hidden" style={{ background:'linear-gradient(135deg,#0C0E12 0%,#141A30 60%,#0A1020 100%)' }}>
+        {/* Background glows */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden>
+          <div style={{ position:'absolute', top:'-20%', left:'10%', width:600, height:600, background:'radial-gradient(ellipse, rgba(26,86,255,0.12) 0%, transparent 60%)', borderRadius:'50%' }}/>
+          <div style={{ position:'absolute', bottom:'-20%', right:'5%', width:500, height:500, background:'radial-gradient(ellipse, rgba(124,58,237,0.1) 0%, transparent 60%)', borderRadius:'50%' }}/>
+          {/* Dot grid */}
+          <div className="absolute inset-0" style={{ backgroundImage:'radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)', backgroundSize:'28px 28px' }}/>
+        </div>
+
+        <div className="max-w-5xl mx-auto relative">
+          <div className="text-center mb-14">
+            <div className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 bg-white/10 rounded-full text-white/50 text-xs font-semibold">
+              Transformation
+            </div>
+            <h2 className="text-[40px] font-bold tracking-tight text-white font-display mb-3">Remplacez le chaos par la clarté.</h2>
+            <p className="text-white/40 text-lg font-light">Tout ce que BOS remplace. Tout ce qu&apos;il apporte.</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            {/* AVANT */}
+            <div className="rounded-2xl p-8 border" style={{ background:'rgba(239,68,68,0.04)', borderColor:'rgba(239,68,68,0.15)' }}>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background:'rgba(239,68,68,0.15)' }}>
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 2l10 10M12 2L2 12" stroke="#ef4444" strokeWidth="1.8" strokeLinecap="round"/></svg>
+                </div>
+                <span className="text-sm font-bold text-red-400 uppercase tracking-wider">Avant BOS</span>
+              </div>
+              <div className="space-y-3.5">
+                {[
+                  'WhatsApp débordé, messages manqués',
+                  'Excel avec 47 onglets non mis à jour',
+                  'Clients oubliés pendant des semaines',
+                  'Aucune visibilité sur le chiffre d\'affaires',
+                  'Absences fréquentes, créneaux perdus',
+                  'Facturation manuelle et chronophage',
+                  'Zéro statistiques, décisions à l\'aveugle',
+                ].map(item => (
+                  <div key={item} className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background:'rgba(239,68,68,0.15)' }}>
+                      <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 1l6 6M7 1L1 7" stroke="#ef4444" strokeWidth="1.5" strokeLinecap="round"/></svg>
+                    </div>
+                    <span className="text-sm text-white/40 leading-relaxed">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* APRÈS */}
+            <div className="rounded-2xl p-8 border" style={{ background:'rgba(16,185,129,0.04)', borderColor:'rgba(16,185,129,0.2)' }}>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background:'rgba(16,185,129,0.15)' }}>
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7l4 4 8-8" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </div>
+                <span className="text-sm font-bold text-emerald-400 uppercase tracking-wider">Après BOS</span>
+              </div>
+              <div className="space-y-3.5">
+                {[
+                  'IA WhatsApp qui répond en moins de 3 secondes',
+                  'CRM centralisé, historique complet par client',
+                  'Relances automatiques au bon moment',
+                  'Dashboard temps réel — CA, RDV, tendances',
+                  '−78% d\'absences grâce aux rappels automatiques',
+                  'Devis et factures générés en 1 clic',
+                  'Analytics complets chaque semaine',
+                ].map(item => (
+                  <div key={item} className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background:'rgba(16,185,129,0.15)' }}>
+                      <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4l2.5 2.5 4.5-5" stroke="#10B981" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    </div>
+                    <span className="text-sm text-white/70 leading-relaxed">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom CTA inside section */}
+          <div className="mt-10 text-center">
+            <Link href="/inscription" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:-translate-y-0.5" style={{ background:'linear-gradient(135deg,#1A56FF,#7C3AED)', boxShadow:'0 4px 16px rgba(26,86,255,0.35)' }}>
+              Passer à l&apos;après maintenant →
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ── TESTIMONIALS ── */}
       <section className="py-24 px-6 md:px-12 bg-[#F7F8FA]">
         <div className="max-w-5xl mx-auto">
