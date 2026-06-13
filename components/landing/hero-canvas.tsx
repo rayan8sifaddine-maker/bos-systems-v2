@@ -9,10 +9,11 @@ export function HeroCanvas() {
     const ctx = canvas.getContext('2d')!
     let W = 0, H = 0, raf = 0
     const particles: { x: number; y: number; vx: number; vy: number; r: number; a: number }[] = []
+    const c = canvas
 
     function resize() {
-      W = canvas.width = canvas.offsetWidth
-      H = canvas.height = canvas.offsetHeight
+      W = c.width = c.offsetWidth
+      H = c.height = c.offsetHeight
     }
     resize()
     window.addEventListener('resize', resize)
