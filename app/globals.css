@@ -211,6 +211,12 @@ body {
 }
 .toast-enter { animation: toast-in 0.3s cubic-bezier(0.16,1,0.3,1) forwards; }
 
+/* Dot grid background */
+.bg-dot-grid {
+  background-image: radial-gradient(circle, rgba(12,14,18,0.07) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
 /* Dot pulse (sidebar) */
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }
