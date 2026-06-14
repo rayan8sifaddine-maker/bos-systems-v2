@@ -57,9 +57,9 @@ function LoginForm() {
             Système opérationnel
           </div>
           <h2 className="text-4xl font-bold text-white mb-4 font-display leading-tight">
-            Tout votre business.<br/>
+            Tout votre business<br/>
             <span style={{ background:'linear-gradient(135deg,#6BA3FF,#A78BFA)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>
-              En un seul endroit.
+              En un seul endroit
             </span>
           </h2>
           <p className="text-white/50 text-base leading-relaxed mb-10">
@@ -116,7 +116,7 @@ function LoginForm() {
           </Link>
 
           <div className="bg-white border border-[rgba(12,14,18,0.08)] rounded-2xl p-8" style={{ boxShadow:'0 4px 20px rgba(12,14,18,0.08)' }}>
-            <h1 className="text-2xl font-bold text-[#0C0E12] mb-1 font-display">Bon retour.</h1>
+            <h1 className="text-2xl font-bold text-[#0C0E12] mb-1 font-display">Bon retour</h1>
             <p className="text-sm text-[#7A7F8E] mb-7">Connectez-vous à votre tableau de bord</p>
 
             <form onSubmit={handleSubmit} className="space-y-4">

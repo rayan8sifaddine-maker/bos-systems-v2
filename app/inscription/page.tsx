@@ -79,7 +79,7 @@ export default function RegisterPage() {
           <h2 className="text-4xl font-bold text-white mb-4 font-display leading-tight">
             Automatisez votre<br/>
             <span style={{ background:'linear-gradient(135deg,#6BA3FF,#A78BFA)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>
-              relation client.
+              relation client
             </span>
           </h2>
           <p className="text-white/50 text-base leading-relaxed mb-10">

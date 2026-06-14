@@ -235,7 +235,7 @@ export default function HomePage() {
               <h1 className="text-[48px] md:text-[62px] font-bold leading-[1.05] tracking-tight text-[#0C0E12] mb-5 font-display">
                 L&apos;infrastructure<br/>client des{' '}
                 <span style={{ background:'linear-gradient(135deg,#1A56FF 0%,#7C3AED 100%)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>
-                  PME<br/>modernes.
+                  PME<br/>modernes
                 </span>
               </h1>
 
@@ -303,7 +303,7 @@ export default function HomePage() {
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
               En 3 étapes
             </div>
-            <h2 className="text-[40px] font-bold tracking-tight text-[#0C0E12] font-display">Opérationnel en 5 minutes.</h2>
+            <h2 className="text-[40px] font-bold tracking-tight text-[#0C0E12] font-display">Opérationnel en 5 minutes</h2>
             <p className="text-lg text-[#3A3D45] mt-3 font-light">Pas de formation. Pas de technicien. Juste votre navigateur.</p>
           </div>
 
@@ -359,7 +359,7 @@ export default function HomePage() {
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-white border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
               Fonctionnalités
             </div>
-            <h2 className="text-[40px] font-bold tracking-tight text-[#0C0E12] mb-3 font-display">Tout ce dont vous avez besoin.</h2>
+            <h2 className="text-[40px] font-bold tracking-tight text-[#0C0E12] mb-3 font-display">Tout ce dont vous avez besoin</h2>
             <p className="text-lg text-[#3A3D45] font-light">Chaque fonctionnalité résout un problème réel des PME marocaines.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-4">
@@ -382,7 +382,7 @@ export default function HomePage() {
               <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
                 Secteurs
               </div>
-              <h2 className="text-[40px] font-bold tracking-tight text-[#0C0E12] font-display">Une plateforme.<br/>Tous les secteurs.</h2>
+              <h2 className="text-[40px] font-bold tracking-tight text-[#0C0E12] font-display">Une plateforme<br/>Tous les secteurs</h2>
             </div>
             <p className="text-lg text-[#3A3D45] font-light md:max-w-xs md:text-right">Adapté à chaque métier, conçu pour la réalité marocaine.</p>
           </div>
@@ -415,7 +415,7 @@ export default function HomePage() {
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 bg-white/10 rounded-full text-white/50 text-xs font-semibold">
               Transformation
             </div>
-            <h2 className="text-[40px] font-bold tracking-tight text-white font-display mb-3">Remplacez le chaos par la clarté.</h2>
+            <h2 className="text-[40px] font-bold tracking-tight text-white font-display mb-3">Remplacez le chaos par la clarté</h2>
             <p className="text-white/40 text-lg font-light">Tout ce que BOS remplace. Tout ce qu&apos;il apporte.</p>
           </div>
 
@@ -528,7 +528,7 @@ export default function HomePage() {
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
               Tarifs
             </div>
-            <h2 className="text-[40px] font-bold tracking-tight text-[#0C0E12] mb-3 font-display">Simples et transparents.</h2>
+            <h2 className="text-[40px] font-bold tracking-tight text-[#0C0E12] mb-3 font-display">Simples et transparents</h2>
             <p className="text-lg text-[#3A3D45] font-light">Sans engagement. 14 jours d&apos;essai gratuit. Annulez à tout moment.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-4 items-center">
@@ -571,7 +571,7 @@ export default function HomePage() {
       {/* ── REVENUE TABLE ── */}
       <section className="py-24 px-6 md:px-12 bg-[#F7F8FA]">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-[32px] font-bold tracking-tight text-[#0C0E12] mb-3 font-display">La vision chiffrée.</h2>
+          <h2 className="text-[32px] font-bold tracking-tight text-[#0C0E12] mb-3 font-display">La vision chiffrée</h2>
           <p className="text-[#7A7F8E] mb-10">Des revenus récurrents et prévisibles à chaque étape.</p>
           <div className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl overflow-hidden" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.06)' }}>
             <table className="w-full border-collapse">
