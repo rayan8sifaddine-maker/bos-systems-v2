@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -192,14 +193,7 @@ export default function HomePage() {
       {/* ── NAV ── */}
       <nav className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-6 md:px-12 bg-white/80 backdrop-blur-xl" style={{ borderBottom: '1px solid rgba(12,14,18,0.07)', boxShadow: '0 1px 0 rgba(12,14,18,0.04)' }}>
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 bg-[#0C0E12] rounded-lg flex items-center justify-center">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <rect x="1" y="1" width="6" height="6" rx="1.5" fill="white"/>
-              <rect x="9" y="1" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
-              <rect x="1" y="9" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
-              <rect x="9" y="9" width="6" height="6" rx="1.5" fill="white"/>
-            </svg>
-          </div>
+          <Image src="/logo.png" alt="BOS Systems" width={44} height={44} />
           <span className="font-bold text-[15px] tracking-wide font-display text-[#0C0E12]">BOS SYSTEMS</span>
         </Link>
         <div className="hidden md:flex items-center gap-1">
@@ -235,7 +229,7 @@ export default function HomePage() {
               <h1 className="text-[48px] md:text-[62px] font-bold leading-[1.05] tracking-tight text-[#0C0E12] mb-5 font-display">
                 L&apos;infrastructure<br/>client des{' '}
                 <span style={{ background:'linear-gradient(135deg,#1A56FF 0%,#7C3AED 100%)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>
-                  PME<br/>modernes.
+                  PME<br/>modernes
                 </span>
               </h1>
 
@@ -303,7 +297,7 @@ export default function HomePage() {
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
               En 3 étapes
             </div>
-            <h2 className="text-[40px] font-bold tracking-tight text-[#0C0E12] font-display">Opérationnel en 5 minutes.</h2>
+            <h2 className="text-[40px] font-bold tracking-tight text-[#0C0E12] font-display">Opérationnel en 5 minutes</h2>
             <p className="text-lg text-[#3A3D45] mt-3 font-light">Pas de formation. Pas de technicien. Juste votre navigateur.</p>
           </div>
 
@@ -359,7 +353,7 @@ export default function HomePage() {
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-white border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
               Fonctionnalités
             </div>
-            <h2 className="text-[40px] font-bold tracking-tight text-[#0C0E12] mb-3 font-display">Tout ce dont vous avez besoin.</h2>
+            <h2 className="text-[40px] font-bold tracking-tight text-[#0C0E12] mb-3 font-display">Tout ce dont vous avez besoin</h2>
             <p className="text-lg text-[#3A3D45] font-light">Chaque fonctionnalité résout un problème réel des PME marocaines.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-4">
@@ -382,7 +376,7 @@ export default function HomePage() {
               <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
                 Secteurs
               </div>
-              <h2 className="text-[40px] font-bold tracking-tight text-[#0C0E12] font-display">Une plateforme.<br/>Tous les secteurs.</h2>
+              <h2 className="text-[40px] font-bold tracking-tight text-[#0C0E12] font-display">Une plateforme<br/>Tous les secteurs</h2>
             </div>
             <p className="text-lg text-[#3A3D45] font-light md:max-w-xs md:text-right">Adapté à chaque métier, conçu pour la réalité marocaine.</p>
           </div>
@@ -415,7 +409,7 @@ export default function HomePage() {
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 bg-white/10 rounded-full text-white/50 text-xs font-semibold">
               Transformation
             </div>
-            <h2 className="text-[40px] font-bold tracking-tight text-white font-display mb-3">Remplacez le chaos par la clarté.</h2>
+            <h2 className="text-[40px] font-bold tracking-tight text-white font-display mb-3">Remplacez le chaos par la clarté</h2>
             <p className="text-white/40 text-lg font-light">Tout ce que BOS remplace. Tout ce qu&apos;il apporte.</p>
           </div>
 
@@ -528,7 +522,7 @@ export default function HomePage() {
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
               Tarifs
             </div>
-            <h2 className="text-[40px] font-bold tracking-tight text-[#0C0E12] mb-3 font-display">Simples et transparents.</h2>
+            <h2 className="text-[40px] font-bold tracking-tight text-[#0C0E12] mb-3 font-display">Simples et transparents</h2>
             <p className="text-lg text-[#3A3D45] font-light">Sans engagement. 14 jours d&apos;essai gratuit. Annulez à tout moment.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-4 items-center">
@@ -571,7 +565,7 @@ export default function HomePage() {
       {/* ── REVENUE TABLE ── */}
       <section className="py-24 px-6 md:px-12 bg-[#F7F8FA]">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-[32px] font-bold tracking-tight text-[#0C0E12] mb-3 font-display">La vision chiffrée.</h2>
+          <h2 className="text-[32px] font-bold tracking-tight text-[#0C0E12] mb-3 font-display">La vision chiffrée</h2>
           <p className="text-[#7A7F8E] mb-10">Des revenus récurrents et prévisibles à chaque étape.</p>
           <div className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl overflow-hidden" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.06)' }}>
             <table className="w-full border-collapse">
@@ -631,14 +625,7 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-10">
             <div className="max-w-xs">
               <div className="flex items-center gap-2.5 mb-3">
-                <div className="w-7 h-7 bg-[#0C0E12] rounded-md flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                    <rect x="1" y="1" width="6" height="6" rx="1.5" fill="white"/>
-                    <rect x="9" y="1" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
-                    <rect x="1" y="9" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
-                    <rect x="9" y="9" width="6" height="6" rx="1.5" fill="white"/>
-                  </svg>
-                </div>
+                <Image src="/logo.png" alt="BOS Systems" width={36} height={36} />
                 <span className="font-bold text-sm text-[#0C0E12] font-display">BOS SYSTEMS</span>
               </div>
               <p className="text-xs text-[#B0B5C3] leading-relaxed">La plateforme SaaS qui automatise la relation client des PME marocaines grâce à l&apos;IA.</p>
