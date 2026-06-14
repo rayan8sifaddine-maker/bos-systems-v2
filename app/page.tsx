@@ -569,30 +569,143 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── REVENUE TABLE ── */}
+      {/* ── WHATSAPP AI ── */}
       <section className="py-24 px-6 md:px-12 bg-[#F7F8FA]">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-[32px] font-bold tracking-tight text-[#0C0E12] mb-3 font-display">La vision chiffrée</h2>
-          <p className="text-[#7A7F8E] mb-10">Des revenus récurrents et prévisibles à chaque étape.</p>
-          <div className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl overflow-hidden" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.06)' }}>
-            <table className="w-full border-collapse">
-              <thead>
-                <tr className="bg-[#F7F8FA]">
-                  {['Clients','MRR estimé','ARR estimé'].map(h => (
-                    <th key={h} className="px-6 py-4 text-xs font-semibold text-[#7A7F8E] uppercase tracking-wider text-left border-b border-[rgba(12,14,18,0.06)]">{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {[[100,'150 000 DH','1 800 000 DH'],[500,'750 000 DH','9 000 000 DH'],[1000,'1 500 000 DH','18 000 000 DH']].map(([c,m,a],i)=>(
-                  <tr key={i} className="border-b border-[rgba(12,14,18,0.04)] last:border-0 hover:bg-[#F7F8FA] transition-colors">
-                    <td className="px-6 py-4 text-sm font-bold text-[#0C0E12]">{c} clients</td>
-                    <td className="px-6 py-4 text-sm font-semibold text-emerald-600">{m}</td>
-                    <td className="px-6 py-4 text-sm font-semibold text-[#1A56FF]">{a}</td>
-                  </tr>
+        <div className="max-w-5xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+
+            {/* Left: text */}
+            <div>
+              <div className="inline-flex items-center gap-2 mb-5 px-3 py-1 bg-[#ECFDF5] border border-emerald-200 rounded-full text-[10px] font-semibold text-emerald-700 uppercase tracking-wider">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-dot" />
+                Assistant IA WhatsApp
+              </div>
+              <h2 className="text-[38px] font-bold tracking-tight text-[#0C0E12] mb-5 font-display leading-tight">
+                Pourquoi l&apos;IA WhatsApp<br/>de BOS est différente
+              </h2>
+              <p className="text-[#3A3D45] text-lg font-light leading-relaxed mb-8">
+                Vos clients écrivent comme ils parlent — en darija, en français, parfois les deux. BOS les comprend, répond instantanément et prend les rendez-vous sans que vous leviez le petit doigt.
+              </p>
+              <div className="space-y-4">
+                {[
+                  { color:'#ECFDF5', dot:'#10B981', title:'Répond en moins de 3 secondes', desc:'Même à 23h, même le week-end. Vos clients n\'attendent plus.' },
+                  { color:'#EEF2FF', dot:'#1A56FF', title:'Comprend le français et la darija', desc:'Adapté à la réalité marocaine. Pas besoin d\'écrire parfaitement.' },
+                  { color:'#FFF7ED', dot:'#F59E0B', title:'Prend les RDV automatiquement', desc:'Vérifie les disponibilités, confirme, envoie un rappel — tout seul.' },
+                  { color:'#F5F3FF', dot:'#7C3AED', title:'Parle dans votre style', desc:'Vous configurez le ton : formel ou friendly, il s\'adapte à votre image.' },
+                ].map(item => (
+                  <div key={item.title} className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: item.color }}>
+                      <span className="w-2 h-2 rounded-full" style={{ background: item.dot }} />
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold text-[#0C0E12] mb-0.5">{item.title}</div>
+                      <div className="text-sm text-[#7A7F8E]">{item.desc}</div>
+                    </div>
+                  </div>
                 ))}
-              </tbody>
-            </table>
+              </div>
+            </div>
+
+            {/* Right: phone mockup with conversation */}
+            <div className="flex justify-center">
+              <div className="relative">
+                {/* Glow behind phone */}
+                <div className="absolute inset-0 -m-8" style={{ background:'radial-gradient(ellipse, rgba(37,211,102,0.12) 0%, transparent 65%)' }} />
+
+                {/* Phone frame */}
+                <div className="relative w-[300px] rounded-[40px] overflow-hidden border-[6px] border-[#1a1a1a]" style={{ boxShadow:'0 30px 70px rgba(12,14,18,0.25), 0 0 0 1px rgba(255,255,255,0.05)' }}>
+                  {/* Status bar */}
+                  <div className="bg-[#075E54] px-5 pt-3 pb-1 flex items-center justify-between">
+                    <span className="text-white text-[10px] font-semibold">9:41</span>
+                    <div className="flex items-center gap-1">
+                      <svg width="12" height="8" viewBox="0 0 12 8" fill="white" opacity=".9"><rect x="0" y="4" width="2" height="4" rx=".5"/><rect x="3" y="2.5" width="2" height="5.5" rx=".5"/><rect x="6" y="1" width="2" height="7" rx=".5"/><rect x="9" y="0" width="2" height="8" rx=".5"/></svg>
+                      <svg width="10" height="8" viewBox="0 0 10 8" fill="white" opacity=".9"><path d="M5 1.5C3.07 1.5 1.34 2.27 0 3.5L1.5 5C2.44 4.1 3.66 3.5 5 3.5s2.56.6 3.5 1.5L10 3.5C8.66 2.27 6.93 1.5 5 1.5z"/><path d="M5 5.5L6.5 7h-3L5 5.5z"/></svg>
+                    </div>
+                  </div>
+
+                  {/* WhatsApp header */}
+                  <div className="bg-[#075E54] px-4 pb-3 flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-full bg-[#25D366] flex items-center justify-center text-white text-xs font-bold flex-shrink-0">B</div>
+                    <div>
+                      <div className="text-white text-sm font-semibold">BOS Assistant</div>
+                      <div className="text-emerald-200 text-[10px]">en ligne</div>
+                    </div>
+                  </div>
+
+                  {/* Chat area */}
+                  <div className="bg-[#ECE5DD] px-3 py-3 space-y-2.5" style={{ minHeight: 380 }}>
+
+                    {/* Client message */}
+                    <div className="flex justify-end">
+                      <div className="bg-[#DCF8C6] rounded-2xl rounded-tr-sm px-3 py-2 max-w-[75%]" style={{ boxShadow:'0 1px 1px rgba(0,0,0,0.08)' }}>
+                        <p className="text-[12px] text-[#111] leading-relaxed">Salam, bghit nakhod rendez-vous pour coupe + soin 🙏</p>
+                        <p className="text-[9px] text-[#667781] text-right mt-1">14:23 ✓✓</p>
+                      </div>
+                    </div>
+
+                    {/* Bot reply */}
+                    <div className="flex justify-start">
+                      <div className="bg-white rounded-2xl rounded-tl-sm px-3 py-2 max-w-[85%]" style={{ boxShadow:'0 1px 1px rgba(0,0,0,0.08)' }}>
+                        <p className="text-[12px] text-[#111] leading-relaxed">Bonjour ! 😊 Bien sûr, voici les créneaux disponibles pour <span className="font-semibold">coupe + soin</span> :</p>
+                        <div className="mt-2 space-y-1">
+                          {['📅 Lundi 16 juin — 10h00','📅 Lundi 16 juin — 14h30','📅 Mardi 17 juin — 11h00'].map(s => (
+                            <div key={s} className="text-[11px] bg-[#F0F2F5] rounded-lg px-2 py-1 text-[#1a1a1a]">{s}</div>
+                          ))}
+                        </div>
+                        <p className="text-[9px] text-[#667781] text-right mt-1.5">14:23</p>
+                      </div>
+                    </div>
+
+                    {/* Client picks */}
+                    <div className="flex justify-end">
+                      <div className="bg-[#DCF8C6] rounded-2xl rounded-tr-sm px-3 py-2 max-w-[75%]" style={{ boxShadow:'0 1px 1px rgba(0,0,0,0.08)' }}>
+                        <p className="text-[12px] text-[#111]">Le lundi à 14h30 svp</p>
+                        <p className="text-[9px] text-[#667781] text-right mt-1">14:24 ✓✓</p>
+                      </div>
+                    </div>
+
+                    {/* Bot confirms */}
+                    <div className="flex justify-start">
+                      <div className="bg-white rounded-2xl rounded-tl-sm px-3 py-2 max-w-[85%]" style={{ boxShadow:'0 1px 1px rgba(0,0,0,0.08)' }}>
+                        <p className="text-[12px] text-[#111] leading-relaxed">✅ <span className="font-semibold">Confirmé !</span> Lundi 16 juin à 14h30.<br/>Vous recevrez un rappel la veille. À bientôt 🌟</p>
+                        <p className="text-[9px] text-[#667781] text-right mt-1">14:24</p>
+                      </div>
+                    </div>
+
+                    {/* Typing indicator */}
+                    <div className="flex justify-start">
+                      <div className="bg-white rounded-2xl rounded-tl-sm px-4 py-3" style={{ boxShadow:'0 1px 1px rgba(0,0,0,0.08)' }}>
+                        <div className="flex items-center gap-1">
+                          {[0,1,2].map(i => (
+                            <span key={i} className="w-1.5 h-1.5 rounded-full bg-[#90999F]" style={{ animation:`pulse 1.2s ease-in-out ${i*0.2}s infinite` }} />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Input bar */}
+                  <div className="bg-[#F0F2F5] px-3 py-2 flex items-center gap-2">
+                    <div className="flex-1 bg-white rounded-full px-4 py-2 text-[11px] text-[#B0B5C3]">Message</div>
+                    <div className="w-8 h-8 rounded-full bg-[#25D366] flex items-center justify-center">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="white"><path d="M13 7L1 1l3 6-3 6 12-6z"/></svg>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Floating badge */}
+                <div className="absolute -right-6 top-16 bg-white rounded-2xl px-3 py-2 shadow-lg border border-[rgba(12,14,18,0.08)]" style={{ boxShadow:'0 4px 20px rgba(12,14,18,0.12)' }}>
+                  <div className="text-[10px] font-bold text-[#0C0E12]">Réponse en</div>
+                  <div className="text-[18px] font-bold text-[#25D366] leading-none">2 sec</div>
+                </div>
+
+                {/* Floating badge 2 */}
+                <div className="absolute -left-6 bottom-24 bg-white rounded-2xl px-3 py-2 shadow-lg border border-[rgba(12,14,18,0.08)]" style={{ boxShadow:'0 4px 20px rgba(12,14,18,0.12)' }}>
+                  <div className="text-[10px] font-bold text-[#0C0E12]">RDV confirmé</div>
+                  <div className="text-[10px] text-[#7A7F8E]">automatiquement</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
