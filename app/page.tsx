@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -192,14 +193,7 @@ export default function HomePage() {
       {/* ── NAV ── */}
       <nav className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-6 md:px-12 bg-white/80 backdrop-blur-xl" style={{ borderBottom: '1px solid rgba(12,14,18,0.07)', boxShadow: '0 1px 0 rgba(12,14,18,0.04)' }}>
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 bg-[#0C0E12] rounded-lg flex items-center justify-center">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <rect x="1" y="1" width="6" height="6" rx="1.5" fill="white"/>
-              <rect x="9" y="1" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
-              <rect x="1" y="9" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
-              <rect x="9" y="9" width="6" height="6" rx="1.5" fill="white"/>
-            </svg>
-          </div>
+          <Image src="/logo.png" alt="BOS Systems" width={34} height={34} />
           <span className="font-bold text-[15px] tracking-wide font-display text-[#0C0E12]">BOS SYSTEMS</span>
         </Link>
         <div className="hidden md:flex items-center gap-1">
@@ -631,14 +625,7 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-10">
             <div className="max-w-xs">
               <div className="flex items-center gap-2.5 mb-3">
-                <div className="w-7 h-7 bg-[#0C0E12] rounded-md flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                    <rect x="1" y="1" width="6" height="6" rx="1.5" fill="white"/>
-                    <rect x="9" y="1" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
-                    <rect x="1" y="9" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
-                    <rect x="9" y="9" width="6" height="6" rx="1.5" fill="white"/>
-                  </svg>
-                </div>
+                <Image src="/logo.png" alt="BOS Systems" width={28} height={28} />
                 <span className="font-bold text-sm text-[#0C0E12] font-display">BOS SYSTEMS</span>
               </div>
               <p className="text-xs text-[#B0B5C3] leading-relaxed">La plateforme SaaS qui automatise la relation client des PME marocaines grâce à l&apos;IA.</p>
