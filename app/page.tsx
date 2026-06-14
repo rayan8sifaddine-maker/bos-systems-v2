@@ -193,7 +193,7 @@ export default function HomePage() {
       {/* ── NAV ── */}
       <nav className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-6 md:px-12 bg-white/80 backdrop-blur-xl" style={{ borderBottom: '1px solid rgba(12,14,18,0.07)', boxShadow: '0 1px 0 rgba(12,14,18,0.04)' }}>
         <Link href="/" className="flex items-center gap-2.5">
-          <Image src="/logo.png" alt="BOS Systems" width={34} height={34} />
+          <Image src="/logo.png" alt="BOS Systems" width={44} height={44} />
           <span className="font-bold text-[15px] tracking-wide font-display text-[#0C0E12]">BOS SYSTEMS</span>
         </Link>
         <div className="hidden md:flex items-center gap-1">
@@ -625,7 +625,7 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-10">
             <div className="max-w-xs">
               <div className="flex items-center gap-2.5 mb-3">
-                <Image src="/logo.png" alt="BOS Systems" width={28} height={28} />
+                <Image src="/logo.png" alt="BOS Systems" width={36} height={36} />
                 <span className="font-bold text-sm text-[#0C0E12] font-display">BOS SYSTEMS</span>
               </div>
               <p className="text-xs text-[#B0B5C3] leading-relaxed">La plateforme SaaS qui automatise la relation client des PME marocaines grâce à l&apos;IA.</p>

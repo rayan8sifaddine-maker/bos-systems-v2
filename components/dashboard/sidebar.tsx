@@ -130,7 +130,7 @@ export function Sidebar({ clinicName, plan }: SidebarProps) {
     <aside className="w-[220px] bg-white border-r border-[rgba(12,14,18,0.06)] flex flex-col sticky top-0 h-screen flex-shrink-0">
       {/* Logo */}
       <div className="h-14 flex items-center gap-2.5 px-4 border-b border-[rgba(12,14,18,0.06)] flex-shrink-0">
-        <Image src="/logo.png" alt="BOS Systems" width={32} height={32} className="flex-shrink-0" />
+        <Image src="/logo.png" alt="BOS Systems" width={40} height={40} className="flex-shrink-0" />
         <span className="font-bold text-sm tracking-wide text-[#0C0E12] font-display">BOS SYSTEMS</span>
       </div>
 

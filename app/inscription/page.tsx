@@ -60,7 +60,7 @@ export default function RegisterPage() {
 
         <div className="relative">
           <Link href="/" className="flex items-center gap-2.5">
-            <Image src="/logo.png" alt="BOS Systems" width={34} height={34} />
+            <Image src="/logo.png" alt="BOS Systems" width={44} height={44} />
             <span className="font-bold text-[15px] tracking-wide text-white font-display">BOS SYSTEMS</span>
           </Link>
         </div>
@@ -116,7 +116,7 @@ export default function RegisterPage() {
       <div className="flex-1 flex items-center justify-center p-6 bg-[#F7F8FA]">
         <div className="w-full max-w-[440px] animate-slide-up">
           <Link href="/" className="flex items-center gap-2.5 justify-center mb-8 lg:hidden">
-            <Image src="/logo.png" alt="BOS Systems" width={34} height={34} />
+            <Image src="/logo.png" alt="BOS Systems" width={44} height={44} />
             <span className="font-bold text-[15px] tracking-wide text-[#0C0E12] font-display">BOS SYSTEMS</span>
           </Link>
 
