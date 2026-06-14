@@ -77,8 +77,12 @@ Règles strictes : Ne jamais inventer de prix ou horaires non listés. Pour les 
     })
 
     return NextResponse.json({ reply })
-  } catch (e) {
-    console.error('[ai/chat]', e)
-    return NextResponse.json({ error: 'Erreur IA.' }, { status: 500 })
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : String(e)
+    console.error('[ai/chat]', msg)
+    if (!process.env.GEMINI_API_KEY) {
+      return NextResponse.json({ error: 'Clé GEMINI_API_KEY manquante dans les variables d\'environnement.' }, { status: 500 })
+    }
+    return NextResponse.json({ error: `Erreur IA : ${msg}` }, { status: 500 })
   }
 }

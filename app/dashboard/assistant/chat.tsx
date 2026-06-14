@@ -41,10 +41,11 @@ export default function AssistantChat({ clinicId, clinicName, clinicHours, clini
         body: JSON.stringify({ message: msg, clinicId, history }),
       })
       const data = await res.json()
-      if (!res.ok) throw new Error(data.error)
+      if (!res.ok) throw new Error(data.error ?? 'Erreur inconnue')
       setMessages(p => [...p, { role: 'assistant', content: data.reply, ts: new Date() }])
-    } catch {
-      setMessages(p => [...p, { role: 'assistant', content: 'Désolé, une erreur est survenue. Veuillez réessayer.', ts: new Date() }])
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : 'Erreur inconnue'
+      setMessages(p => [...p, { role: 'assistant', content: `⚠️ ${msg}`, ts: new Date() }])
     } finally {
       setLoading(false)
       setTimeout(() => inputRef.current?.focus(), 100)
