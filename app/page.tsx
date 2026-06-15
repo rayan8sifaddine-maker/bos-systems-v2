@@ -588,121 +588,144 @@ export default function HomePage() {
               </p>
               <div className="space-y-4">
                 {[
-                  { color:'#ECFDF5', dot:'#10B981', title:'Répond en moins de 3 secondes', desc:'Même à 23h, même le week-end. Vos clients n\'attendent plus.' },
-                  { color:'#EEF2FF', dot:'#1A56FF', title:'Comprend le français et la darija', desc:'Adapté à la réalité marocaine. Pas besoin d\'écrire parfaitement.' },
-                  { color:'#FFF7ED', dot:'#F59E0B', title:'Prend les RDV automatiquement', desc:'Vérifie les disponibilités, confirme, envoie un rappel — tout seul.' },
-                  { color:'#F5F3FF', dot:'#7C3AED', title:'Parle dans votre style', desc:'Vous configurez le ton : formel ou friendly, il s\'adapte à votre image.' },
+                  { bg:'#ECFDF5', color:'#10B981', title:'Répond en moins de 3 secondes', desc:'Même à 23h, même le week-end. Vos clients n\'attendent plus.', icon:<svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm1-12a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l2.828 2.829a1 1 0 1 0 1.415-1.415L11 9.586V6z" clipRule="evenodd"/></svg> },
+                  { bg:'#EEF2FF', color:'#1A56FF', title:'Comprend le français et la darija', desc:'Adapté à la réalité marocaine. Pas besoin d\'écrire parfaitement.', icon:<svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 0 1-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd"/></svg> },
+                  { bg:'#FFF7ED', color:'#F59E0B', title:'Prend les RDV automatiquement', desc:'Vérifie les disponibilités, confirme, envoie un rappel — tout seul.', icon:<svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M6 2a1 1 0 0 0-1 1v1H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1V3a1 1 0 1 0-2 0v1H7V3a1 1 0 0 0-1-1zm0 5a1 1 0 0 0 0 2h8a1 1 0 1 0 0-2H6z" clipRule="evenodd"/></svg> },
+                  { bg:'#F5F3FF', color:'#7C3AED', title:'Parle dans votre style', desc:'Vous configurez le ton : formel ou friendly, il s\'adapte à votre image.', icon:<svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path d="M13.586 3.586a2 2 0 1 1 2.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/></svg> },
                 ].map(item => (
                   <div key={item.title} className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: item.color }}>
-                      <span className="w-2 h-2 rounded-full" style={{ background: item.dot }} />
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: item.bg, color: item.color }}>
+                      {item.icon}
                     </div>
                     <div>
                       <div className="text-sm font-semibold text-[#0C0E12] mb-0.5">{item.title}</div>
-                      <div className="text-sm text-[#7A7F8E]">{item.desc}</div>
+                      <div className="text-sm text-[#7A7F8E] leading-relaxed">{item.desc}</div>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Right: phone mockup with conversation */}
+            {/* Right: iPhone mockup */}
             <div className="flex justify-center">
               <div className="relative">
-                {/* Glow behind phone */}
-                <div className="absolute inset-0 -m-8" style={{ background:'radial-gradient(ellipse, rgba(37,211,102,0.12) 0%, transparent 65%)' }} />
+                {/* Glow */}
+                <div className="absolute inset-0 -m-12" style={{ background:'radial-gradient(ellipse, rgba(37,211,102,0.15) 0%, transparent 60%)' }} />
 
-                {/* Phone frame */}
-                <div className="relative w-[300px] rounded-[40px] overflow-hidden border-[6px] border-[#1a1a1a]" style={{ boxShadow:'0 30px 70px rgba(12,14,18,0.25), 0 0 0 1px rgba(255,255,255,0.05)' }}>
-                  {/* Status bar */}
-                  <div className="bg-[#075E54] px-5 pt-3 pb-1 flex items-center justify-between">
-                    <span className="text-white text-[10px] font-semibold">9:41</span>
-                    <div className="flex items-center gap-1">
-                      <svg width="12" height="8" viewBox="0 0 12 8" fill="white" opacity=".9"><rect x="0" y="4" width="2" height="4" rx=".5"/><rect x="3" y="2.5" width="2" height="5.5" rx=".5"/><rect x="6" y="1" width="2" height="7" rx=".5"/><rect x="9" y="0" width="2" height="8" rx=".5"/></svg>
-                      <svg width="10" height="8" viewBox="0 0 10 8" fill="white" opacity=".9"><path d="M5 1.5C3.07 1.5 1.34 2.27 0 3.5L1.5 5C2.44 4.1 3.66 3.5 5 3.5s2.56.6 3.5 1.5L10 3.5C8.66 2.27 6.93 1.5 5 1.5z"/><path d="M5 5.5L6.5 7h-3L5 5.5z"/></svg>
-                    </div>
-                  </div>
+                {/* iPhone outer shell */}
+                <div className="relative" style={{ width: 285 }}>
+                  {/* Side buttons left */}
+                  <div className="absolute -left-[3px] top-[72px] w-[3px] h-8 rounded-l-full" style={{ background:'#2a2a2a' }} />
+                  <div className="absolute -left-[3px] top-[112px] w-[3px] h-10 rounded-l-full" style={{ background:'#2a2a2a' }} />
+                  <div className="absolute -left-[3px] top-[156px] w-[3px] h-10 rounded-l-full" style={{ background:'#2a2a2a' }} />
+                  {/* Side button right */}
+                  <div className="absolute -right-[3px] top-[100px] w-[3px] h-14 rounded-r-full" style={{ background:'#2a2a2a' }} />
 
-                  {/* WhatsApp header */}
-                  <div className="bg-[#075E54] px-4 pb-3 flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-[#25D366] flex items-center justify-center text-white text-xs font-bold flex-shrink-0">B</div>
-                    <div>
-                      <div className="text-white text-sm font-semibold">BOS Assistant</div>
-                      <div className="text-emerald-200 text-[10px]">en ligne</div>
-                    </div>
-                  </div>
+                  {/* Phone body */}
+                  <div className="rounded-[44px] overflow-hidden" style={{ background:'#1a1a1a', padding:'3px', boxShadow:'0 40px 80px rgba(12,14,18,0.35), 0 0 0 0.5px rgba(255,255,255,0.08), inset 0 0 0 1px rgba(255,255,255,0.04)' }}>
+                    <div className="rounded-[42px] overflow-hidden bg-black" style={{ position:'relative' }}>
 
-                  {/* Chat area */}
-                  <div className="bg-[#ECE5DD] px-3 py-3 space-y-2.5" style={{ minHeight: 380 }}>
+                      {/* Screen content */}
+                      <div className="bg-[#075E54]" style={{ position:'relative' }}>
 
-                    {/* Client message */}
-                    <div className="flex justify-end">
-                      <div className="bg-[#DCF8C6] rounded-2xl rounded-tr-sm px-3 py-2 max-w-[75%]" style={{ boxShadow:'0 1px 1px rgba(0,0,0,0.08)' }}>
-                        <p className="text-[12px] text-[#111] leading-relaxed">Salam, bghit nakhod rendez-vous pour coupe + soin 🙏</p>
-                        <p className="text-[9px] text-[#667781] text-right mt-1">14:23 ✓✓</p>
-                      </div>
-                    </div>
-
-                    {/* Bot reply */}
-                    <div className="flex justify-start">
-                      <div className="bg-white rounded-2xl rounded-tl-sm px-3 py-2 max-w-[85%]" style={{ boxShadow:'0 1px 1px rgba(0,0,0,0.08)' }}>
-                        <p className="text-[12px] text-[#111] leading-relaxed">Bonjour ! 😊 Bien sûr, voici les créneaux disponibles pour <span className="font-semibold">coupe + soin</span> :</p>
-                        <div className="mt-2 space-y-1">
-                          {['📅 Lundi 16 juin — 10h00','📅 Lundi 16 juin — 14h30','📅 Mardi 17 juin — 11h00'].map(s => (
-                            <div key={s} className="text-[11px] bg-[#F0F2F5] rounded-lg px-2 py-1 text-[#1a1a1a]">{s}</div>
-                          ))}
+                        {/* Status bar with Dynamic Island */}
+                        <div className="px-6 pt-3 pb-1 flex items-center justify-between" style={{ background:'#075E54' }}>
+                          {/* Dynamic Island */}
+                          <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-black rounded-full flex items-center justify-center gap-1.5 px-3" style={{ width:88, height:26, zIndex:10 }}>
+                            <div className="w-2 h-2 rounded-full bg-[#1a1a1a] border border-[#333]" />
+                            <div className="w-1.5 h-1.5 rounded-full bg-[#1a1a1a] border border-[#333]" />
+                          </div>
+                          <span className="text-white text-[11px] font-semibold mt-1">9:41</span>
+                          <div className="flex items-center gap-1.5 mt-1">
+                            <svg width="13" height="9" viewBox="0 0 13 9" fill="white"><rect x="0" y="5" width="2.5" height="4" rx=".5"/><rect x="3.5" y="3" width="2.5" height="6" rx=".5"/><rect x="7" y="1" width="2.5" height="8" rx=".5"/><rect x="10.5" y="0" width="2.5" height="9" rx=".5"/></svg>
+                            <svg width="12" height="9" viewBox="0 0 12 9" fill="white"><path d="M6 1C3.6 1 1.5 2 0 3.7L1.8 5.5C2.9 4.3 4.3 3.5 6 3.5S9.1 4.3 10.2 5.5L12 3.7C10.5 2 8.4 1 6 1z"/><circle cx="6" cy="7.5" r="1.5"/></svg>
+                            <svg width="20" height="10" viewBox="0 0 20 10" fill="none"><rect x="0.5" y="0.5" width="16" height="9" rx="2.5" stroke="white" strokeOpacity=".5"/><rect x="1.5" y="1.5" width="12" height="7" rx="1.5" fill="white"/><path d="M18 3.5v3a1.5 1.5 0 0 0 0-3z" fill="white" opacity=".4"/></svg>
+                          </div>
                         </div>
-                        <p className="text-[9px] text-[#667781] text-right mt-1.5">14:23</p>
-                      </div>
-                    </div>
 
-                    {/* Client picks */}
-                    <div className="flex justify-end">
-                      <div className="bg-[#DCF8C6] rounded-2xl rounded-tr-sm px-3 py-2 max-w-[75%]" style={{ boxShadow:'0 1px 1px rgba(0,0,0,0.08)' }}>
-                        <p className="text-[12px] text-[#111]">Le lundi à 14h30 svp</p>
-                        <p className="text-[9px] text-[#667781] text-right mt-1">14:24 ✓✓</p>
-                      </div>
-                    </div>
-
-                    {/* Bot confirms */}
-                    <div className="flex justify-start">
-                      <div className="bg-white rounded-2xl rounded-tl-sm px-3 py-2 max-w-[85%]" style={{ boxShadow:'0 1px 1px rgba(0,0,0,0.08)' }}>
-                        <p className="text-[12px] text-[#111] leading-relaxed">✅ <span className="font-semibold">Confirmé !</span> Lundi 16 juin à 14h30.<br/>Vous recevrez un rappel la veille. À bientôt 🌟</p>
-                        <p className="text-[9px] text-[#667781] text-right mt-1">14:24</p>
-                      </div>
-                    </div>
-
-                    {/* Typing indicator */}
-                    <div className="flex justify-start">
-                      <div className="bg-white rounded-2xl rounded-tl-sm px-4 py-3" style={{ boxShadow:'0 1px 1px rgba(0,0,0,0.08)' }}>
-                        <div className="flex items-center gap-1">
-                          {[0,1,2].map(i => (
-                            <span key={i} className="w-1.5 h-1.5 rounded-full bg-[#90999F]" style={{ animation:`pulse 1.2s ease-in-out ${i*0.2}s infinite` }} />
-                          ))}
+                        {/* WhatsApp top bar */}
+                        <div className="px-4 pb-3 pt-1 flex items-center gap-3">
+                          <svg width="18" height="18" viewBox="0 0 18 18" fill="white" opacity=".9"><path d="M11 9L6 5v8l5-4z"/></svg>
+                          <div className="w-9 h-9 rounded-full bg-[#128C7E] flex items-center justify-center text-white text-sm font-bold flex-shrink-0 border-2 border-white/20">B</div>
+                          <div className="flex-1">
+                            <div className="text-white text-[13px] font-semibold leading-tight">BOS Assistant</div>
+                            <div className="text-emerald-200 text-[10px]">● en ligne</div>
+                          </div>
+                          <svg width="18" height="18" viewBox="0 0 18 18" fill="white" opacity=".7"><circle cx="4" cy="9" r="1.5"/><circle cx="9" cy="9" r="1.5"/><circle cx="14" cy="9" r="1.5"/></svg>
                         </div>
                       </div>
-                    </div>
-                  </div>
 
-                  {/* Input bar */}
-                  <div className="bg-[#F0F2F5] px-3 py-2 flex items-center gap-2">
-                    <div className="flex-1 bg-white rounded-full px-4 py-2 text-[11px] text-[#B0B5C3]">Message</div>
-                    <div className="w-8 h-8 rounded-full bg-[#25D366] flex items-center justify-center">
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill="white"><path d="M13 7L1 1l3 6-3 6 12-6z"/></svg>
+                      {/* Chat area */}
+                      <div className="px-3 py-3 space-y-2.5" style={{ background:'#ECE5DD', minHeight:360 }}>
+                        <div className="flex justify-center mb-2">
+                          <span className="text-[9px] bg-[#E1F2FB] text-[#667781] px-2 py-0.5 rounded-full">Aujourd&apos;hui</span>
+                        </div>
+
+                        <div className="flex justify-end">
+                          <div className="bg-[#DCF8C6] rounded-[16px] rounded-tr-[4px] px-3 py-2 max-w-[78%]" style={{ boxShadow:'0 1px 2px rgba(0,0,0,0.1)' }}>
+                            <p className="text-[12px] text-[#111] leading-relaxed">Salam, bghit nakhod rendez-vous pour coupe + soin 🙏</p>
+                            <p className="text-[9px] text-[#667781] text-right mt-0.5">14:23 ✓✓</p>
+                          </div>
+                        </div>
+
+                        <div className="flex justify-start gap-1.5">
+                          <div className="w-6 h-6 rounded-full bg-[#128C7E] flex items-center justify-center text-white text-[8px] font-bold flex-shrink-0 self-end mb-1">B</div>
+                          <div className="bg-white rounded-[16px] rounded-tl-[4px] px-3 py-2 max-w-[80%]" style={{ boxShadow:'0 1px 2px rgba(0,0,0,0.08)' }}>
+                            <p className="text-[11.5px] text-[#111] leading-relaxed">Bonjour ! 😊 Bien sûr, voici les créneaux pour <span className="font-semibold">coupe + soin</span> :</p>
+                            <div className="mt-1.5 space-y-1">
+                              {['📅 Lundi 16 juin — 10h00','📅 Lundi 16 juin — 14h30','📅 Mardi 17 juin — 11h00'].map(s => (
+                                <div key={s} className="text-[10.5px] bg-[#F0F4F8] rounded-lg px-2 py-1 text-[#1a1a1a]">{s}</div>
+                              ))}
+                            </div>
+                            <p className="text-[9px] text-[#667781] text-right mt-1">14:23</p>
+                          </div>
+                        </div>
+
+                        <div className="flex justify-end">
+                          <div className="bg-[#DCF8C6] rounded-[16px] rounded-tr-[4px] px-3 py-2 max-w-[70%]" style={{ boxShadow:'0 1px 2px rgba(0,0,0,0.1)' }}>
+                            <p className="text-[12px] text-[#111]">Le lundi à 14h30 svp</p>
+                            <p className="text-[9px] text-[#667781] text-right mt-0.5">14:24 ✓✓</p>
+                          </div>
+                        </div>
+
+                        <div className="flex justify-start gap-1.5">
+                          <div className="w-6 h-6 rounded-full bg-[#128C7E] flex items-center justify-center text-white text-[8px] font-bold flex-shrink-0 self-end mb-1">B</div>
+                          <div className="bg-white rounded-[16px] rounded-tl-[4px] px-3 py-2 max-w-[80%]" style={{ boxShadow:'0 1px 2px rgba(0,0,0,0.08)' }}>
+                            <p className="text-[11.5px] text-[#111] leading-relaxed">✅ <span className="font-semibold">Confirmé !</span> Lundi 16 juin à 14h30. Vous recevrez un rappel la veille. À bientôt 🌟</p>
+                            <p className="text-[9px] text-[#667781] text-right mt-1">14:24</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Input bar */}
+                      <div className="bg-[#F0F2F5] px-3 py-2 flex items-center gap-2">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="#8696A0"><path d="M10 2a8 8 0 1 0 0 16A8 8 0 0 0 10 2zm0 3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm0 10.5c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                        <div className="flex-1 bg-white rounded-full px-3 py-1.5 text-[11px] text-[#B0B5C3]">Message</div>
+                        <div className="w-8 h-8 rounded-full bg-[#25D366] flex items-center justify-center flex-shrink-0">
+                          <svg width="14" height="14" viewBox="0 0 14 14" fill="white"><path d="M13 7L1 1l3 6-3 6 12-6z"/></svg>
+                        </div>
+                      </div>
+
+                      {/* Home indicator */}
+                      <div className="bg-black flex justify-center py-2">
+                        <div className="w-24 h-1 rounded-full bg-white opacity-30" />
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Floating badge */}
-                <div className="absolute -right-6 top-16 bg-white rounded-2xl px-3 py-2 shadow-lg border border-[rgba(12,14,18,0.08)]" style={{ boxShadow:'0 4px 20px rgba(12,14,18,0.12)' }}>
-                  <div className="text-[10px] font-bold text-[#0C0E12]">Réponse en</div>
-                  <div className="text-[18px] font-bold text-[#25D366] leading-none">2 sec</div>
+                {/* Floating badges */}
+                <div className="absolute -right-8 top-20 bg-white rounded-2xl px-3 py-2.5 border border-[rgba(12,14,18,0.08)]" style={{ boxShadow:'0 8px 24px rgba(12,14,18,0.12)' }}>
+                  <div className="text-[9px] text-[#7A7F8E] font-medium">Réponse en</div>
+                  <div className="text-[20px] font-bold text-[#25D366] leading-tight">2 sec</div>
                 </div>
 
-                {/* Floating badge 2 */}
-                <div className="absolute -left-6 bottom-24 bg-white rounded-2xl px-3 py-2 shadow-lg border border-[rgba(12,14,18,0.08)]" style={{ boxShadow:'0 4px 20px rgba(12,14,18,0.12)' }}>
-                  <div className="text-[10px] font-bold text-[#0C0E12]">RDV confirmé</div>
-                  <div className="text-[10px] text-[#7A7F8E]">automatiquement</div>
+                <div className="absolute -left-8 bottom-28 bg-white rounded-2xl px-3 py-2.5 border border-[rgba(12,14,18,0.08)]" style={{ boxShadow:'0 8px 24px rgba(12,14,18,0.12)' }}>
+                  <div className="flex items-center gap-1.5 mb-0.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    <div className="text-[9px] text-[#7A7F8E] font-medium">RDV confirmé</div>
+                  </div>
+                  <div className="text-[11px] font-semibold text-[#0C0E12]">automatiquement</div>
                 </div>
               </div>
             </div>
