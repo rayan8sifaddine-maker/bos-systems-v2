@@ -75,7 +75,7 @@ function KpiCard({ label, value, sub, trend, color, bg, icon }: {
   icon: React.ReactNode
 }) {
   return (
-    <div className="stat-card">
+    <div className="stat-card hover:-translate-y-0.5 hover:shadow-md transition-all">
       <div className="flex items-center justify-between">
         <span className="stat-label">{label}</span>
         <span className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: bg, color }}>

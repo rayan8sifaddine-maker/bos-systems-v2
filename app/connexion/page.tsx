@@ -70,7 +70,7 @@ function LoginForm() {
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4 mb-10">
             {[{ v:'−78%', l:'de no-shows' },{ v:'24/7', l:'IA active' },{ v:'+40%', l:'CA' }].map(({ v, l }) => (
-              <div key={l} className="bg-white/5 rounded-xl p-4 border border-white/10">
+              <div key={l} className="bg-white/5 rounded-xl p-4 border border-white/10 hover:bg-white/10 transition-colors">
                 <div className="text-xl font-bold text-white font-display">{v}</div>
                 <div className="text-xs text-white/40 mt-0.5">{l}</div>
               </div>
@@ -116,8 +116,8 @@ function LoginForm() {
             <span className="font-bold text-[15px] tracking-wide text-[#0C0E12] font-display">BOS SYSTEMS</span>
           </Link>
 
-          <div className="bg-white border border-[rgba(12,14,18,0.08)] rounded-2xl p-8" style={{ boxShadow:'0 4px 20px rgba(12,14,18,0.08)' }}>
-            <h1 className="text-2xl font-bold text-[#0C0E12] mb-1 font-display">Bon retour</h1>
+          <div className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-8" style={{ boxShadow:'0 1px 2px rgba(12,14,18,0.04), 0 8px 24px rgba(12,14,18,0.06), 0 20px 48px rgba(12,14,18,0.06)' }}>
+            <h1 className="text-2xl font-bold text-[#0C0E12] mb-1 font-display tracking-tight">Bon retour</h1>
             <p className="text-sm text-[#7A7F8E] mb-7">Connectez-vous à votre tableau de bord</p>
 
             <form onSubmit={handleSubmit} className="space-y-4">

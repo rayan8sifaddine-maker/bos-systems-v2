@@ -52,6 +52,23 @@ export async function POST(req: Request) {
     const body = await req.json()
     const data = appointmentSchema.parse(body)
 
+    let clientId = data.clientId || null
+    if (!clientId) {
+      const existing = data.phone
+        ? await prisma.client.findFirst({ where: { clinicId: clinic.id, phone: data.phone } })
+        : null
+      const client = existing ?? await prisma.client.create({
+        data: {
+          clinicId: clinic.id,
+          name: data.patientName,
+          phone: data.phone || null,
+          status: 'LEAD',
+          source: 'RDV',
+        },
+      })
+      clientId = client.id
+    }
+
     const appointment = await prisma.appointment.create({
       data: {
         clinicId: clinic.id,
@@ -61,7 +78,7 @@ export async function POST(req: Request) {
         type: data.type,
         status: data.status ?? 'PENDING',
         notes: data.notes || null,
-        clientId: data.clientId || null,
+        clientId,
       },
     })
 

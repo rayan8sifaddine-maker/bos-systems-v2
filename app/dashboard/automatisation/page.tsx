@@ -170,7 +170,7 @@ export default async function AutomatisationPage() {
       {/* Impact stats */}
       <div className="grid grid-cols-3 gap-4 mb-8">
         {stats.map((s, i) => (
-          <div key={i} className="card p-5 flex items-start gap-3">
+          <div key={i} className="card p-5 flex items-start gap-3 hover:-translate-y-0.5 hover:shadow-md transition-all">
             <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: s.bg, color: s.color }}>
               {s.icon}
             </div>
@@ -191,7 +191,7 @@ export default async function AutomatisationPage() {
             {AUTOMATIONS.filter(a => a.category === cat).map(auto => (
               <div
                 key={auto.id}
-                className={`card p-5 flex items-center gap-4 transition-all ${auto.enabled ? 'border-l-2 border-l-emerald-400' : ''}`}
+                className={`card p-5 flex items-center gap-4 transition-all hover:shadow-md ${auto.enabled ? 'border-l-2 border-l-emerald-400' : ''}`}
               >
                 {/* Icon */}
                 <div
