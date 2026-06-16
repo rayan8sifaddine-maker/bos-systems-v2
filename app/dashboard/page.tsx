@@ -45,7 +45,6 @@ export default async function DashboardPage() {
     noShowThisMonth,
     recentAppts,
     clientsByStatus,
-    paidRevenue,
   ] = await Promise.all([
     prisma.client.count({ where: { clinicId: clinic.id } }),
     prisma.client.count({ where: { clinicId: clinic.id, createdAt: { gte: monthStart } } }),
@@ -60,13 +59,11 @@ export default async function DashboardPage() {
       take: 8,
     }),
     prisma.client.groupBy({ by: ['status'], where: { clinicId: clinic.id }, _count: true }),
-    prisma.invoice.aggregate({ where: { clinicId: clinic.id, status: 'PAID' }, _sum: { amount: true } }),
   ])
 
   const clientGrowth = newLastMonth > 0 ? Math.round(((newThisMonth - newLastMonth) / newLastMonth) * 100) : 0
   const apptGrowth = lastMonthAppts > 0 ? Math.round(((monthAppts - lastMonthAppts) / lastMonthAppts) * 100) : 0
   const noShowRate = monthAppts > 0 ? Math.round((noShowThisMonth / monthAppts) * 100) : 0
-  const revenue = paidRevenue._sum.amount ?? 0
 
   const stats = [
     {
@@ -110,20 +107,6 @@ export default async function DashboardPage() {
       icon: (
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
           <path d="M2 13l4-5 3 3 4-6 4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      ),
-    },
-    {
-      label: 'Chiffre d\'affaires',
-      value: formatCurrency(revenue),
-      sub: 'total facturé payé',
-      trend: null,
-      color: '#F59E0B',
-      bg: '#FFFBEB',
-      icon: (
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-          <circle cx="9" cy="9" r="7" stroke="currentColor" strokeWidth="1.5"/>
-          <path d="M9 5v1.5M9 11.5V13M6.5 8.5c0-1.1.895-2 2-2h1a1.5 1.5 0 010 3h-1a1.5 1.5 0 000 3h1c1.105 0 2-.9 2-2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
         </svg>
       ),
     },
@@ -252,12 +235,6 @@ export default async function DashboardPage() {
                   href: '/dashboard/crm',
                   icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="4" r="2.5" stroke="currentColor" strokeWidth="1.3"/><path d="M1 12c0-2.761 2.239-5 5-5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/><path d="M10 8v4M8 10h4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>,
                   color: 'text-blue-500 bg-blue-50',
-                },
-                {
-                  label: 'Créer une facture',
-                  href: '/dashboard/facturation',
-                  icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="1" width="10" height="12" rx="1.5" stroke="currentColor" strokeWidth="1.3"/><path d="M4 5h6M4 7.5h6M4 10h3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>,
-                  color: 'text-teal-500 bg-teal-50',
                 },
                 {
                   label: 'Configurer l\'IA',

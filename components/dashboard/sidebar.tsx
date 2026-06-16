@@ -69,16 +69,6 @@ const NAV = [
     ),
   },
   {
-    href: '/dashboard/facturation',
-    label: 'Facturation',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <rect x="2" y="1" width="12" height="14" rx="1.5" stroke="currentColor" strokeWidth="1.5"/>
-        <path d="M5 5h6M5 8h6M5 11h3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-      </svg>
-    ),
-  },
-  {
     href: '/dashboard/assistant',
     label: 'Assistant IA',
     icon: (

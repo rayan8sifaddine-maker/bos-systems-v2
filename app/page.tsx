@@ -79,7 +79,6 @@ function DashboardMockup() {
                 { label: 'Rendez-vous', active: false },
                 { label: 'CRM', active: false },
                 { label: 'Analytics', active: false },
-                { label: 'Facturation', active: false },
                 { label: 'Assistant IA', active: false },
               ].map(item => (
                 <div key={item.label} className={`px-2 py-1.5 rounded-lg text-[9px] font-medium ${item.active ? 'bg-[#EEF2FF] text-[#1A56FF]' : 'text-[#7A7F8E]'}`}>
@@ -163,25 +162,21 @@ const FEATURES = [
   { icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 14l4-7 3 4 2-3 4 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><circle cx="16" cy="5" r="2" stroke="currentColor" strokeWidth="1.5"/><path d="M16 3V1M14 5h-2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>, title: 'Relances intelligentes', desc: 'BOS identifie les clients inactifs et les relance au bon moment. Fidélisation automatique.', color: 'text-rose-500', bg: 'bg-rose-50' },
   { icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 15l4-5 3 3 4-6 5 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><rect x="2" y="2" width="16" height="16" rx="2" stroke="currentColor" strokeWidth="1.5"/></svg>, title: 'Analytics temps réel', desc: 'CA, taux de conversion, performance équipe — tout sur un seul tableau de bord.', color: 'text-amber-500', bg: 'bg-amber-50' },
   { icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="7" cy="6" r="3" stroke="currentColor" strokeWidth="1.5"/><path d="M2 17c0-3.314 2.239-6 5-6s5 2.686 5 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="15" cy="5" r="2" stroke="currentColor" strokeWidth="1.5"/><path d="M18 13c0-2.209-1.343-4-3-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'CRM complet', desc: 'Historique client, notes, statuts, pipeline commercial. Votre mémoire institutionnelle.', color: 'text-cyan-500', bg: 'bg-cyan-50' },
-  { icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="2" width="14" height="16" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M7 7h6M7 10h6M7 13h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Facturation intégrée', desc: 'Créez et suivez vos devis et factures. Paiements en ligne bientôt disponibles.', color: 'text-teal-500', bg: 'bg-teal-50' },
-  { icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2v4M10 14v4M2 10h4M14 10h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="10" cy="10" r="3" stroke="currentColor" strokeWidth="1.5"/></svg>, title: 'Automatisations', desc: 'Workflows personnalisés, séquences emails, relances factures — sans intervention.', color: 'text-indigo-500', bg: 'bg-indigo-50' },
+  { icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2v4M10 14v4M2 10h4M14 10h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="10" cy="10" r="3" stroke="currentColor" strokeWidth="1.5"/></svg>, title: 'Automatisations', desc: 'Workflows personnalisés, séquences emails, relances clients — sans intervention.', color: 'text-indigo-500', bg: 'bg-indigo-50' },
   { icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="6" r="3.5" stroke="currentColor" strokeWidth="1.5"/><path d="M3 18c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Gestion d\'équipe', desc: 'Rôles et permissions granulaires. Journal d\'activité. Performance par collaborateur.', color: 'text-orange-500', bg: 'bg-orange-50' },
 ]
 
 const SECTORS = [
   { icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 9.5L11 2l8 7.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" stroke="currentColor" strokeWidth="1.5"/><path d="M8 21v-7h6v7" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M9 6h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, name: 'Cliniques', desc: 'Médecins & cabinets' },
   { icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="8" width="18" height="9" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M5 8V6a6 6 0 0112 0v2" stroke="currentColor" strokeWidth="1.5"/><circle cx="7" cy="17" r="2" stroke="currentColor" strokeWidth="1.5"/><circle cx="15" cy="17" r="2" stroke="currentColor" strokeWidth="1.5"/></svg>, name: 'Garages', desc: 'Auto & mécanique' },
-  { icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 10L11 3l8 7v9a1 1 0 01-1 1H4a1 1 0 01-1-1v-9z" stroke="currentColor" strokeWidth="1.5"/><path d="M8 21v-6h6v6" stroke="currentColor" strokeWidth="1.5"/></svg>, name: 'Immobilier', desc: 'Agences & promoteurs' },
-  { icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M8 8h6M8 11h4M8 14h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, name: 'Avocats', desc: 'Cabinets juridiques' },
   { icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="currentColor" strokeWidth="1.5"/><path d="M4 19c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, name: 'Salons', desc: 'Beauté & coiffure' },
-  { icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="7" width="18" height="13" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M6 7V5a5 5 0 0110 0v2" stroke="currentColor" strokeWidth="1.5"/><path d="M9 13h4M11 11v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, name: 'Hôtels & Riads', desc: 'Hospitalité & tourisme' },
   { icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 17l4-8 3 4 3-6 4 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><circle cx="11" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.5"/></svg>, name: 'Écoles', desc: 'Formation & éducation' },
   { icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16l-1.5 9H4.5L3 6z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M3 6l-1-3M8 6V4M14 6V4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="8" cy="19" r="1.5" stroke="currentColor" strokeWidth="1.5"/><circle cx="14" cy="19" r="1.5" stroke="currentColor" strokeWidth="1.5"/></svg>, name: 'Restaurants', desc: 'Restauration & livraison' },
 ]
 
 const PLANS = [
   { name: 'Starter', price: '500', desc: 'Pour démarrer et valider', features: ['Assistant IA WhatsApp', 'Gestion des rendez-vous', 'Rappels automatiques', '200 conversations/mois', 'CRM basique', '1 utilisateur'], featured: false, cta: 'Commencer' },
-  { name: 'Pro', price: '1 500', desc: 'Pour les équipes actives', features: ['Tout Starter inclus', 'Conversations illimitées', 'Relances automatiques', 'CRM complet', 'Analytics avancés', 'Facturation', '3 utilisateurs', 'Support prioritaire'], featured: true, cta: 'Commencer maintenant' },
+  { name: 'Pro', price: '1 500', desc: 'Pour les équipes actives', features: ['Tout Starter inclus', 'Conversations illimitées', 'Relances automatiques', 'CRM complet', 'Analytics avancés', '3 utilisateurs', 'Support prioritaire'], featured: true, cta: 'Commencer maintenant' },
   { name: 'Enterprise', price: '5 000+', desc: 'Pour les grandes structures', features: ['Tout Pro inclus', 'Équipe illimitée', 'Intégrations custom', 'API dédiée', 'SLA garanti', 'Account manager dédié', 'Onboarding personnalisé'], featured: false, cta: 'Contacter l\'équipe' },
 ]
 
@@ -436,7 +431,6 @@ export default function HomePage() {
                   'Clients oubliés pendant des semaines',
                   'Aucune visibilité sur le chiffre d\'affaires',
                   'Absences fréquentes, créneaux perdus',
-                  'Facturation manuelle et chronophage',
                   'Zéro statistiques, décisions à l\'aveugle',
                 ].map(item => (
                   <div key={item} className="flex items-start gap-3">
@@ -464,7 +458,6 @@ export default function HomePage() {
                   'Relances automatiques au bon moment',
                   'Dashboard temps réel — CA, RDV, tendances',
                   '−78% d\'absences grâce aux rappels automatiques',
-                  'Devis et factures générés en 1 clic',
                   'Analytics complets chaque semaine',
                 ].map(item => (
                   <div key={item} className="flex items-start gap-3">
