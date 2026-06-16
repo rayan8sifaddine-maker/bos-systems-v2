@@ -5,6 +5,7 @@ import { Modal } from '@/components/ui/modal'
 import { Confirm } from '@/components/ui/confirm'
 import { SkeletonTable } from '@/components/ui/skeleton'
 import { useToast } from '@/components/ui/toast'
+import { ExportPanel, downloadCSV, printAsPDF } from '@/components/ui/export-panel'
 
 interface Appointment {
   id: string
@@ -32,6 +33,7 @@ export default function RdvPage() {
   const [saving, setSaving] = useState(false)
   const [deletingId, setDeletingId] = useState(false)
   const [filterStatus, setFilterStatus] = useState('')
+  const [exporting, setExporting] = useState(false)
 
   const fetchRdv = useCallback(async () => {
     const params = new URLSearchParams()
@@ -99,6 +101,39 @@ export default function RdvPage() {
     return d.toDateString() === now.toDateString()
   }).length
 
+  async function handleExport(format: 'csv' | 'pdf', range: { from?: string; to?: string }, periodText: string) {
+    setExporting(true)
+    try {
+      const params = new URLSearchParams({ limit: '5000' })
+      if (range.from) params.set('from', range.from)
+      if (range.to) params.set('to', range.to)
+      const res = await fetch(`/api/appointments?${params}`)
+      if (!res.ok) throw new Error()
+      const data: Appointment[] = await res.json()
+
+      const headers = ['Date', 'Heure', 'Patient', 'Téléphone', 'Type', 'Statut', 'Notes']
+      const rows = data.map(a => [
+        formatDate(a.datetime),
+        formatTime(a.datetime),
+        a.patientName,
+        a.phone ?? '',
+        a.type,
+        STATUS_LABELS[a.status] ?? a.status,
+        a.notes ?? '',
+      ])
+
+      if (format === 'csv') {
+        downloadCSV(`rendez-vous_${new Date().toISOString().slice(0, 10)}.csv`, headers, rows)
+      } else {
+        printAsPDF('Rendez-vous', periodText, headers, rows)
+      }
+    } catch {
+      toast("Erreur lors de l'export", 'error')
+    } finally {
+      setExporting(false)
+    }
+  }
+
   return (
     <div className="p-6 lg:p-8 max-w-7xl mx-auto animate-fade-in">
       {/* Header */}
@@ -107,10 +142,13 @@ export default function RdvPage() {
           <h1 className="page-title">Rendez-vous</h1>
           <p className="page-subtitle">{appointments.length} au total · {today} aujourd'hui</p>
         </div>
-        <button onClick={openAdd} className="btn-primary">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
-          Nouveau RDV
-        </button>
+        <div className="flex items-center gap-2">
+          <ExportPanel onExport={handleExport} exporting={exporting} />
+          <button onClick={openAdd} className="btn-primary">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+            Nouveau RDV
+          </button>
+        </div>
       </div>
 
       {/* Filters */}
@@ -119,7 +157,7 @@ export default function RdvPage() {
           <button
             key={s}
             onClick={() => setFilterStatus(s)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${filterStatus === s ? 'bg-[#0C0E12] text-white' : 'bg-white border border-[rgba(12,14,18,0.08)] text-[#3A3D45] hover:bg-[#F7F8FA]'}`}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${filterStatus === s ? 'bg-[#0C0E12] dark:bg-[#1A56FF] text-white' : 'bg-white dark:bg-[#1A1D24] border border-[rgba(12,14,18,0.08)] dark:border-white/10 text-[#3A3D45] dark:text-[#9CA3AF] hover:bg-[#F7F8FA] dark:hover:bg-white/5'}`}
           >
             {s ? STATUS_LABELS[s] : 'Tous'}
           </button>
@@ -155,15 +193,15 @@ export default function RdvPage() {
               ) : appointments.map(a => (
                 <tr key={a.id} className="tr-hover">
                   <td className="td">
-                    <div className="text-sm font-semibold text-[#0C0E12]">{formatDate(a.datetime)}</div>
-                    <div className="text-xs text-[#7A7F8E]">{formatTime(a.datetime)}</div>
+                    <div className="text-sm font-semibold text-[#0C0E12] dark:text-[#F1F2F4]">{formatDate(a.datetime)}</div>
+                    <div className="text-xs text-[#7A7F8E] dark:text-[#9CA3AF]">{formatTime(a.datetime)}</div>
                   </td>
                   <td className="td">
-                    <div className="text-sm font-medium text-[#0C0E12]">{a.patientName}</div>
-                    {a.notes && <div className="text-xs text-[#B0B5C3] truncate max-w-[140px]">{a.notes}</div>}
+                    <div className="text-sm font-medium text-[#0C0E12] dark:text-[#F1F2F4]">{a.patientName}</div>
+                    {a.notes && <div className="text-xs text-[#B0B5C3] dark:text-[#5A5F6B] truncate max-w-[140px]">{a.notes}</div>}
                   </td>
-                  <td className="td text-sm text-[#3A3D45]">{a.type}</td>
-                  <td className="td text-sm text-[#7A7F8E]">{a.phone ?? '—'}</td>
+                  <td className="td text-sm text-[#3A3D45] dark:text-[#9CA3AF]">{a.type}</td>
+                  <td className="td text-sm text-[#7A7F8E] dark:text-[#9CA3AF]">{a.phone ?? '—'}</td>
                   <td className="td">
                     <span className="badge-blue badge-sm">{a.source}</span>
                   </td>
@@ -197,35 +235,35 @@ export default function RdvPage() {
       <Modal open={showAdd || !!editing} onClose={closeModal} title={editing ? 'Modifier le rendez-vous' : 'Nouveau rendez-vous'}>
         <form onSubmit={saveRdv} className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Nom du patient *</label>
+            <label className="block text-xs font-medium text-[#3A3D45] dark:text-[#9CA3AF] mb-1.5">Nom du patient *</label>
             <input className="input" placeholder="Mohammed Alami" value={form.patientName} onChange={e => setForm(f => ({...f, patientName: e.target.value}))} required />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Téléphone</label>
+              <label className="block text-xs font-medium text-[#3A3D45] dark:text-[#9CA3AF] mb-1.5">Téléphone</label>
               <input className="input" placeholder="06 00 00 00 00" value={form.phone} onChange={e => setForm(f => ({...f, phone: e.target.value}))} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Date et heure *</label>
+              <label className="block text-xs font-medium text-[#3A3D45] dark:text-[#9CA3AF] mb-1.5">Date et heure *</label>
               <input type="datetime-local" className="input" value={form.datetime} onChange={e => setForm(f => ({...f, datetime: e.target.value}))} required />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Type</label>
+              <label className="block text-xs font-medium text-[#3A3D45] dark:text-[#9CA3AF] mb-1.5">Type</label>
               <select className="select" value={form.type} onChange={e => setForm(f => ({...f, type: e.target.value}))}>
                 {TYPES.map(t => <option key={t}>{t}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Statut</label>
+              <label className="block text-xs font-medium text-[#3A3D45] dark:text-[#9CA3AF] mb-1.5">Statut</label>
               <select className="select" value={form.status} onChange={e => setForm(f => ({...f, status: e.target.value}))}>
                 {STATUSES.map(s => <option key={s} value={s}>{STATUS_LABELS[s]}</option>)}
               </select>
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Notes</label>
+            <label className="block text-xs font-medium text-[#3A3D45] dark:text-[#9CA3AF] mb-1.5">Notes</label>
             <textarea className="textarea" rows={2} placeholder="Motif de consultation, observations..." value={form.notes} onChange={e => setForm(f => ({...f, notes: e.target.value}))} />
           </div>
           <div className="flex gap-3 pt-1">

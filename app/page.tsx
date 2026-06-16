@@ -233,7 +233,7 @@ export default function HomePage() {
             <div className="animate-slide-up">
               <div className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 bg-[#EEF2FF] border border-[rgba(26,86,255,0.2)] rounded-full text-[#1A56FF] text-xs font-semibold">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#1A56FF] animate-pulse flex-shrink-0" />
-                Disponible au Maroc · 14 jours gratuits
+                Disponible au Maroc · 7 jours gratuits
               </div>
 
               <h1 className="text-[48px] md:text-[64px] font-bold leading-[1.03] tracking-[-0.02em] text-[#0C0E12] mb-5 font-display">
@@ -249,7 +249,7 @@ export default function HomePage() {
 
               <div className="flex flex-col sm:flex-row gap-3 mb-8">
                 <Link href="/inscription" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-base font-semibold text-white transition-all hover:-translate-y-0.5" style={{ background:'linear-gradient(135deg,#0C0E12,#1e2330)', boxShadow:'0 4px 16px rgba(12,14,18,0.25)' }}>
-                  Commencer gratuitement — 14 jours →
+                  Commencer gratuitement — 7 jours →
                 </Link>
                 <Link href="/connexion" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-base font-medium text-[#3A3D45] border border-[rgba(12,14,18,0.12)] hover:bg-[#F7F8FA] transition-all">
                   Se connecter
@@ -561,8 +561,6 @@ export default function HomePage() {
 
           <div className="flex flex-wrap justify-center gap-3 mt-6">
             {[
-              { l:'Hébergé en Europe', icon:<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="2" width="12" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.3"/><path d="M1 5h12M4 11v2M10 11v2M3 13h8" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg> },
-              { l:'Conforme RGPD', icon:<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1l5 2v3.4c0 3.1-2 5.3-5 6.4-3-1.1-5-3.3-5-6.4V3l5-2z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/><path d="M4.8 7l1.6 1.6 2.8-3.2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg> },
               { l:'Support en français/darija', icon:<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 4a1 1 0 011-1h8a1 1 0 011 1v5.5a1 1 0 01-1 1H6l-2.5 2v-2H3a1 1 0 01-1-1V4z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/></svg> },
               { l:'Sans engagement', icon:<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3 3 7-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg> },
             ].map(badge => (
@@ -570,6 +568,57 @@ export default function HomePage() {
                 <span className="text-[#1A56FF] flex-shrink-0">{badge.icon}</span>
                 {badge.l}
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SÉCURITÉ ── */}
+      <section className="py-24 px-6 md:px-12">
+        <div className="max-w-5xl mx-auto">
+          <ScrollReveal>
+            <div className="mb-14 max-w-xl mx-auto text-center">
+              <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
+                Sécurité
+              </div>
+              <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Vos données sont protégées</h2>
+              <p className="text-lg text-[#3A3D45] font-light">Sécurité et conformité prises au sérieux, dès le premier jour.</p>
+            </div>
+          </ScrollReveal>
+          <div className="flex flex-wrap justify-center gap-4">
+            {[
+              {
+                title: 'Chiffrement de bout en bout',
+                desc: 'Connexions HTTPS/TLS et mots de passe stockés sous forme chiffrée (hash). Vos données ne circulent jamais en clair.',
+                color: 'text-blue-500', bg: 'bg-blue-50',
+                icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="4" y="9" width="12" height="9" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M6 9V6a4 4 0 018 0v3" stroke="currentColor" strokeWidth="1.5"/><circle cx="10" cy="13.5" r="1.2" fill="currentColor"/></svg>,
+              },
+              {
+                title: 'Conformité loi 09-08 & RGPD',
+                desc: 'Traitement des données conforme à la loi marocaine sur la protection des données personnelles et aux standards RGPD.',
+                color: 'text-emerald-500', bg: 'bg-emerald-50',
+                icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2l7 3v5c0 4.4-2.9 7.6-7 9-4.1-1.4-7-4.6-7-9V5l7-3z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M6.8 10l2.2 2.2 4-4.6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+              },
+              {
+                title: 'Hébergement sécurisé en Europe',
+                desc: 'Base de données hébergée chez un fournisseur cloud avec chiffrement au repos et sauvegardes régulières.',
+                color: 'text-violet-500', bg: 'bg-violet-50',
+                icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M2 7h16M5 14v2M13 14v2M4 18h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>,
+              },
+              {
+                title: 'Cloisonnement par établissement',
+                desc: 'Chaque clinique, garage ou salon n\'a accès qu\'à ses propres données. Aucune fuite croisée possible entre comptes.',
+                color: 'text-amber-500', bg: 'bg-amber-50',
+                icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5"/></svg>,
+              },
+            ].map((f, i) => (
+              <ScrollReveal key={f.title} delay={i * 80}>
+                <div className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-6 hover:border-[rgba(26,86,255,0.2)] hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(12,14,18,0.08)] transition-all duration-200 w-[300px]" style={{ boxShadow:'0 1px 2px rgba(12,14,18,0.04), 0 2px 6px rgba(12,14,18,0.03)' }}>
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${f.bg} ${f.color}`}>{f.icon}</div>
+                  <div className="text-sm font-semibold text-[#0C0E12] mb-2">{f.title}</div>
+                  <div className="text-sm text-[#7A7F8E] leading-relaxed">{f.desc}</div>
+                </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -610,7 +659,7 @@ export default function HomePage() {
               Tarifs
             </div>
             <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Simples et transparents</h2>
-            <p className="text-lg text-[#3A3D45] font-light">Sans engagement. 14 jours d&apos;essai gratuit. Annulez à tout moment.</p>
+            <p className="text-lg text-[#3A3D45] font-light">Sans engagement. 7 jours d&apos;essai gratuit. Annulez à tout moment.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-4 items-center">
             {PLANS.map(p => (
@@ -826,7 +875,7 @@ export default function HomePage() {
               Rejoignez les PME qui ont déjà automatisé
             </div>
             <h2 className="text-[40px] font-bold tracking-tight text-white mb-4 font-display">Prêt à automatiser<br/>votre relation client ?</h2>
-            <p className="text-white/50 mb-10 text-lg">14 jours gratuits. Sans carte bancaire. Résultats visibles dès le premier jour.</p>
+            <p className="text-white/50 mb-10 text-lg">7 jours gratuits. Sans carte bancaire. Résultats visibles dès le premier jour.</p>
             <Link href="/inscription" className="inline-flex items-center gap-2 px-10 py-4 bg-white text-[#0C0E12] rounded-xl text-base font-semibold hover:bg-gray-50 transition-all hover:-translate-y-0.5 hover:shadow-2xl">
               Commencer gratuitement →
             </Link>

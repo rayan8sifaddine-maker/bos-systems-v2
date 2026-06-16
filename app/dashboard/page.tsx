@@ -160,6 +160,30 @@ export default async function DashboardPage() {
         </Link>
       </div>
 
+      {/* Trial countdown */}
+      {clinic.trialEndsAt && new Date(clinic.trialEndsAt) > now && (() => {
+        const daysLeft = Math.max(1, Math.ceil((new Date(clinic.trialEndsAt).getTime() - now.getTime()) / (1000 * 60 * 60 * 24)))
+        const urgent = daysLeft <= 3
+        return (
+          <div className={`flex items-center justify-between gap-4 rounded-2xl px-5 py-3.5 mb-8 border ${urgent ? 'bg-amber-50 border-amber-200 dark:bg-amber-500/10 dark:border-amber-500/20' : 'bg-[#EEF2FF] border-[rgba(26,86,255,0.15)] dark:bg-[#1A56FF]/10 dark:border-[#1A56FF]/20'}`}>
+            <div className="flex items-center gap-3">
+              <span className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${urgent ? 'bg-amber-100 text-amber-600 dark:bg-amber-500/15' : 'bg-white text-[#1A56FF] dark:bg-white/5'}`}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5"/><path d="M8 5v3l2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+              </span>
+              <div>
+                <div className={`text-sm font-semibold ${urgent ? 'text-amber-800 dark:text-amber-400' : 'text-[#0C0E12] dark:text-[#F1F2F4]'}`}>
+                  {daysLeft === 1 ? 'Dernier jour de votre essai gratuit' : `${daysLeft} jours restants sur votre essai gratuit`}
+                </div>
+                <div className={`text-xs ${urgent ? 'text-amber-700/70 dark:text-amber-400/70' : 'text-[#7A7F8E] dark:text-[#9CA3AF]'}`}>Passez au plan Pro pour garder l&apos;accès à toutes les fonctionnalités.</div>
+              </div>
+            </div>
+            <Link href="/dashboard/parametres" className={`flex-shrink-0 text-xs font-semibold px-3.5 py-2 rounded-xl transition-all whitespace-nowrap ${urgent ? 'bg-amber-600 text-white hover:bg-amber-700' : 'bg-[#0C0E12] text-white hover:bg-[#1A1D24] dark:bg-[#1A56FF] dark:hover:bg-[#1444DD]'}`}>
+              Choisir un plan
+            </Link>
+          </div>
+        )
+      })()}
+
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8">
         {stats.map((s, i) => (
@@ -189,11 +213,11 @@ export default async function DashboardPage() {
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Today's appointments */}
         <div className="lg:col-span-2 card">
-          <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-[rgba(12,14,18,0.06)]">
+          <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-[rgba(12,14,18,0.06)] dark:border-white/10">
             <div className="flex items-center gap-2">
-              <h2 className="text-sm font-semibold text-[#0C0E12]">Rendez-vous du jour</h2>
+              <h2 className="text-sm font-semibold text-[#0C0E12] dark:text-[#F1F2F4]">Rendez-vous du jour</h2>
               {recentAppts.length > 0 && (
-                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#EEF2FF] text-[#1A56FF]">
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#EEF2FF] text-[#1A56FF] dark:bg-[#1A56FF]/10 dark:text-[#5B8DFF]">
                   {recentAppts.length}
                 </span>
               )}
@@ -203,7 +227,7 @@ export default async function DashboardPage() {
           <div>
             {recentAppts.length === 0 ? (
               <div className="empty-state">
-                <div className="w-14 h-14 rounded-2xl bg-[#F7F8FA] flex items-center justify-center mb-4 text-[#B0B5C3]">
+                <div className="w-14 h-14 rounded-2xl bg-[#F7F8FA] flex items-center justify-center mb-4 text-[#B0B5C3] dark:bg-[#13151A] dark:text-[#5A5F6B]">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" strokeWidth="1.5"/>
                     <path d="M8 2v4M16 2v4M3 10h18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -217,14 +241,14 @@ export default async function DashboardPage() {
               </div>
             ) : (
               recentAppts.map((a, i) => (
-                <div key={a.id} className={`flex items-center gap-4 px-6 py-3.5 hover:bg-[#F7F8FA] transition-colors duration-150 ${i < recentAppts.length - 1 ? 'border-b border-[rgba(12,14,18,0.04)]' : ''}`}>
+                <div key={a.id} className={`flex items-center gap-4 px-6 py-3.5 hover:bg-[#F7F8FA] dark:hover:bg-white/5 transition-colors duration-150 ${i < recentAppts.length - 1 ? 'border-b border-[rgba(12,14,18,0.04)] dark:border-white/5' : ''}`}>
                   <div className="w-12 text-center flex-shrink-0">
-                    <div className="text-sm font-bold text-[#0C0E12]">{formatTime(a.datetime)}</div>
+                    <div className="text-sm font-bold text-[#0C0E12] dark:text-[#F1F2F4]">{formatTime(a.datetime)}</div>
                   </div>
-                  <div className="w-px h-8 bg-[rgba(12,14,18,0.06)]" />
+                  <div className="w-px h-8 bg-[rgba(12,14,18,0.06)] dark:bg-white/10" />
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-medium text-[#0C0E12] truncate">{a.patientName}</div>
-                    <div className="text-xs text-[#7A7F8E]">{a.type}</div>
+                    <div className="text-sm font-medium text-[#0C0E12] dark:text-[#F1F2F4] truncate">{a.patientName}</div>
+                    <div className="text-xs text-[#7A7F8E] dark:text-[#9CA3AF]">{a.type}</div>
                   </div>
                   <span className={`badge text-[10px] ${STATUS_COLORS[a.status] ?? 'bg-gray-50 text-gray-600 border-gray-200'}`}>
                     {STATUS_LABELS[a.status] ?? a.status}
@@ -239,7 +263,7 @@ export default async function DashboardPage() {
         <div className="space-y-4">
           {/* Client pipeline */}
           <div className="card p-5">
-            <h3 className="text-sm font-semibold text-[#0C0E12] mb-4">Pipeline clients</h3>
+            <h3 className="text-sm font-semibold text-[#0C0E12] dark:text-[#F1F2F4] mb-4">Pipeline clients</h3>
             <div className="space-y-3.5">
               {[
                 { label: 'Prospects', status: 'LEAD', color: '#7C3AED', bg: '#7C3AED' },
@@ -251,10 +275,10 @@ export default async function DashboardPage() {
                 return (
                   <div key={status}>
                     <div className="flex justify-between text-xs mb-1.5">
-                      <span className="text-[#3A3D45] font-medium">{label}</span>
-                      <span className="font-semibold text-[#0C0E12]">{count} <span className="text-[#B0B5C3] font-normal">({pct}%)</span></span>
+                      <span className="text-[#3A3D45] dark:text-[#9CA3AF] font-medium">{label}</span>
+                      <span className="font-semibold text-[#0C0E12] dark:text-[#F1F2F4]">{count} <span className="text-[#B0B5C3] dark:text-[#5A5F6B] font-normal">({pct}%)</span></span>
                     </div>
-                    <div className="h-1.5 bg-[#F0F2F5] rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-[#F0F2F5] dark:bg-white/5 rounded-full overflow-hidden">
                       <div className="h-full rounded-full transition-all duration-700" style={{ width: `${pct}%`, background: bg }} />
                     </div>
                   </div>
@@ -265,7 +289,7 @@ export default async function DashboardPage() {
 
           {/* Quick actions */}
           <div className="card p-5">
-            <h3 className="text-sm font-semibold text-[#0C0E12] mb-3">Actions rapides</h3>
+            <h3 className="text-sm font-semibold text-[#0C0E12] dark:text-[#F1F2F4] mb-3">Actions rapides</h3>
             <div className="space-y-1">
               {[
                 {
@@ -287,10 +311,10 @@ export default async function DashboardPage() {
                   color: 'text-amber-500 bg-amber-50',
                 },
               ].map(a => (
-                <Link key={a.href} href={a.href} className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#F7F8FA] transition-colors group">
+                <Link key={a.href} href={a.href} className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#F7F8FA] dark:hover:bg-white/5 transition-colors group">
                   <span className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${a.color}`}>{a.icon}</span>
-                  <span className="text-sm text-[#3A3D45] group-hover:text-[#0C0E12] transition-colors">{a.label}</span>
-                  <svg className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity text-[#B0B5C3]" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 3l3 3-3 3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  <span className="text-sm text-[#3A3D45] dark:text-[#9CA3AF] group-hover:text-[#0C0E12] dark:group-hover:text-[#F1F2F4] transition-colors">{a.label}</span>
+                  <svg className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity text-[#B0B5C3] dark:text-[#5A5F6B]" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 3l3 3-3 3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </Link>
               ))}
             </div>

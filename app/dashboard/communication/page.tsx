@@ -56,8 +56,8 @@ export default async function CommunicationPage() {
               ● Actif
             </span>
           </div>
-          <div className="text-sm font-semibold text-[#0C0E12]">WhatsApp</div>
-          <div className="text-xs text-[#B0B5C3] mt-0.5">{conversations.length} conversation{conversations.length !== 1 ? 's' : ''}</div>
+          <div className="text-sm font-semibold text-[#0C0E12] dark:text-[#F1F2F4]">WhatsApp</div>
+          <div className="text-xs text-[#B0B5C3] dark:text-[#5A5F6B] mt-0.5">{conversations.length} conversation{conversations.length !== 1 ? 's' : ''}</div>
         </div>
       </div>
 
@@ -65,9 +65,9 @@ export default async function CommunicationPage() {
 
         {/* Conversations */}
         <div className="card overflow-hidden">
-          <div className="flex items-center justify-between px-6 py-4 border-b border-[rgba(12,14,18,0.06)]">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-[rgba(12,14,18,0.06)] dark:border-white/10">
             <div className="flex items-center gap-2">
-              <h3 className="text-sm font-semibold text-[#0C0E12]">Conversations WhatsApp</h3>
+              <h3 className="text-sm font-semibold text-[#0C0E12] dark:text-[#F1F2F4]">Conversations WhatsApp</h3>
               {conversations.length > 0 && (
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EEF2FF] text-[#1A56FF]">{conversations.length}</span>
               )}
@@ -80,7 +80,7 @@ export default async function CommunicationPage() {
 
           {conversations.length === 0 ? (
             <div className="empty-state py-16">
-              <div className="w-14 h-14 rounded-2xl bg-[#F7F8FA] flex items-center justify-center mb-4 text-[#B0B5C3]">
+              <div className="w-14 h-14 rounded-2xl bg-[#F7F8FA] dark:bg-white/5 flex items-center justify-center mb-4 text-[#B0B5C3] dark:text-[#5A5F6B]">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <path d="M2 22l1.5-5.5A9.9 9.9 0 012 12a10 10 0 1010 10 9.9 9.9 0 01-4.5-1L2 22z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
                   <path d="M9 11h6M9 15h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -90,12 +90,12 @@ export default async function CommunicationPage() {
               <div className="empty-desc mt-1">Les échanges WhatsApp de vos clients apparaîtront ici</div>
             </div>
           ) : (
-            <div className="divide-y divide-[rgba(12,14,18,0.04)]">
+            <div className="divide-y divide-[rgba(12,14,18,0.04)] dark:divide-white/5">
               {conversations.map(conv => {
                 const lastMsg = conv.messages[0]
                 const isAI = lastMsg?.role === 'ASSISTANT'
                 return (
-                  <div key={conv.id} className="flex items-start gap-3 px-6 py-4 hover:bg-[#F7F8FA] transition-colors">
+                  <div key={conv.id} className="flex items-start gap-3 px-6 py-4 hover:bg-[#F7F8FA] dark:hover:bg-white/5 transition-colors">
                     <div className="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 flex-shrink-0">
                       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                         <path d="M1.5 14.5l1-3.5a6 6 0 111.5 1.5l-2.5 2z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/>
@@ -103,18 +103,18 @@ export default async function CommunicationPage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-sm font-semibold text-[#0C0E12] truncate">{conv.clientName ?? conv.phone ?? 'Inconnu'}</span>
-                        <span className="text-[10px] text-[#B0B5C3] flex-shrink-0">{lastMsg ? formatRelative(lastMsg.createdAt) : ''}</span>
+                        <span className="text-sm font-semibold text-[#0C0E12] dark:text-[#F1F2F4] truncate">{conv.clientName ?? conv.phone ?? 'Inconnu'}</span>
+                        <span className="text-[10px] text-[#B0B5C3] dark:text-[#5A5F6B] flex-shrink-0">{lastMsg ? formatRelative(lastMsg.createdAt) : ''}</span>
                       </div>
                       {lastMsg && (
                         <div className="flex items-center gap-1 mt-0.5">
                           {isAI && (
                             <span className="text-[9px] font-bold text-[#1A56FF] bg-[#EEF2FF] px-1.5 py-0.5 rounded-full flex-shrink-0">IA</span>
                           )}
-                          <span className="text-xs text-[#7A7F8E] truncate">{lastMsg.content}</span>
+                          <span className="text-xs text-[#7A7F8E] dark:text-[#9CA3AF] truncate">{lastMsg.content}</span>
                         </div>
                       )}
-                      <div className="text-[10px] text-[#B0B5C3] mt-1">{conv._count.messages} message{conv._count.messages !== 1 ? 's' : ''}</div>
+                      <div className="text-[10px] text-[#B0B5C3] dark:text-[#5A5F6B] mt-1">{conv._count.messages} message{conv._count.messages !== 1 ? 's' : ''}</div>
                     </div>
                   </div>
                 )
@@ -135,8 +135,8 @@ export default async function CommunicationPage() {
             ].map(s => (
               <div key={s.label} className="card p-4 hover:-translate-y-0.5 hover:shadow-md transition-all">
                 <div className="w-8 h-8 rounded-xl flex items-center justify-center mb-3" style={{ background: s.bg, color: s.color }}>{s.icon}</div>
-                <div className="text-xl font-bold text-[#0C0E12]" style={{ color: s.color }}>{s.value}</div>
-                <div className="text-[10px] text-[#B0B5C3] mt-0.5">{s.label}</div>
+                <div className="text-xl font-bold text-[#0C0E12] dark:text-[#F1F2F4]" style={{ color: s.color }}>{s.value}</div>
+                <div className="text-[10px] text-[#B0B5C3] dark:text-[#5A5F6B] mt-0.5">{s.label}</div>
               </div>
             ))}
           </div>
