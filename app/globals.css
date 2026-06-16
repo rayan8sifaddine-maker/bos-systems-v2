@@ -177,7 +177,7 @@ body {
 
   /* Empty state */
   .empty-state  { @apply flex flex-col items-center justify-center py-16 px-6 text-center; }
-  .empty-icon   { @apply w-12 h-12 rounded-2xl bg-[#F7F8FA] flex items-center justify-center mb-4 text-xl; }
+  .empty-icon   { @apply w-12 h-12 rounded-2xl bg-[#F7F8FA] border border-[rgba(12,14,18,0.05)] flex items-center justify-center mb-4 text-xl; }
   .empty-title  { @apply text-sm font-semibold text-[#3A3D45] mb-1; }
   .empty-desc   { @apply text-xs text-[#B0B5C3]; }
 
