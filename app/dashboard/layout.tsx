@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { Sidebar } from '@/components/dashboard/sidebar'
+import { ThemeProvider } from '@/components/dashboard/theme-provider'
 
 export const dynamic = 'force-dynamic'
 
@@ -13,11 +14,13 @@ export default async function DashboardLayout({ children }: { children: React.Re
   if (!clinic) redirect('/inscription')
 
   return (
-    <div className="flex h-screen bg-[#F7F8FA] overflow-hidden">
-      <Sidebar clinicName={clinic.name} plan={clinic.plan} />
-      <main className="flex-1 overflow-auto">
-        {children}
-      </main>
-    </div>
+    <ThemeProvider>
+      <div className="flex h-screen bg-[#F7F8FA] dark:bg-[#0C0E12] overflow-hidden">
+        <Sidebar clinicName={clinic.name} plan={clinic.plan} />
+        <main className="flex-1 overflow-auto">
+          {children}
+        </main>
+      </div>
+    </ThemeProvider>
   )
 }

@@ -20,7 +20,7 @@ export async function GET(req: Request) {
   const status = searchParams.get('status') || ''
   const from = searchParams.get('from')
   const to = searchParams.get('to')
-  const limit = Math.min(parseInt(searchParams.get('limit') || '100'), 500)
+  const limit = Math.min(parseInt(searchParams.get('limit') || '100'), 5000)
 
   const appointments = await prisma.appointment.findMany({
     where: {

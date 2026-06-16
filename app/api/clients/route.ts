@@ -19,7 +19,9 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
   const search = searchParams.get('q') || ''
   const status = searchParams.get('status') || ''
-  const limit = Math.min(parseInt(searchParams.get('limit') || '100'), 200)
+  const from = searchParams.get('from')
+  const to = searchParams.get('to')
+  const limit = Math.min(parseInt(searchParams.get('limit') || '100'), 5000)
 
   const clients = await prisma.client.findMany({
     where: {
@@ -32,6 +34,12 @@ export async function GET(req: Request) {
         ],
       }),
       ...(status && { status }),
+      ...(from || to ? {
+        createdAt: {
+          ...(from && { gte: new Date(from) }),
+          ...(to && { lte: new Date(to) }),
+        },
+      } : {}),
     },
     orderBy: { createdAt: 'desc' },
     take: limit,
