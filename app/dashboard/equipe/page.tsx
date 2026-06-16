@@ -18,7 +18,7 @@ const ROLES = ['ADMIN','MANAGER','AGENT','VIEWER'] as const
 const EMPTY_FORM = { name: '', email: '', role: 'AGENT' }
 
 const ROLE_PERMS: Record<string, string[]> = {
-  ADMIN:   ['Accès complet','Gestion équipe','Facturation','Paramètres'],
+  ADMIN:   ['Accès complet','Gestion équipe','Paramètres'],
   MANAGER: ['CRM','Rendez-vous','Analytics','Communication'],
   AGENT:   ['CRM','Rendez-vous','Assistant IA'],
   VIEWER:  ['Dashboard lecture seule'],

@@ -20,11 +20,8 @@ interface Clinic {
 const SECTORS = [
   { value: 'clinique', label: 'Clinique / Cabinet médical' },
   { value: 'garage', label: 'Garage automobile' },
-  { value: 'immobilier', label: 'Agence immobilière' },
   { value: 'ecole', label: 'École / Centre de formation' },
-  { value: 'avocat', label: 'Cabinet d\'avocats' },
   { value: 'salon', label: 'Salon de beauté / Coiffure' },
-  { value: 'hotel', label: 'Hôtel / Riad' },
   { value: 'restaurant', label: 'Restaurant' },
   { value: 'autre', label: 'Autre' },
 ]

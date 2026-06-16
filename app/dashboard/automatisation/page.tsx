@@ -103,22 +103,6 @@ const AUTOMATIONS = [
     ),
   },
   {
-    id: 'invoice_overdue',
-    name: 'Relance facture',
-    description: 'Relance les factures non payées après la date d\'échéance.',
-    trigger: 'Facture en retard',
-    action: 'Message + Email',
-    impact: '+35% paiement',
-    enabled: false,
-    category: 'Facturation',
-    bg: '#ECFDF5', color: '#059669',
-    icon: (
-      <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
-        <path d="M4 4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2V6h10a2 2 0 0 0-2-2H4zm2 6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-4zm6 4a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
-      </svg>
-    ),
-  },
-  {
     id: 'no_show_followup',
     name: 'Suivi no-show',
     description: 'Contacte automatiquement les clients qui n\'ont pas honoré leur rendez-vous.',

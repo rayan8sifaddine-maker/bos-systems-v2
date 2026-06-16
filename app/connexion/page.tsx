@@ -64,7 +64,7 @@ function LoginForm() {
             </span>
           </h2>
           <p className="text-white/50 text-base leading-relaxed mb-10">
-            Rendez-vous, clients, facturation, analytics — BOS centralise tout et automatise le reste grâce à l&apos;IA.
+            Rendez-vous, clients, analytics — BOS centralise tout et automatise le reste grâce à l&apos;IA.
           </p>
 
           {/* Stats */}
