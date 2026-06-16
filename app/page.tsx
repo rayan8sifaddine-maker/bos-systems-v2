@@ -352,16 +352,16 @@ export default function HomePage() {
       {/* ── FEATURES ── */}
       <section id="fonctionnalites" className="py-24 px-6 md:px-12 bg-[#F7F8FA]">
         <div className="max-w-5xl mx-auto">
-          <div className="mb-14 max-w-xl">
+          <div className="mb-14 max-w-xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-white border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
               Fonctionnalités
             </div>
             <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Tout ce dont vous avez besoin</h2>
             <p className="text-lg text-[#3A3D45] font-light">Chaque fonctionnalité résout un problème réel des PME marocaines.</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             {FEATURES.map(f => (
-              <div key={f.title} className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-6 hover:border-[rgba(26,86,255,0.2)] hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(12,14,18,0.08)] transition-all duration-200 group" style={{ boxShadow:'0 1px 2px rgba(12,14,18,0.04), 0 2px 6px rgba(12,14,18,0.03)' }}>
+              <div key={f.title} className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-6 hover:border-[rgba(26,86,255,0.2)] hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(12,14,18,0.08)] transition-all duration-200 group w-full md:w-[calc(33.333%-11px)]" style={{ boxShadow:'0 1px 2px rgba(12,14,18,0.04), 0 2px 6px rgba(12,14,18,0.03)' }}>
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${f.bg} ${f.color}`}>{f.icon}</div>
                 <div className="text-sm font-semibold text-[#0C0E12] mb-2 group-hover:text-[#1A56FF] transition-colors">{f.title}</div>
                 <div className="text-sm text-[#7A7F8E] leading-relaxed">{f.desc}</div>
@@ -374,18 +374,16 @@ export default function HomePage() {
       {/* ── SECTORS ── */}
       <section id="secteurs" className="py-24 px-6 md:px-12">
         <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
-            <div>
-              <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
-                Secteurs
-              </div>
-              <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Une plateforme<br/>Tous les secteurs</h2>
+          <div className="flex flex-col items-center text-center gap-4 mb-14">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
+              Secteurs
             </div>
-            <p className="text-lg text-[#3A3D45] font-light md:max-w-xs md:text-right">Adapté à chaque métier, conçu pour la réalité marocaine.</p>
+            <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Une plateforme<br/>Tous les secteurs</h2>
+            <p className="text-lg text-[#3A3D45] font-light max-w-md">Adapté à chaque métier, conçu pour la réalité marocaine.</p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="flex flex-wrap justify-center gap-3">
             {SECTORS.map(s => (
-              <div key={s.name} className="p-5 border border-[rgba(12,14,18,0.08)] rounded-2xl hover:border-[rgba(26,86,255,0.25)] hover:bg-[#EEF2FF] hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(26,86,255,0.10)] transition-all duration-200 cursor-default group" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.04)' }}>
+              <div key={s.name} className="p-5 border border-[rgba(12,14,18,0.08)] rounded-2xl hover:border-[rgba(26,86,255,0.25)] hover:bg-[#EEF2FF] hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(26,86,255,0.10)] transition-all duration-200 cursor-default group w-[calc(50%-6px)] md:w-[calc(25%-9px)]" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.04)' }}>
                 <div className="w-10 h-10 rounded-xl bg-[#F7F8FA] group-hover:bg-white flex items-center justify-center text-[#3A3D45] group-hover:text-[#1A56FF] mb-3 transition-all">
                   {s.icon}
                 </div>
@@ -796,7 +794,15 @@ export default function HomePage() {
             </div>
           </div>
           <div className="pt-8 border-t border-[rgba(12,14,18,0.06)] flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-xs text-[#B0B5C3]">© 2025 BOS Systems — Casablanca, Maroc</div>
+            <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 text-xs text-[#B0B5C3]">
+              <span>© 2025 BOS Systems — Casablanca, Maroc</span>
+              <span className="hidden md:inline">·</span>
+              <Link href="/confidentialite" className="hover:text-[#0C0E12] transition-colors">Politique de confidentialité</Link>
+              <span className="hidden md:inline">·</span>
+              <Link href="/conditions" className="hover:text-[#0C0E12] transition-colors">Conditions d&apos;utilisation</Link>
+              <span className="hidden md:inline">·</span>
+              <Link href="/conformite" className="hover:text-[#0C0E12] transition-colors">Conformité des données</Link>
+            </div>
             <div className="flex items-center gap-1 text-xs text-[#B0B5C3]">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               Tous les systèmes opérationnels

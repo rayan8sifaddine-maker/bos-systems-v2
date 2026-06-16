@@ -43,8 +43,8 @@ export default async function CommunicationPage() {
       </div>
 
       {/* Channel card */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
-        <div className="card p-5 hover:-translate-y-0.5 hover:shadow-md transition-all">
+      <div className="mb-8">
+        <div className="card p-5 hover:-translate-y-0.5 hover:shadow-md transition-all max-w-xs">
           <div className="flex items-center justify-between mb-4">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: '#ECFDF5', color: '#10B981' }}>
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
