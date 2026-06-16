@@ -217,6 +217,7 @@ export default function HomePage() {
         <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
           <div style={{ position:'absolute', top:'-20%', left:'20%', width:700, height:700, background:'radial-gradient(ellipse, rgba(26,86,255,0.06) 0%, transparent 65%)', borderRadius:'50%' }}/>
           <div style={{ position:'absolute', top:'10%', right:'5%', width:500, height:500, background:'radial-gradient(ellipse, rgba(124,58,237,0.05) 0%, transparent 65%)', borderRadius:'50%' }}/>
+          <div className="absolute inset-0 bg-grid-watermark" style={{ maskImage: 'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)' }} />
         </div>
 
         <div className="max-w-6xl mx-auto relative">
@@ -228,7 +229,7 @@ export default function HomePage() {
                 Disponible au Maroc · 14 jours gratuits
               </div>
 
-              <h1 className="text-[48px] md:text-[62px] font-bold leading-[1.05] tracking-tight text-[#0C0E12] mb-5 font-display">
+              <h1 className="text-[48px] md:text-[64px] font-bold leading-[1.03] tracking-[-0.02em] text-[#0C0E12] mb-5 font-display">
                 L&apos;infrastructure<br/>client des{' '}
                 <span style={{ background:'linear-gradient(135deg,#1A56FF 0%,#7C3AED 100%)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>
                   PME<br/>modernes
@@ -299,7 +300,7 @@ export default function HomePage() {
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
               En 3 étapes
             </div>
-            <h2 className="text-[40px] font-bold tracking-tight text-[#0C0E12] font-display">Opérationnel en 5 minutes</h2>
+            <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Opérationnel en 5 minutes</h2>
             <p className="text-lg text-[#3A3D45] mt-3 font-light">Pas de formation. Pas de technicien. Juste votre navigateur.</p>
           </div>
 
@@ -333,7 +334,7 @@ export default function HomePage() {
                 icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 11l5 5 9-9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
               },
             ].map((step) => (
-              <div key={step.n} className="relative bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-7" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.06)' }}>
+              <div key={step.n} className="relative bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-7 hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(12,14,18,0.08)] transition-all duration-200" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.06)' }}>
                 <div className="flex items-start justify-between mb-5">
                   <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background:step.bg, color:step.color }}>
                     {step.icon}
@@ -355,12 +356,12 @@ export default function HomePage() {
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-white border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
               Fonctionnalités
             </div>
-            <h2 className="text-[40px] font-bold tracking-tight text-[#0C0E12] mb-3 font-display">Tout ce dont vous avez besoin</h2>
+            <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Tout ce dont vous avez besoin</h2>
             <p className="text-lg text-[#3A3D45] font-light">Chaque fonctionnalité résout un problème réel des PME marocaines.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-4">
             {FEATURES.map(f => (
-              <div key={f.title} className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-6 hover:border-[rgba(26,86,255,0.2)] hover:-translate-y-0.5 transition-all group" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.05)' }}>
+              <div key={f.title} className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-6 hover:border-[rgba(26,86,255,0.2)] hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(12,14,18,0.08)] transition-all duration-200 group" style={{ boxShadow:'0 1px 2px rgba(12,14,18,0.04), 0 2px 6px rgba(12,14,18,0.03)' }}>
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${f.bg} ${f.color}`}>{f.icon}</div>
                 <div className="text-sm font-semibold text-[#0C0E12] mb-2 group-hover:text-[#1A56FF] transition-colors">{f.title}</div>
                 <div className="text-sm text-[#7A7F8E] leading-relaxed">{f.desc}</div>
@@ -378,13 +379,13 @@ export default function HomePage() {
               <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
                 Secteurs
               </div>
-              <h2 className="text-[40px] font-bold tracking-tight text-[#0C0E12] font-display">Une plateforme<br/>Tous les secteurs</h2>
+              <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Une plateforme<br/>Tous les secteurs</h2>
             </div>
             <p className="text-lg text-[#3A3D45] font-light md:max-w-xs md:text-right">Adapté à chaque métier, conçu pour la réalité marocaine.</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {SECTORS.map(s => (
-              <div key={s.name} className="p-5 border border-[rgba(12,14,18,0.08)] rounded-2xl hover:border-[rgba(26,86,255,0.25)] hover:bg-[#EEF2FF] hover:-translate-y-0.5 transition-all cursor-default group" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.04)' }}>
+              <div key={s.name} className="p-5 border border-[rgba(12,14,18,0.08)] rounded-2xl hover:border-[rgba(26,86,255,0.25)] hover:bg-[#EEF2FF] hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(26,86,255,0.10)] transition-all duration-200 cursor-default group" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.04)' }}>
                 <div className="w-10 h-10 rounded-xl bg-[#F7F8FA] group-hover:bg-white flex items-center justify-center text-[#3A3D45] group-hover:text-[#1A56FF] mb-3 transition-all">
                   {s.icon}
                 </div>
@@ -495,7 +496,7 @@ export default function HomePage() {
               { name:'Farid Alaoui', role:'Directeur, Garage Elite Rabat', initials:'FA', color:'bg-amber-100 text-amber-600', quote:'Mes clients reçoivent des rappels automatiques pour les révisions. Le taux de retour a augmenté de 35% en 3 mois.' },
               { name:'Salma Chraibi', role:'Directrice, École Innovate', initials:'SC', color:'bg-violet-100 text-violet-600', quote:'Le tableau de bord me donne une vision complète. Je sais exactement combien d\'inscrits, de prospects, et ce que ça représente en CA.' },
             ].map((t, i) => (
-              <div key={i} className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-6 flex flex-col" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.05)' }}>
+              <div key={i} className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-6 flex flex-col hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(12,14,18,0.08)] transition-all duration-200" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.05)' }}>
                 <div className="flex gap-0.5 mb-4">
                   {[...Array(5)].map((_, j) => (
                     <svg key={j} width="14" height="14" viewBox="0 0 14 14" fill="#F59E0B"><path d="M7 1l1.5 4h4.5l-3.5 2.5 1.5 4L7 9 3 11.5l1.5-4L1 5h4.5z"/></svg>
@@ -522,12 +523,12 @@ export default function HomePage() {
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
               Tarifs
             </div>
-            <h2 className="text-[40px] font-bold tracking-tight text-[#0C0E12] mb-3 font-display">Simples et transparents</h2>
+            <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Simples et transparents</h2>
             <p className="text-lg text-[#3A3D45] font-light">Sans engagement. 14 jours d&apos;essai gratuit. Annulez à tout moment.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-4 items-center">
             {PLANS.map(p => (
-              <div key={p.name} className={`rounded-2xl overflow-hidden transition-all ${p.featured ? 'ring-2 ring-[#1A56FF] ring-offset-2 scale-[1.02]' : 'border border-[rgba(12,14,18,0.08)]'}`} style={p.featured ? { background:'#0C0E12', boxShadow:'0 16px 40px rgba(12,14,18,0.25)' } : { background:'white', boxShadow:'0 1px 3px rgba(12,14,18,0.06)' }}>
+              <div key={p.name} className={`rounded-2xl overflow-hidden transition-all duration-200 ${p.featured ? 'ring-2 ring-[#1A56FF] ring-offset-2 scale-[1.02] hover:scale-[1.03]' : 'border border-[rgba(12,14,18,0.08)] hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(12,14,18,0.08)]'}`} style={p.featured ? { background:'#0C0E12', boxShadow:'0 16px 40px rgba(12,14,18,0.25)' } : { background:'white', boxShadow:'0 1px 3px rgba(12,14,18,0.06)' }}>
                 {p.featured && (
                   <div className="text-center py-2 text-[11px] font-bold uppercase tracking-widest" style={{ background:'rgba(26,86,255,0.15)', color:'#6BA3FF' }}>
                     ⭐ Le plus populaire

@@ -120,7 +120,7 @@ export function Sidebar({ clinicName, plan }: SidebarProps) {
     <aside className="w-[220px] bg-white border-r border-[rgba(12,14,18,0.06)] flex flex-col sticky top-0 h-screen flex-shrink-0">
       {/* Logo */}
       <div className="h-14 flex items-center gap-2.5 px-4 border-b border-[rgba(12,14,18,0.06)] flex-shrink-0">
-        <div className="w-7 h-7 bg-[#0C0E12] rounded-lg flex items-center justify-center flex-shrink-0">
+        <div className="w-7 h-7 bg-[#0C0E12] rounded-lg flex items-center justify-center flex-shrink-0" style={{ boxShadow: '0 2px 6px rgba(12,14,18,0.25)' }}>
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
             <rect x="1" y="1" width="6" height="6" rx="1.5" fill="white"/>
             <rect x="9" y="1" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
@@ -133,7 +133,7 @@ export function Sidebar({ clinicName, plan }: SidebarProps) {
 
       {/* Clinic info */}
       <div className="px-3 py-3 border-b border-[rgba(12,14,18,0.06)] flex-shrink-0">
-        <div className="flex items-center gap-2.5 p-2 rounded-xl">
+        <div className="flex items-center gap-2.5 p-2 rounded-xl bg-[#F7F8FA]/0 hover:bg-[#F7F8FA] transition-colors">
           <div className="w-8 h-8 rounded-lg bg-[#EEF2FF] flex items-center justify-center text-[#1A56FF] text-xs font-bold flex-shrink-0">
             {clinicName.charAt(0).toUpperCase()}
           </div>

@@ -155,10 +155,10 @@ export default function CrmPage() {
                 </td>
               </tr>
             ) : clients.map(c => (
-              <tr key={c.id} className="tr-hover">
+              <tr key={c.id} className="tr-hover group">
                 <td className="td">
                   <div className="flex items-center gap-3">
-                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-xs font-bold flex-shrink-0 ${avatarColor(c.name)}`}>
+                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-xs font-bold flex-shrink-0 transition-transform group-hover:scale-105 ${avatarColor(c.name)}`}>
                       {initials(c.name)}
                     </div>
                     <div>

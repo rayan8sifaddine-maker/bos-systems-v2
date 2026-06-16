@@ -132,7 +132,7 @@ export default async function DashboardPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {stats.map((s, i) => (
-          <div key={i} className="stat-card animate-slide-up" style={{ animationDelay: `${i * 60}ms` }}>
+          <div key={i} className="stat-card animate-slide-up hover:-translate-y-0.5 hover:shadow-md transition-all" style={{ animationDelay: `${i * 60}ms` }}>
             <div className="flex items-center justify-between">
               <span className="stat-label">{s.label}</span>
               <span className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: s.bg, color: s.color }}>
@@ -179,7 +179,7 @@ export default async function DashboardPage() {
               </div>
             ) : (
               recentAppts.map((a, i) => (
-                <div key={a.id} className={`flex items-center gap-4 px-6 py-3.5 hover:bg-[#F7F8FA] transition-colors ${i < recentAppts.length - 1 ? 'border-b border-[rgba(12,14,18,0.04)]' : ''}`}>
+                <div key={a.id} className={`flex items-center gap-4 px-6 py-3.5 hover:bg-[#F7F8FA] transition-colors duration-150 ${i < recentAppts.length - 1 ? 'border-b border-[rgba(12,14,18,0.04)]' : ''}`}>
                   <div className="w-12 text-center flex-shrink-0">
                     <div className="text-sm font-bold text-[#0C0E12]">{formatTime(a.datetime)}</div>
                   </div>
@@ -259,9 +259,18 @@ export default async function DashboardPage() {
           </div>
 
           {/* Plan card */}
-          <div className="rounded-2xl p-5 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0C0E12 0%, #1A2040 100%)' }}>
+          <div className="rounded-2xl p-5 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0C0E12 0%, #1A2040 100%)', boxShadow: '0 12px 28px rgba(12,14,18,0.18)' }}>
             <div className="absolute top-0 right-0 w-24 h-24 opacity-10" aria-hidden>
               <div style={{ width: '100%', height: '100%', background: 'radial-gradient(circle, #1A56FF, transparent)', borderRadius: '50%' }} />
+            </div>
+            {/* Logo-grid watermark */}
+            <div className="absolute -bottom-3 -right-3 opacity-[0.07]" aria-hidden>
+              <svg width="64" height="64" viewBox="0 0 16 16" fill="none">
+                <rect x="1" y="1" width="6" height="6" rx="1.5" fill="white"/>
+                <rect x="9" y="1" width="6" height="6" rx="1.5" fill="white"/>
+                <rect x="1" y="9" width="6" height="6" rx="1.5" fill="white"/>
+                <rect x="9" y="9" width="6" height="6" rx="1.5" fill="white"/>
+              </svg>
             </div>
             <div className="relative">
               <div className="text-xs font-semibold text-white/40 uppercase tracking-wider mb-1">Plan actuel</div>

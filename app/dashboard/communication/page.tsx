@@ -44,7 +44,7 @@ export default async function CommunicationPage() {
 
       {/* Channel card */}
       <div className="grid grid-cols-3 gap-4 mb-8">
-        <div className="card p-5" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.06)' }}>
+        <div className="card p-5 hover:-translate-y-0.5 hover:shadow-md transition-all">
           <div className="flex items-center justify-between mb-4">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: '#ECFDF5', color: '#10B981' }}>
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -133,7 +133,7 @@ export default async function CommunicationPage() {
               { label: 'Messages', value: totalMessages.toString(), color: '#1A56FF', bg: '#EEF2FF', icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4a1 1 0 011-1h10a1 1 0 011 1v7a1 1 0 01-1 1H5l-3 2V4z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/></svg> },
               { label: 'Tps réponse', value: '< 3s', color: '#F59E0B', bg: '#FFFBEB', icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3"/><path d="M8 5v3l2 2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg> },
             ].map(s => (
-              <div key={s.label} className="card p-4">
+              <div key={s.label} className="card p-4 hover:-translate-y-0.5 hover:shadow-md transition-all">
                 <div className="w-8 h-8 rounded-xl flex items-center justify-center mb-3" style={{ background: s.bg, color: s.color }}>{s.icon}</div>
                 <div className="text-xl font-bold text-[#0C0E12]" style={{ color: s.color }}>{s.value}</div>
                 <div className="text-[10px] text-[#B0B5C3] mt-0.5">{s.label}</div>
