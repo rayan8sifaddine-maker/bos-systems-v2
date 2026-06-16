@@ -29,7 +29,6 @@ export async function GET() {
     recentAppts,
     clientsByStatus,
     apptsByStatus,
-    paidInvoices,
   ] = await Promise.all([
     prisma.client.count({ where: { clinicId: clinic.id } }),
     prisma.client.count({ where: { clinicId: clinic.id, createdAt: { gte: monthStart } } }),
@@ -46,7 +45,6 @@ export async function GET() {
     }),
     prisma.client.groupBy({ by: ['status'], where: { clinicId: clinic.id }, _count: true }),
     prisma.appointment.groupBy({ by: ['status'], where: { clinicId: clinic.id, datetime: { gte: monthStart } }, _count: true }),
-    prisma.invoice.aggregate({ where: { clinicId: clinic.id, status: 'PAID' }, _sum: { amount: true } }),
   ])
 
   const noShowRate = monthAppts > 0 ? Math.round((noShowThisMonth / monthAppts) * 100) : 0
@@ -70,7 +68,6 @@ export async function GET() {
     confirmedThisMonth,
     noShowRate,
     conversionRate,
-    revenue: paidInvoices._sum.amount ?? 0,
     recentAppts,
     clientsByStatus,
     apptsByStatus,

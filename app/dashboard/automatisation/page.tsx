@@ -103,22 +103,6 @@ const AUTOMATIONS = [
     ),
   },
   {
-    id: 'invoice_overdue',
-    name: 'Relance facture',
-    description: 'Relance les factures non payées après la date d\'échéance.',
-    trigger: 'Facture en retard',
-    action: 'Message + Email',
-    impact: '+35% paiement',
-    enabled: false,
-    category: 'Facturation',
-    bg: '#ECFDF5', color: '#059669',
-    icon: (
-      <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
-        <path d="M4 4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2V6h10a2 2 0 0 0-2-2H4zm2 6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-4zm6 4a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
-      </svg>
-    ),
-  },
-  {
     id: 'no_show_followup',
     name: 'Suivi no-show',
     description: 'Contacte automatiquement les clients qui n\'ont pas honoré leur rendez-vous.',
@@ -186,7 +170,7 @@ export default async function AutomatisationPage() {
       {/* Impact stats */}
       <div className="grid grid-cols-3 gap-4 mb-8">
         {stats.map((s, i) => (
-          <div key={i} className="card p-5 flex items-start gap-3">
+          <div key={i} className="card p-5 flex items-start gap-3 hover:-translate-y-0.5 hover:shadow-md transition-all">
             <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: s.bg, color: s.color }}>
               {s.icon}
             </div>
@@ -207,7 +191,7 @@ export default async function AutomatisationPage() {
             {AUTOMATIONS.filter(a => a.category === cat).map(auto => (
               <div
                 key={auto.id}
-                className={`card p-5 flex items-center gap-4 transition-all ${auto.enabled ? 'border-l-2 border-l-emerald-400' : ''}`}
+                className={`card p-5 flex items-center gap-4 transition-all hover:shadow-md ${auto.enabled ? 'border-l-2 border-l-emerald-400' : ''}`}
               >
                 {/* Icon */}
                 <div

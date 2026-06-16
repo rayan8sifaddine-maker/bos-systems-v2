@@ -45,7 +45,6 @@ export default async function DashboardPage() {
     noShowThisMonth,
     recentAppts,
     clientsByStatus,
-    paidRevenue,
   ] = await Promise.all([
     prisma.client.count({ where: { clinicId: clinic.id } }),
     prisma.client.count({ where: { clinicId: clinic.id, createdAt: { gte: monthStart } } }),
@@ -60,13 +59,11 @@ export default async function DashboardPage() {
       take: 8,
     }),
     prisma.client.groupBy({ by: ['status'], where: { clinicId: clinic.id }, _count: true }),
-    prisma.invoice.aggregate({ where: { clinicId: clinic.id, status: 'PAID' }, _sum: { amount: true } }),
   ])
 
   const clientGrowth = newLastMonth > 0 ? Math.round(((newThisMonth - newLastMonth) / newLastMonth) * 100) : 0
   const apptGrowth = lastMonthAppts > 0 ? Math.round(((monthAppts - lastMonthAppts) / lastMonthAppts) * 100) : 0
   const noShowRate = monthAppts > 0 ? Math.round((noShowThisMonth / monthAppts) * 100) : 0
-  const revenue = paidRevenue._sum.amount ?? 0
 
   const stats = [
     {
@@ -113,20 +110,6 @@ export default async function DashboardPage() {
         </svg>
       ),
     },
-    {
-      label: 'Chiffre d\'affaires',
-      value: formatCurrency(revenue),
-      sub: 'total facturé payé',
-      trend: null,
-      color: '#F59E0B',
-      bg: '#FFFBEB',
-      icon: (
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-          <circle cx="9" cy="9" r="7" stroke="currentColor" strokeWidth="1.5"/>
-          <path d="M9 5v1.5M9 11.5V13M6.5 8.5c0-1.1.895-2 2-2h1a1.5 1.5 0 010 3h-1a1.5 1.5 0 000 3h1c1.105 0 2-.9 2-2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
-        </svg>
-      ),
-    },
   ]
 
   const dateLabel = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
@@ -149,7 +132,7 @@ export default async function DashboardPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {stats.map((s, i) => (
-          <div key={i} className="stat-card animate-slide-up" style={{ animationDelay: `${i * 60}ms` }}>
+          <div key={i} className="stat-card animate-slide-up hover:-translate-y-0.5 hover:shadow-md transition-all" style={{ animationDelay: `${i * 60}ms` }}>
             <div className="flex items-center justify-between">
               <span className="stat-label">{s.label}</span>
               <span className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: s.bg, color: s.color }}>
@@ -196,7 +179,7 @@ export default async function DashboardPage() {
               </div>
             ) : (
               recentAppts.map((a, i) => (
-                <div key={a.id} className={`flex items-center gap-4 px-6 py-3.5 hover:bg-[#F7F8FA] transition-colors ${i < recentAppts.length - 1 ? 'border-b border-[rgba(12,14,18,0.04)]' : ''}`}>
+                <div key={a.id} className={`flex items-center gap-4 px-6 py-3.5 hover:bg-[#F7F8FA] transition-colors duration-150 ${i < recentAppts.length - 1 ? 'border-b border-[rgba(12,14,18,0.04)]' : ''}`}>
                   <div className="w-12 text-center flex-shrink-0">
                     <div className="text-sm font-bold text-[#0C0E12]">{formatTime(a.datetime)}</div>
                   </div>
@@ -254,12 +237,6 @@ export default async function DashboardPage() {
                   color: 'text-blue-500 bg-blue-50',
                 },
                 {
-                  label: 'Créer une facture',
-                  href: '/dashboard/facturation',
-                  icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="1" width="10" height="12" rx="1.5" stroke="currentColor" strokeWidth="1.3"/><path d="M4 5h6M4 7.5h6M4 10h3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>,
-                  color: 'text-teal-500 bg-teal-50',
-                },
-                {
                   label: 'Configurer l\'IA',
                   href: '/dashboard/assistant',
                   icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" strokeWidth="1.3"/><path d="M5.5 6c0-.553.672-1 1.5-1s1.5.447 1.5 1c0 .74-.9 1.3-1.35 1.65-.45.35-.65.6-.65 1.35" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/><circle cx="7" cy="10.5" r=".5" fill="currentColor"/></svg>,
@@ -282,9 +259,18 @@ export default async function DashboardPage() {
           </div>
 
           {/* Plan card */}
-          <div className="rounded-2xl p-5 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0C0E12 0%, #1A2040 100%)' }}>
+          <div className="rounded-2xl p-5 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0C0E12 0%, #1A2040 100%)', boxShadow: '0 12px 28px rgba(12,14,18,0.18)' }}>
             <div className="absolute top-0 right-0 w-24 h-24 opacity-10" aria-hidden>
               <div style={{ width: '100%', height: '100%', background: 'radial-gradient(circle, #1A56FF, transparent)', borderRadius: '50%' }} />
+            </div>
+            {/* Logo-grid watermark */}
+            <div className="absolute -bottom-3 -right-3 opacity-[0.07]" aria-hidden>
+              <svg width="64" height="64" viewBox="0 0 16 16" fill="none">
+                <rect x="1" y="1" width="6" height="6" rx="1.5" fill="white"/>
+                <rect x="9" y="1" width="6" height="6" rx="1.5" fill="white"/>
+                <rect x="1" y="9" width="6" height="6" rx="1.5" fill="white"/>
+                <rect x="9" y="9" width="6" height="6" rx="1.5" fill="white"/>
+              </svg>
             </div>
             <div className="relative">
               <div className="text-xs font-semibold text-white/40 uppercase tracking-wider mb-1">Plan actuel</div>

@@ -20,11 +20,8 @@ interface Clinic {
 const SECTORS = [
   { value: 'clinique', label: 'Clinique / Cabinet médical' },
   { value: 'garage', label: 'Garage automobile' },
-  { value: 'immobilier', label: 'Agence immobilière' },
   { value: 'ecole', label: 'École / Centre de formation' },
-  { value: 'avocat', label: 'Cabinet d\'avocats' },
   { value: 'salon', label: 'Salon de beauté / Coiffure' },
-  { value: 'hotel', label: 'Hôtel / Riad' },
   { value: 'restaurant', label: 'Restaurant' },
   { value: 'autre', label: 'Autre' },
 ]
@@ -106,7 +103,7 @@ export default function ParamsPage() {
         <div className="grid md:grid-cols-2 gap-6">
           {/* Clinic profile */}
           <div className="card p-6">
-            <h2 className="text-sm font-semibold text-[#0C0E12] mb-5 pb-4 border-b border-[rgba(12,14,18,0.06)]">Profil établissement</h2>
+            <h2 className="text-sm font-semibold text-[#0C0E12] mb-5 pb-4 border-b border-[rgba(12,14,18,0.06)] font-display tracking-tight">Profil établissement</h2>
             <div className="space-y-4">
               <div>
                 <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Nom de l'établissement</label>
@@ -142,7 +139,7 @@ export default function ParamsPage() {
           {/* IA + Account */}
           <div className="space-y-6">
             <div className="card p-6">
-              <h2 className="text-sm font-semibold text-[#0C0E12] mb-5 pb-4 border-b border-[rgba(12,14,18,0.06)]">Configuration IA</h2>
+              <h2 className="text-sm font-semibold text-[#0C0E12] mb-5 pb-4 border-b border-[rgba(12,14,18,0.06)] font-display tracking-tight">Configuration IA</h2>
               <div className="space-y-4">
                 <div>
                   <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Horaires d'ouverture</label>
@@ -158,7 +155,7 @@ export default function ParamsPage() {
             </div>
 
             <div className="card p-6">
-              <h2 className="text-sm font-semibold text-[#0C0E12] mb-5 pb-4 border-b border-[rgba(12,14,18,0.06)]">Abonnement</h2>
+              <h2 className="text-sm font-semibold text-[#0C0E12] mb-5 pb-4 border-b border-[rgba(12,14,18,0.06)] font-display tracking-tight">Abonnement</h2>
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-[#7A7F8E]">Plan actuel</span>

@@ -1,7 +1,7 @@
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
-import { formatCurrency, STATUS_LABELS } from '@/lib/utils'
+import { STATUS_LABELS } from '@/lib/utils'
 
 export const dynamic = 'force-dynamic'
 export const metadata = { title: 'Analytics' }
@@ -75,7 +75,7 @@ function KpiCard({ label, value, sub, trend, color, bg, icon }: {
   icon: React.ReactNode
 }) {
   return (
-    <div className="stat-card">
+    <div className="stat-card hover:-translate-y-0.5 hover:shadow-md transition-all">
       <div className="flex items-center justify-between">
         <span className="stat-label">{label}</span>
         <span className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: bg, color }}>
@@ -121,8 +121,6 @@ export default async function AnalyticsPage() {
     totalAppts, monthAppts, lastMonthAppts,
     confirmedMonth, noShowMonth, canceledMonth,
     clientsByStatus, apptsByType,
-    paidRevenue, draftRevenue,
-    invoicesByStatus,
   ] = await Promise.all([
     prisma.client.count({ where: { clinicId: clinic.id } }),
     prisma.client.count({ where: { clinicId: clinic.id, createdAt: { gte: monthStart } } }),
@@ -135,9 +133,6 @@ export default async function AnalyticsPage() {
     prisma.appointment.count({ where: { clinicId: clinic.id, datetime: { gte: monthStart }, status: 'CANCELED' } }),
     prisma.client.groupBy({ by: ['status'], where: { clinicId: clinic.id }, _count: true }),
     prisma.appointment.groupBy({ by: ['type'], where: { clinicId: clinic.id }, _count: true, orderBy: { _count: { type: 'desc' } } }),
-    prisma.invoice.aggregate({ where: { clinicId: clinic.id, status: 'PAID' }, _sum: { amount: true } }),
-    prisma.invoice.aggregate({ where: { clinicId: clinic.id, status: { not: 'PAID' } }, _sum: { amount: true } }),
-    prisma.invoice.groupBy({ by: ['status'], where: { clinicId: clinic.id }, _count: true }),
   ])
 
   const monthlyData = await Promise.all(
@@ -160,8 +155,6 @@ export default async function AnalyticsPage() {
   const convRate     = totalClients > 0 ? Math.round((activeCount / totalClients) * 100) : 0
   const maxAppts     = Math.max(...monthlyData.map(m => m.value), 1)
   const maxClients   = Math.max(...monthlyData.map(m => m.clients), 1)
-  const paidAmt      = paidRevenue._sum.amount ?? 0
-  const pendingAmt   = draftRevenue._sum.amount ?? 0
 
   return (
     <div className="p-6 lg:p-8 max-w-7xl mx-auto animate-fade-in">
@@ -179,7 +172,7 @@ export default async function AnalyticsPage() {
       </div>
 
       {/* KPI Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
         <KpiCard
           label="Clients totaux"
           value={totalClients.toString()}
@@ -202,13 +195,6 @@ export default async function AnalyticsPage() {
           sub={`${activeCount} clients actifs`}
           color="#10B981" bg="#ECFDF5"
           icon={<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 13l4-5 3 3 4-6 4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
-        />
-        <KpiCard
-          label="CA encaissé"
-          value={formatCurrency(paidAmt)}
-          sub={`${formatCurrency(pendingAmt)} en attente`}
-          color="#F59E0B" bg="#FFFBEB"
-          icon={<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="currentColor" strokeWidth="1.5"/><path d="M9 5v1.5M9 11.5V13M6.5 8.5c0-1.1.895-2 2-2h1a1.5 1.5 0 010 3h-1a1.5 1.5 0 000 3h1c1.105 0 2-.9 2-2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>}
         />
       </div>
 
@@ -283,7 +269,7 @@ export default async function AnalyticsPage() {
       </div>
 
       {/* Bottom row */}
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-2 gap-6">
 
         {/* Client pipeline */}
         <div className="card p-6">
@@ -354,49 +340,6 @@ export default async function AnalyticsPage() {
             {apptsByType.length === 0 && (
               <div className="text-center py-6 text-xs text-[#B0B5C3]">Aucun rendez-vous enregistré</div>
             )}
-          </div>
-        </div>
-
-        {/* Revenue */}
-        <div className="card p-6">
-          <div className="mb-5">
-            <h3 className="text-sm font-semibold text-[#0C0E12]">Facturation</h3>
-            <p className="text-xs text-[#B0B5C3] mt-0.5">Synthèse financière</p>
-          </div>
-
-          <div className="space-y-1 mb-5">
-            {invoicesByStatus.map(s => {
-              const statusConfig: Record<string, { label: string; color: string; bg: string }> = {
-                PAID:    { label: 'Payées', color: '#10B981', bg: '#ECFDF5' },
-                SENT:    { label: 'Envoyées', color: '#1A56FF', bg: '#EEF2FF' },
-                DRAFT:   { label: 'Brouillons', color: '#94A3B8', bg: '#F8FAFC' },
-                OVERDUE: { label: 'En retard', color: '#EF4444', bg: '#FEF2F2' },
-              }
-              const cfg = statusConfig[s.status] ?? { label: s.status, color: '#94A3B8', bg: '#F8FAFC' }
-              return (
-                <div key={s.status} className="flex items-center justify-between p-3 rounded-xl" style={{ background: cfg.bg }}>
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full" style={{ background: cfg.color }}/>
-                    <span className="text-xs font-medium text-[#3A3D45]">{cfg.label}</span>
-                  </div>
-                  <span className="text-xs font-bold" style={{ color: cfg.color }}>{s._count} facture{s._count > 1 ? 's' : ''}</span>
-                </div>
-              )
-            })}
-            {invoicesByStatus.length === 0 && (
-              <div className="text-center py-4 text-xs text-[#B0B5C3]">Aucune facture</div>
-            )}
-          </div>
-
-          <div className="pt-4 border-t border-[rgba(12,14,18,0.06)] space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs text-[#7A7F8E]">Total encaissé</span>
-              <span className="text-lg font-bold text-emerald-600">{formatCurrency(paidAmt)}</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-xs text-[#7A7F8E]">En attente</span>
-              <span className="text-sm font-semibold text-amber-600">{formatCurrency(pendingAmt)}</span>
-            </div>
           </div>
         </div>
       </div>

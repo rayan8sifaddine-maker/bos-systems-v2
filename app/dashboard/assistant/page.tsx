@@ -19,7 +19,7 @@ export default async function AssistantPage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-lg font-bold text-[#0C0E12]">Assistant IA</h1>
-            <p className="text-xs text-[#7A7F8E] mt-0.5">Simulez une conversation client · Propulsé par Claude AI</p>
+            <p className="text-xs text-[#7A7F8E] mt-0.5">Simulez une conversation client · Propulsé par Gemini AI</p>
           </div>
           <div className="flex items-center gap-2 text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1.5 rounded-lg font-medium">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />

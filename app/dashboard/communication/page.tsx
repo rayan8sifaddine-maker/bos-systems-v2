@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
 import { formatRelative } from '@/lib/utils'
 import Link from 'next/link'
+import TemplatesPanel from './templates-panel'
 
 export const dynamic = 'force-dynamic'
 export const metadata = { title: 'Communication' }
@@ -26,79 +27,6 @@ export default async function CommunicationPage() {
 
   const totalMessages = conversations.reduce((a, c) => a + c._count.messages, 0)
 
-  const platforms = [
-    {
-      id: 'whatsapp',
-      label: 'WhatsApp',
-      desc: `${conversations.length} conversation${conversations.length !== 1 ? 's' : ''}`,
-      active: true,
-      color: '#10B981',
-      bg: '#ECFDF5',
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M2 18l1.2-4.4A7.9 7.9 0 012 10a8 8 0 108 8 7.9 7.9 0 01-3.6-.8L2 18z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
-          <path d="M7.5 7.5c.5 1 1.5 2.5 2.5 3.5s2.5 2 3.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-        </svg>
-      ),
-    },
-    {
-      id: 'sms',
-      label: 'SMS',
-      desc: 'Intégration prochaine',
-      active: false,
-      color: '#1A56FF',
-      bg: '#EEF2FF',
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <rect x="4" y="2" width="12" height="16" rx="2" stroke="currentColor" strokeWidth="1.5"/>
-          <path d="M7 6h6M7 9h6M7 12h3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-          <circle cx="10" cy="15.5" r="1" fill="currentColor"/>
-        </svg>
-      ),
-    },
-    {
-      id: 'email',
-      label: 'Email',
-      desc: 'Intégration prochaine',
-      active: false,
-      color: '#7C3AED',
-      bg: '#F5F3FF',
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" strokeWidth="1.5"/>
-          <path d="M2 7l8 5 8-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      ),
-    },
-  ]
-
-  const templates = [
-    {
-      label: 'Rappel RDV',
-      text: 'Bonjour, nous vous rappelons votre rendez-vous demain à [HEURE]. Répondez OUI pour confirmer.',
-      color: '#F59E0B', bg: '#FFFBEB',
-      icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1a5 5 0 100 10A5 5 0 007 1zM7 3v4l2.5 1.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/><path d="M5 12.5h4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>,
-    },
-    {
-      label: 'Confirmation',
-      text: 'Votre rendez-vous du [DATE] à [HEURE] est bien confirmé. À bientôt !',
-      color: '#10B981', bg: '#ECFDF5',
-      icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5 6.5-6.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>,
-    },
-    {
-      label: 'Relance inactif',
-      text: 'Bonjour [NOM], cela fait un moment que nous n\'avons pas eu de vos nouvelles. Souhaitez-vous reprendre rendez-vous ?',
-      color: '#1A56FF', bg: '#EEF2FF',
-      icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12 2v4H8M2 12v-4h4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/><path d="M12 6A5 5 0 002 8" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>,
-    },
-    {
-      label: 'Demande d\'avis',
-      text: 'Bonjour [NOM], comment s\'est passée votre visite ? Votre avis nous aide à améliorer nos services.',
-      color: '#7C3AED', bg: '#F5F3FF',
-      icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.3 3.5H12L9 6.8l1 3.7L7 8.5 3.9 10.5l1-3.7L2 3.5h3.7z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/></svg>,
-    },
-  ]
-
   return (
     <div className="p-6 lg:p-8 max-w-7xl mx-auto animate-fade-in">
 
@@ -114,22 +42,23 @@ export default async function CommunicationPage() {
         </Link>
       </div>
 
-      {/* Channel cards */}
+      {/* Channel card */}
       <div className="grid grid-cols-3 gap-4 mb-8">
-        {platforms.map(p => (
-          <div key={p.id} className="card p-5 hover:-translate-y-0.5 transition-all" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.06)' }}>
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: p.active ? p.bg : '#F7F8FA', color: p.active ? p.color : '#B0B5C3' }}>
-                {p.icon}
-              </div>
-              <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full ${p.active ? 'text-emerald-700 bg-emerald-50 border border-emerald-200' : 'text-[#B0B5C3] bg-[#F7F8FA] border border-[rgba(12,14,18,0.06)]'}`}>
-                {p.active ? '● Actif' : 'Bientôt'}
-              </span>
+        <div className="card p-5 hover:-translate-y-0.5 hover:shadow-md transition-all">
+          <div className="flex items-center justify-between mb-4">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: '#ECFDF5', color: '#10B981' }}>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M2 18l1.2-4.4A7.9 7.9 0 012 10a8 8 0 108 8 7.9 7.9 0 01-3.6-.8L2 18z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+                <path d="M7.5 7.5c.5 1 1.5 2.5 2.5 3.5s2.5 2 3.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
             </div>
-            <div className="text-sm font-semibold text-[#0C0E12]">{p.label}</div>
-            <div className="text-xs text-[#B0B5C3] mt-0.5">{p.desc}</div>
+            <span className="text-[10px] font-bold px-2.5 py-1 rounded-full text-emerald-700 bg-emerald-50 border border-emerald-200">
+              ● Actif
+            </span>
           </div>
-        ))}
+          <div className="text-sm font-semibold text-[#0C0E12]">WhatsApp</div>
+          <div className="text-xs text-[#B0B5C3] mt-0.5">{conversations.length} conversation{conversations.length !== 1 ? 's' : ''}</div>
+        </div>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6">
@@ -204,7 +133,7 @@ export default async function CommunicationPage() {
               { label: 'Messages', value: totalMessages.toString(), color: '#1A56FF', bg: '#EEF2FF', icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4a1 1 0 011-1h10a1 1 0 011 1v7a1 1 0 01-1 1H5l-3 2V4z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/></svg> },
               { label: 'Tps réponse', value: '< 3s', color: '#F59E0B', bg: '#FFFBEB', icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3"/><path d="M8 5v3l2 2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg> },
             ].map(s => (
-              <div key={s.label} className="card p-4">
+              <div key={s.label} className="card p-4 hover:-translate-y-0.5 hover:shadow-md transition-all">
                 <div className="w-8 h-8 rounded-xl flex items-center justify-center mb-3" style={{ background: s.bg, color: s.color }}>{s.icon}</div>
                 <div className="text-xl font-bold text-[#0C0E12]" style={{ color: s.color }}>{s.value}</div>
                 <div className="text-[10px] text-[#B0B5C3] mt-0.5">{s.label}</div>
@@ -213,20 +142,7 @@ export default async function CommunicationPage() {
           </div>
 
           {/* Templates */}
-          <div className="card p-6">
-            <h3 className="text-sm font-semibold text-[#0C0E12] mb-4">Modèles de messages</h3>
-            <div className="space-y-3">
-              {templates.map(t => (
-                <div key={t.label} className="p-4 rounded-xl border border-[rgba(12,14,18,0.06)] hover:border-[rgba(12,14,18,0.12)] transition-all" style={{ background: t.bg }}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'white', color: t.color }}>{t.icon}</span>
-                    <span className="text-xs font-bold text-[#0C0E12]">{t.label}</span>
-                  </div>
-                  <p className="text-xs text-[#7A7F8E] leading-relaxed">{t.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+          <TemplatesPanel />
 
           {/* WhatsApp connection banner */}
           <div className="rounded-2xl p-5 relative overflow-hidden" style={{ background:'linear-gradient(135deg,#0C0E12,#1A2040)' }}>

@@ -8,11 +8,8 @@ import Link from 'next/link'
 const SECTORS = [
   { value: 'clinique',   label: 'Clinique / Cabinet médical' },
   { value: 'garage',     label: 'Garage automobile' },
-  { value: 'immobilier', label: 'Agence immobilière' },
   { value: 'ecole',      label: 'École / Centre de formation' },
-  { value: 'avocat',     label: 'Cabinet d\'avocats' },
   { value: 'salon',      label: 'Salon de beauté / Coiffure' },
-  { value: 'hotel',      label: 'Hôtel / Riad' },
   { value: 'restaurant', label: 'Restaurant' },
   { value: 'autre',      label: 'Autre' },
 ]
@@ -103,7 +100,7 @@ export default function RegisterPage() {
             ))}
           </div>
 
-          <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl p-4">
+          <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl p-4 hover:bg-white/[0.07] transition-colors">
             <div className="flex -space-x-2">
               {[['YB','#3B82F6'],['FA','#F59E0B'],['SC','#8B5CF6'],['KA','#10B981']].map(([initials, bg]) => (
                 <div key={initials} className="w-8 h-8 rounded-full border-2 border-[#0C0E12] flex items-center justify-center text-[10px] font-bold text-white" style={{ background: bg }}>{initials}</div>
@@ -134,7 +131,7 @@ export default function RegisterPage() {
             <span className="font-bold text-[15px] tracking-wide text-[#0C0E12] font-display">BOS SYSTEMS</span>
           </Link>
 
-          <div className="bg-white border border-[rgba(12,14,18,0.08)] rounded-2xl p-8" style={{ boxShadow:'0 4px 20px rgba(12,14,18,0.08)' }}>
+          <div className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-8" style={{ boxShadow:'0 1px 2px rgba(12,14,18,0.04), 0 8px 24px rgba(12,14,18,0.06), 0 20px 48px rgba(12,14,18,0.06)' }}>
             {/* Progress */}
             <div className="flex gap-2 mb-6">
               {[1,2].map(s => (
@@ -147,7 +144,7 @@ export default function RegisterPage() {
             <div className="flex items-center gap-2 mb-1">
               <span className="text-[10px] font-bold text-[#B0B5C3] uppercase tracking-wider">Étape {step}/2</span>
             </div>
-            <h1 className="text-xl font-bold text-[#0C0E12] mb-0.5 font-display">
+            <h1 className="text-xl font-bold text-[#0C0E12] mb-0.5 font-display tracking-tight">
               {step === 1 ? 'Votre établissement' : 'Créez votre compte'}
             </h1>
             <p className="text-sm text-[#7A7F8E] mb-7">
