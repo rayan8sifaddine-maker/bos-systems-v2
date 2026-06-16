@@ -7,6 +7,33 @@ import Link from 'next/link'
 export const dynamic = 'force-dynamic'
 export const metadata = { title: 'Dashboard' }
 
+function DonutStat({ pct, color, bg, label, sub }: { pct: number; color: string; bg: string; label: string; sub: string }) {
+  const r = 15.5
+  const circumference = 2 * Math.PI * r
+  const offset = circumference - (Math.min(Math.max(pct, 0), 100) / 100) * circumference
+  return (
+    <div className="stat-card animate-slide-up hover:-translate-y-0.5 hover:shadow-md transition-all" style={{ animationDelay: '240ms' }}>
+      <div className="flex items-center justify-between">
+        <span className="stat-label">{label}</span>
+      </div>
+      <div className="flex items-center gap-3 mt-1">
+        <svg width="48" height="48" viewBox="0 0 36 36" className="-rotate-90 flex-shrink-0">
+          <circle cx="18" cy="18" r={r} fill="none" stroke={bg} strokeWidth="4" />
+          <circle
+            cx="18" cy="18" r={r} fill="none" stroke={color} strokeWidth="4"
+            strokeDasharray={circumference} strokeDashoffset={offset} strokeLinecap="round"
+            style={{ transition: 'stroke-dashoffset 0.8s cubic-bezier(0.16,1,0.3,1)' }}
+          />
+        </svg>
+        <div>
+          <div className="stat-value text-2xl">{pct}%</div>
+          <div className="stat-sub">{sub}</div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function TrendBadge({ value }: { value: number }) {
   const positive = value >= 0
   return (
@@ -118,19 +145,23 @@ export default async function DashboardPage() {
     <div className="p-6 lg:p-8 max-w-7xl mx-auto animate-fade-in">
 
       {/* Header */}
-      <div className="page-header">
-        <div>
-          <h1 className="page-title">Bonjour, {clinic.name.split(' ')[0]}</h1>
-          <p className="page-subtitle capitalize">{dateLabel}</p>
+      <div className="relative overflow-hidden rounded-2xl p-6 lg:p-7 mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4" style={{ background: 'linear-gradient(135deg, #0C0E12 0%, #1A2040 100%)', boxShadow: '0 12px 28px rgba(12,14,18,0.16)' }}>
+        <div className="absolute inset-0 pointer-events-none" aria-hidden>
+          <div style={{ position: 'absolute', top: '-40%', right: '-5%', width: 320, height: 320, background: 'radial-gradient(ellipse, rgba(26,86,255,0.25) 0%, transparent 60%)', borderRadius: '50%' }} />
+          <div className="absolute inset-0 bg-grid-watermark-dark" style={{ maskImage: 'linear-gradient(to right, transparent, black 40%, black 100%)' }} />
         </div>
-        <Link href="/dashboard/rendez-vous" className="btn-primary">
+        <div className="relative">
+          <h1 className="text-2xl font-bold tracking-tight text-white font-display">Bonjour, {clinic.name.split(' ')[0]} 👋</h1>
+          <p className="text-sm text-white/40 mt-1 capitalize">{dateLabel}</p>
+        </div>
+        <Link href="/dashboard/rendez-vous" className="relative inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-[#0C0E12] bg-white hover:bg-gray-50 transition-all hover:-translate-y-0.5 flex-shrink-0 w-fit">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
           Nouveau RDV
         </Link>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8">
         {stats.map((s, i) => (
           <div key={i} className="stat-card animate-slide-up hover:-translate-y-0.5 hover:shadow-md transition-all" style={{ animationDelay: `${i * 60}ms` }}>
             <div className="flex items-center justify-between">
@@ -146,6 +177,13 @@ export default async function DashboardPage() {
             </div>
           </div>
         ))}
+        <DonutStat
+          pct={100 - noShowRate}
+          color={noShowRate > 15 ? '#F59E0B' : '#10B981'}
+          bg="#F0F2F5"
+          label="Taux de présence"
+          sub={`${noShowRate}% d'absences ce mois`}
+        />
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">

@@ -134,7 +134,7 @@ export function Sidebar({ clinicName, plan }: SidebarProps) {
       {/* Clinic info */}
       <div className="px-3 py-3 border-b border-[rgba(12,14,18,0.06)] flex-shrink-0">
         <div className="flex items-center gap-2.5 p-2 rounded-xl bg-[#F7F8FA]/0 hover:bg-[#F7F8FA] transition-colors">
-          <div className="w-8 h-8 rounded-lg bg-[#EEF2FF] flex items-center justify-center text-[#1A56FF] text-xs font-bold flex-shrink-0">
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style={{ background: 'linear-gradient(135deg,#1A56FF,#7C3AED)', boxShadow: '0 2px 6px rgba(26,86,255,0.3)' }}>
             {clinicName.charAt(0).toUpperCase()}
           </div>
           <div className="min-w-0">
