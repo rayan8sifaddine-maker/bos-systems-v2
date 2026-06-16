@@ -72,7 +72,7 @@ export default function RegisterPage() {
         <div className="relative">
           <div className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 bg-white/10 rounded-full text-white/60 text-xs font-semibold">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            14 jours gratuits · Sans carte
+            7 jours gratuits · Sans carte
           </div>
           <h2 className="text-4xl font-bold text-white mb-4 font-display leading-tight">
             Automatisez votre<br/>
@@ -148,7 +148,7 @@ export default function RegisterPage() {
               {step === 1 ? 'Votre établissement' : 'Créez votre compte'}
             </h1>
             <p className="text-sm text-[#7A7F8E] mb-7">
-              {step === 1 ? 'Dites-nous en plus sur votre activité' : '14 jours gratuits, sans carte bancaire'}
+              {step === 1 ? 'Dites-nous en plus sur votre activité' : '7 jours gratuits, sans carte bancaire'}
             </p>
 
             {step === 1 ? (
@@ -235,7 +235,7 @@ export default function RegisterPage() {
           </div>
 
           <div className="flex items-center justify-center gap-5 mt-5">
-            {['Sans carte bancaire','14 jours gratuits','Annulation simple'].map(t => (
+            {['Sans carte bancaire','7 jours gratuits','Annulation simple'].map(t => (
               <div key={t} className="flex items-center gap-1 text-[11px] text-[#B0B5C3]">
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 5-5" stroke="#10B981" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 {t}

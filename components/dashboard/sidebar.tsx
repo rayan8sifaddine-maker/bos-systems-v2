@@ -2,7 +2,10 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
+
+const LAST_SEEN_KEY = 'bos-comm-last-seen'
 
 const NAV = [
   {
@@ -111,10 +114,39 @@ interface SidebarProps {
 
 export function Sidebar({ clinicName, plan }: SidebarProps) {
   const pathname = usePathname()
+  const [unread, setUnread] = useState(0)
 
   function isActive(href: string, exact = false) {
     return exact ? pathname === href : pathname === href || pathname.startsWith(href + '/')
   }
+
+  useEffect(() => {
+    let cancelled = false
+
+    async function poll() {
+      try {
+        const lastSeen = localStorage.getItem(LAST_SEEN_KEY) || new Date(0).toISOString()
+        const res = await fetch(`/api/notifications?since=${encodeURIComponent(lastSeen)}`)
+        if (!res.ok) return
+        const data = await res.json()
+        if (!cancelled) setUnread(data.count || 0)
+      } catch {}
+    }
+
+    poll()
+    const interval = setInterval(poll, 15000)
+    return () => {
+      cancelled = true
+      clearInterval(interval)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (pathname.startsWith('/dashboard/communication')) {
+      localStorage.setItem(LAST_SEEN_KEY, new Date().toISOString())
+      setUnread(0)
+    }
+  }, [pathname])
 
   return (
     <aside className="w-[220px] bg-white border-r border-[rgba(12,14,18,0.06)] flex flex-col sticky top-0 h-screen flex-shrink-0">
@@ -156,7 +188,12 @@ export function Sidebar({ clinicName, plan }: SidebarProps) {
             className={cn('nav-item', isActive(item.href, item.exact) && 'nav-item-active')}
           >
             <span className="flex-shrink-0">{item.icon}</span>
-            <span className="truncate">{item.label}</span>
+            <span className="truncate flex-1">{item.label}</span>
+            {item.href === '/dashboard/communication' && unread > 0 && (
+              <span className="flex-shrink-0 min-w-[18px] h-[18px] px-1 rounded-full bg-[#FF3B30] text-white text-[10px] font-bold flex items-center justify-center">
+                {unread > 9 ? '9+' : unread}
+              </span>
+            )}
           </Link>
         ))}
 

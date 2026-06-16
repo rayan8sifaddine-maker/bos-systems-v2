@@ -160,6 +160,30 @@ export default async function DashboardPage() {
         </Link>
       </div>
 
+      {/* Trial countdown */}
+      {clinic.trialEndsAt && new Date(clinic.trialEndsAt) > now && (() => {
+        const daysLeft = Math.max(1, Math.ceil((new Date(clinic.trialEndsAt).getTime() - now.getTime()) / (1000 * 60 * 60 * 24)))
+        const urgent = daysLeft <= 3
+        return (
+          <div className={`flex items-center justify-between gap-4 rounded-2xl px-5 py-3.5 mb-8 border ${urgent ? 'bg-amber-50 border-amber-200' : 'bg-[#EEF2FF] border-[rgba(26,86,255,0.15)]'}`}>
+            <div className="flex items-center gap-3">
+              <span className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${urgent ? 'bg-amber-100 text-amber-600' : 'bg-white text-[#1A56FF]'}`}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5"/><path d="M8 5v3l2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+              </span>
+              <div>
+                <div className={`text-sm font-semibold ${urgent ? 'text-amber-800' : 'text-[#0C0E12]'}`}>
+                  {daysLeft === 1 ? 'Dernier jour de votre essai gratuit' : `${daysLeft} jours restants sur votre essai gratuit`}
+                </div>
+                <div className={`text-xs ${urgent ? 'text-amber-700/70' : 'text-[#7A7F8E]'}`}>Passez au plan Pro pour garder l&apos;accès à toutes les fonctionnalités.</div>
+              </div>
+            </div>
+            <Link href="/dashboard/parametres" className={`flex-shrink-0 text-xs font-semibold px-3.5 py-2 rounded-xl transition-all whitespace-nowrap ${urgent ? 'bg-amber-600 text-white hover:bg-amber-700' : 'bg-[#0C0E12] text-white hover:bg-[#1A1D24]'}`}>
+              Choisir un plan
+            </Link>
+          </div>
+        )
+      })()}
+
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8">
         {stats.map((s, i) => (
