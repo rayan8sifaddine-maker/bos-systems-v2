@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { useTheme } from '@/components/dashboard/theme-provider'
+import { usePlanModal } from '@/components/dashboard/plan-modal-provider'
 
 const LAST_SEEN_KEY = 'bos-comm-last-seen'
 
@@ -117,6 +118,7 @@ export function Sidebar({ clinicName, plan }: SidebarProps) {
   const pathname = usePathname()
   const [unread, setUnread] = useState(0)
   const { theme, toggleTheme } = useTheme()
+  const { open: openPlanModal } = usePlanModal()
 
   function isActive(href: string, exact = false) {
     return exact ? pathname === href : pathname === href || pathname.startsWith(href + '/')
@@ -175,7 +177,9 @@ export function Sidebar({ clinicName, plan }: SidebarProps) {
             <div className="text-xs font-semibold text-[#0C0E12] dark:text-[#F1F2F4] truncate">{clinicName}</div>
             <div className="flex items-center gap-1 mt-0.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-dot" />
-              <span className="text-[10px] text-[#1A56FF] dark:text-[#5B8DFF] font-medium">{plan}</span>
+              <button type="button" onClick={openPlanModal} className="text-[10px] text-[#1A56FF] dark:text-[#5B8DFF] font-medium hover:underline">
+                {plan} · Changer
+              </button>
             </div>
           </div>
           <button
@@ -231,6 +235,24 @@ export function Sidebar({ clinicName, plan }: SidebarProps) {
           </Link>
         ))}
       </nav>
+
+      {/* Upgrade promo */}
+      <div className="px-3 pb-2 flex-shrink-0">
+        <button
+          type="button"
+          onClick={openPlanModal}
+          className="w-full flex items-center gap-2.5 p-3 rounded-xl text-left transition-all hover:-translate-y-0.5"
+          style={{ background: 'linear-gradient(135deg,rgba(26,86,255,0.08),rgba(124,58,237,0.08))', border: '1px solid rgba(26,86,255,0.15)' }}
+        >
+          <span className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 text-white" style={{ background: 'linear-gradient(135deg,#1A56FF,#7C3AED)' }}>
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 1l2 4.5 5 .7-3.6 3.5.9 5-4.3-2.3-4.3 2.3.9-5L1 6.2l5-.7L8 1z" fill="white"/></svg>
+          </span>
+          <div className="min-w-0">
+            <div className="text-xs font-semibold text-[#0C0E12] dark:text-white">Passer au plan Pro</div>
+            <div className="text-[10px] text-[#7A7F8E] dark:text-[#9CA3AF]">Débloquez toutes les fonctionnalités</div>
+          </div>
+        </button>
+      </div>
 
       {/* Signout */}
       <div className="p-3 border-t border-[rgba(12,14,18,0.06)] dark:border-white/10 flex-shrink-0">

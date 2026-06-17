@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
 import { formatTime, formatCurrency, STATUS_COLORS, STATUS_LABELS } from '@/lib/utils'
 import Link from 'next/link'
+import { PlanModalTrigger } from '@/components/dashboard/plan-modal-trigger'
 
 export const dynamic = 'force-dynamic'
 export const metadata = { title: 'Dashboard' }
@@ -177,9 +178,9 @@ export default async function DashboardPage() {
                 <div className={`text-xs ${urgent ? 'text-amber-700/70 dark:text-amber-400/70' : 'text-[#7A7F8E] dark:text-[#9CA3AF]'}`}>Passez au plan Pro pour garder l&apos;accès à toutes les fonctionnalités.</div>
               </div>
             </div>
-            <Link href="/dashboard/parametres" className={`flex-shrink-0 text-xs font-semibold px-3.5 py-2 rounded-xl transition-all whitespace-nowrap ${urgent ? 'bg-amber-600 text-white hover:bg-amber-700' : 'bg-[#0C0E12] text-white hover:bg-[#1A1D24] dark:bg-[#1A56FF] dark:hover:bg-[#1444DD]'}`}>
+            <PlanModalTrigger className={`flex-shrink-0 text-xs font-semibold px-3.5 py-2 rounded-xl transition-all whitespace-nowrap ${urgent ? 'bg-amber-600 text-white hover:bg-amber-700' : 'bg-[#0C0E12] text-white hover:bg-[#1A1D24] dark:bg-[#1A56FF] dark:hover:bg-[#1444DD]'}`}>
               Choisir un plan
-            </Link>
+            </PlanModalTrigger>
           </div>
         )
       })()}
@@ -343,9 +344,9 @@ export default async function DashboardPage() {
                   : 'Abonnement actif'
                 }
               </div>
-              <Link href="/dashboard/parametres" className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/15 text-white text-xs font-medium rounded-lg transition-all">
+              <PlanModalTrigger className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/15 text-white text-xs font-medium rounded-lg transition-all">
                 Gérer le plan →
-              </Link>
+              </PlanModalTrigger>
             </div>
           </div>
         </div>
