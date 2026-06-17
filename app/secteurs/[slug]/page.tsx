@@ -140,10 +140,17 @@ export default function SectorPage({ params }: { params: { slug: string } }) {
               Commencer avec le plan {sector.recommendedPlan} →
             </Link>
           </div>
-          {sector.altPlan && (
-            <div className="mt-4 p-5 rounded-2xl border border-[rgba(12,14,18,0.07)]">
-              <div className="text-sm font-semibold text-[#0C0E12] mb-1.5">Plutôt une grande structure ? Le plan {sector.altPlan.name}</div>
-              <p className="text-sm text-[#7A7F8E] leading-relaxed">{sector.altPlan.reason}</p>
+          {sector.alternativePlans.length > 0 && (
+            <div className="mt-4 grid sm:grid-cols-2 gap-3">
+              {sector.alternativePlans.map(alt => (
+                <div key={alt.name} className="p-5 rounded-2xl border border-[rgba(12,14,18,0.07)]">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#F7F8FA] text-[#7A7F8E] border border-[rgba(12,14,18,0.08)]">{alt.label}</span>
+                  </div>
+                  <div className="text-sm font-semibold text-[#0C0E12] mb-1.5">Plan {alt.name}</div>
+                  <p className="text-sm text-[#7A7F8E] leading-relaxed">{alt.reason}</p>
+                </div>
+              ))}
             </div>
           )}
         </div>

@@ -1,5 +1,6 @@
 export interface SectorUseCase { title: string; desc: string }
 export interface SectorTestimonial { name: string; role: string; quote: string; initials: string; color: string }
+export interface SectorAltPlan { name: 'Starter' | 'Pro' | 'Enterprise'; label: string; reason: string }
 
 export interface Sector {
   slug: string
@@ -14,7 +15,7 @@ export interface Sector {
   useCases: SectorUseCase[]
   recommendedPlan: 'Starter' | 'Pro' | 'Enterprise'
   planReason: string
-  altPlan?: { name: string; reason: string }
+  alternativePlans: SectorAltPlan[]
   stat: { value: string; label: string }
   testimonial?: SectorTestimonial
 }
@@ -42,8 +43,10 @@ export const SECTORS: Sector[] = [
       { title: 'Relance des patients inactifs', desc: 'BOS identifie les patients qui n\'ont pas pris de rendez-vous depuis longtemps et les relance automatiquement.' },
     ],
     recommendedPlan: 'Pro',
-    planReason: 'Pour un cabinet avec plusieurs praticiens et un volume de rendez-vous soutenu, le plan Pro offre des conversations illimitées, un CRM complet et des relances automatiques essentielles pour fidéliser vos patients.',
-    altPlan: { name: 'Starter', reason: 'Pour un médecin seul avec un volume de patients modéré, le plan Starter couvre déjà l\'essentiel : prise de RDV, rappels et CRM de base.' },
+    planReason: 'Pour un médecin ou un cabinet, le plan Pro est notre recommandation par défaut : conversations illimitées, CRM complet et relances automatiques pour ne perdre aucun patient — un volume que le plan Starter limiterait trop vite.',
+    alternativePlans: [
+      { name: 'Enterprise', label: 'Réseau de cliniques ou polyclinique', reason: 'Pour un groupe de cliniques, une polyclinique ou un réseau multi-sites, le plan Enterprise ajoute une équipe illimitée, une API dédiée pour vos outils internes et un account manager attitré.' },
+    ],
     stat: { value: '−78%', label: 'd\'absences grâce aux rappels automatiques' },
     testimonial: { name: 'Dr. Youssef Bennani', role: 'Dermatologue, Casablanca', quote: 'Depuis BOS, je ne reçois plus d\'appels manqués. L\'IA répond, planifie et rappelle mes patients. J\'ai récupéré 2h par jour.', initials: 'YB', color: 'bg-blue-100 text-blue-600' },
   },
@@ -68,9 +71,12 @@ export const SECTORS: Sector[] = [
       { title: 'Suivi par véhicule', desc: 'Chaque client et son véhicule sont enregistrés avec l\'historique des interventions passées.' },
       { title: 'Réponses automatiques sur les délais', desc: 'L\'IA renseigne vos clients sur les disponibilités et délais courants, sans interrompre vos mécaniciens.' },
     ],
-    recommendedPlan: 'Starter',
-    planReason: 'Pour un garage indépendant, le plan Starter couvre la prise de rendez-vous, les rappels de révision et un CRM de base — l\'essentiel pour ne plus perdre de clients.',
-    altPlan: { name: 'Pro', reason: 'Pour une chaîne de garages avec plusieurs techniciens, le plan Pro ajoute des conversations illimitées et un CRM complet multi-utilisateurs.' },
+    recommendedPlan: 'Pro',
+    planReason: 'Dès que plusieurs mécaniciens se partagent l\'atelier, le plan Pro devient le bon calibrage : conversations illimitées, CRM complet par véhicule et relances automatiques pour faire revenir vos clients à chaque révision.',
+    alternativePlans: [
+      { name: 'Starter', label: 'Garage indépendant qui démarre', reason: 'Pour un garage seul qui débute avec un volume de rendez-vous modéré, le plan Starter couvre déjà l\'essentiel : prise de RDV, rappels et CRM de base.' },
+      { name: 'Enterprise', label: 'Chaîne de garages multi-sites', reason: 'Pour une chaîne de garages ou un réseau national, le plan Enterprise offre une équipe illimitée, des intégrations sur mesure et un account manager dédié pour piloter tous vos sites.' },
+    ],
     stat: { value: '+35%', label: 'de taux de retour pour révision' },
     testimonial: { name: 'Farid Alaoui', role: 'Directeur, Garage Elite Rabat', quote: 'Mes clients reçoivent des rappels automatiques pour les révisions. Le taux de retour a augmenté de 35% en 3 mois.', initials: 'FA', color: 'bg-amber-100 text-amber-600' },
   },
@@ -97,6 +103,10 @@ export const SECTORS: Sector[] = [
     ],
     recommendedPlan: 'Starter',
     planReason: 'Pour un salon avec une ou deux praticiennes, le plan Starter suffit largement : prise de RDV automatique, rappels et CRM basique pour suivre vos clientes.',
+    alternativePlans: [
+      { name: 'Pro', label: 'Salon avec plusieurs employées', reason: 'Dès que votre équipe grandit et que les conversations s\'accumulent, le plan Pro passe en conversations illimitées avec un CRM complet pour ne perdre aucune cliente.' },
+      { name: 'Enterprise', label: 'Franchise ou chaîne de salons', reason: 'Pour une franchise ou une chaîne de salons sur plusieurs villes, le plan Enterprise centralise tous vos établissements avec un account manager dédié.' },
+    ],
     stat: { value: '24/7', label: 'de disponibilité pour vos clientes' },
   },
   {
@@ -122,6 +132,9 @@ export const SECTORS: Sector[] = [
     ],
     recommendedPlan: 'Pro',
     planReason: 'Pour un centre de formation avec plusieurs filières et un volume important de demandes, le plan Pro offre des conversations illimitées et des analytics avancés pour piloter les inscriptions.',
+    alternativePlans: [
+      { name: 'Enterprise', label: 'Groupe scolaire multi-campus', reason: 'Pour un groupe scolaire avec plusieurs campus ou filières, le plan Enterprise centralise les inscriptions de tous vos établissements avec une API dédiée et un account manager.' },
+    ],
     stat: { value: '100%', label: 'des demandes qualifiées automatiquement' },
     testimonial: { name: 'Salma Chraibi', role: 'Directrice, École Innovate', quote: 'Le tableau de bord me donne une vision complète. Je sais exactement combien d\'inscrits, de prospects, et ce que ça représente en CA.', initials: 'SC', color: 'bg-violet-100 text-violet-600' },
   },
@@ -148,7 +161,10 @@ export const SECTORS: Sector[] = [
     ],
     recommendedPlan: 'Starter',
     planReason: 'Pour un restaurant indépendant, le plan Starter couvre la prise de réservation, les rappels et les réponses automatiques aux questions fréquentes.',
-    altPlan: { name: 'Pro', reason: 'Pour une chaîne avec plusieurs établissements, le plan Pro permet de gérer des volumes de réservation plus importants avec plusieurs utilisateurs.' },
+    alternativePlans: [
+      { name: 'Pro', label: 'Plusieurs établissements', reason: 'Pour une enseigne avec plusieurs établissements, le plan Pro gère des volumes de réservation plus importants avec plusieurs utilisateurs et un CRM complet.' },
+      { name: 'Enterprise', label: 'Grande chaîne nationale', reason: 'Pour une grande chaîne nationale ou un groupe de restauration, le plan Enterprise centralise tous vos points de vente avec une API dédiée et un account manager attitré.' },
+    ],
     stat: { value: '<3s', label: 'de temps de réponse moyen' },
   },
 ]
