@@ -64,9 +64,9 @@ export default function AssistantChat({ clinicId, clinicName, clinicHours, clini
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center py-12">
-              <div className="w-16 h-16 rounded-2xl bg-[#EEF2FF] flex items-center justify-center text-3xl mb-4">🤖</div>
-              <div className="text-base font-semibold text-[#0C0E12] mb-1">Assistant de {clinicName}</div>
-              <div className="text-sm text-[#7A7F8E] max-w-sm">
+              <div className="w-16 h-16 rounded-2xl bg-[#EEF2FF] dark:bg-blue-500/10 flex items-center justify-center text-3xl mb-4">🤖</div>
+              <div className="text-base font-semibold text-[#0C0E12] dark:text-white mb-1">Assistant de {clinicName}</div>
+              <div className="text-sm text-[#7A7F8E] dark:text-[#9CA3AF] max-w-sm">
                 Simulez une conversation avec votre assistant IA. Posez une question comme un client le ferait via WhatsApp.
               </div>
               <div className="mt-6 flex flex-wrap gap-2 justify-center">
@@ -74,7 +74,7 @@ export default function AssistantChat({ clinicId, clinicName, clinicHours, clini
                   <button
                     key={s}
                     onClick={() => send(s)}
-                    className="text-xs px-3 py-1.5 bg-white border border-[rgba(12,14,18,0.08)] rounded-xl text-[#3A3D45] hover:border-[#1A56FF] hover:text-[#1A56FF] hover:bg-[#EEF2FF] transition-all"
+                    className="text-xs px-3 py-1.5 bg-white dark:bg-[#1A1D24] border border-[rgba(12,14,18,0.08)] dark:border-white/10 rounded-xl text-[#3A3D45] dark:text-[#D1D5DB] hover:border-[#1A56FF] hover:text-[#1A56FF] hover:bg-[#EEF2FF] dark:hover:bg-blue-500/10 transition-all"
                   >
                     {s}
                   </button>
@@ -85,17 +85,17 @@ export default function AssistantChat({ clinicId, clinicName, clinicHours, clini
             messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'} animate-slide-up`}>
                 {m.role === 'assistant' && (
-                  <div className="w-7 h-7 rounded-xl bg-[#EEF2FF] flex items-center justify-center text-sm flex-shrink-0 mr-2.5 mt-0.5">🤖</div>
+                  <div className="w-7 h-7 rounded-xl bg-[#EEF2FF] dark:bg-blue-500/10 flex items-center justify-center text-sm flex-shrink-0 mr-2.5 mt-0.5">🤖</div>
                 )}
                 <div className={`max-w-[75%] ${m.role === 'user' ? 'order-2' : ''}`}>
                   <div className={`px-4 py-3 rounded-2xl text-sm leading-relaxed ${
                     m.role === 'user'
                       ? 'bg-[#0C0E12] text-white rounded-br-sm'
-                      : 'bg-white border border-[rgba(12,14,18,0.08)] text-[#0C0E12] rounded-bl-sm shadow-sm'
+                      : 'bg-white dark:bg-[#1A1D24] border border-[rgba(12,14,18,0.08)] dark:border-white/10 text-[#0C0E12] dark:text-white rounded-bl-sm shadow-sm'
                   }`}>
                     {m.content}
                   </div>
-                  <div className={`text-[10px] text-[#B0B5C3] mt-1 ${m.role === 'user' ? 'text-right' : ''}`}>
+                  <div className={`text-[10px] text-[#B0B5C3] dark:text-[#5A5F6B] mt-1 ${m.role === 'user' ? 'text-right' : ''}`}>
                     {formatTime(m.ts)}
                   </div>
                 </div>
@@ -108,11 +108,11 @@ export default function AssistantChat({ clinicId, clinicName, clinicHours, clini
 
           {loading && (
             <div className="flex justify-start animate-slide-up">
-              <div className="w-7 h-7 rounded-xl bg-[#EEF2FF] flex items-center justify-center text-sm flex-shrink-0 mr-2.5">🤖</div>
-              <div className="bg-white border border-[rgba(12,14,18,0.08)] rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm">
+              <div className="w-7 h-7 rounded-xl bg-[#EEF2FF] dark:bg-blue-500/10 flex items-center justify-center text-sm flex-shrink-0 mr-2.5">🤖</div>
+              <div className="bg-white dark:bg-[#1A1D24] border border-[rgba(12,14,18,0.08)] dark:border-white/10 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm">
                 <div className="flex gap-1 items-center h-4">
                   {[0,1,2].map(i => (
-                    <span key={i} className="w-1.5 h-1.5 rounded-full bg-[#B0B5C3] animate-bounce" style={{ animationDelay: `${i * 150}ms` }} />
+                    <span key={i} className="w-1.5 h-1.5 rounded-full bg-[#B0B5C3] dark:bg-[#5A5F6B] animate-bounce" style={{ animationDelay: `${i * 150}ms` }} />
                   ))}
                 </div>
               </div>
@@ -122,14 +122,14 @@ export default function AssistantChat({ clinicId, clinicName, clinicHours, clini
         </div>
 
         {/* Input */}
-        <div className="px-4 pb-4 pt-2 border-t border-[rgba(12,14,18,0.06)] bg-white flex-shrink-0">
+        <div className="px-4 pb-4 pt-2 border-t border-[rgba(12,14,18,0.06)] dark:border-white/10 bg-white dark:bg-[#13151A] flex-shrink-0">
           {messages.length > 0 && (
             <div className="flex gap-2 mb-3 flex-wrap">
               {SUGGESTIONS.slice(0, 3).map(s => (
                 <button
                   key={s}
                   onClick={() => send(s)}
-                  className="text-[11px] px-2.5 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.06)] rounded-lg text-[#7A7F8E] hover:border-[#1A56FF] hover:text-[#1A56FF] transition-all"
+                  className="text-[11px] px-2.5 py-1 bg-[#F7F8FA] dark:bg-white/5 border border-[rgba(12,14,18,0.06)] dark:border-white/10 rounded-lg text-[#7A7F8E] dark:text-[#9CA3AF] hover:border-[#1A56FF] hover:text-[#1A56FF] transition-all"
                 >
                   {s}
                 </button>
@@ -158,15 +158,15 @@ export default function AssistantChat({ clinicId, clinicName, clinicHours, clini
             </button>
           </div>
           <div className="flex justify-between items-center mt-2">
-            <span className="text-[10px] text-[#B0B5C3]">Appuyez sur Entrée pour envoyer</span>
-            <span className="text-[10px] text-[#B0B5C3]">{input.length}/500</span>
+            <span className="text-[10px] text-[#B0B5C3] dark:text-[#5A5F6B]">Appuyez sur Entrée pour envoyer</span>
+            <span className="text-[10px] text-[#B0B5C3] dark:text-[#5A5F6B]">{input.length}/500</span>
           </div>
         </div>
       </div>
 
       {/* Sidebar info */}
-      <div className="w-64 border-l border-[rgba(12,14,18,0.06)] bg-[#F7F8FA] p-5 overflow-y-auto hidden lg:block flex-shrink-0">
-        <div className="text-xs font-semibold text-[#7A7F8E] uppercase tracking-wider mb-3">Configuration IA</div>
+      <div className="w-64 border-l border-[rgba(12,14,18,0.06)] dark:border-white/10 bg-[#F7F8FA] dark:bg-[#13151A] p-5 overflow-y-auto hidden lg:block flex-shrink-0">
+        <div className="text-xs font-semibold text-[#7A7F8E] dark:text-[#9CA3AF] uppercase tracking-wider mb-3">Configuration IA</div>
         <div className="space-y-2.5 mb-6">
           {[
             ['Modèle', 'Gemini 1.5 Flash'],
@@ -175,14 +175,14 @@ export default function AssistantChat({ clinicId, clinicName, clinicHours, clini
             ['Max tokens', '500'],
           ].map(([k, v]) => (
             <div key={k} className="flex justify-between text-xs">
-              <span className="text-[#B0B5C3]">{k}</span>
-              <span className="font-medium text-[#3A3D45]">{v}</span>
+              <span className="text-[#B0B5C3] dark:text-[#5A5F6B]">{k}</span>
+              <span className="font-medium text-[#3A3D45] dark:text-[#D1D5DB]">{v}</span>
             </div>
           ))}
         </div>
 
         <div className="divider mb-4" />
-        <div className="text-xs font-semibold text-[#7A7F8E] uppercase tracking-wider mb-3">Ce que l'IA sait</div>
+        <div className="text-xs font-semibold text-[#7A7F8E] dark:text-[#9CA3AF] uppercase tracking-wider mb-3">Ce que l'IA sait</div>
         <div className="space-y-2">
           {[
             { icon: '🏥', label: 'Votre établissement', value: clinicName },
@@ -193,9 +193,9 @@ export default function AssistantChat({ clinicId, clinicName, clinicHours, clini
             <div key={i.label} className="card-inset rounded-lg p-2.5">
               <div className="flex items-center gap-1.5 mb-0.5">
                 <span className="text-sm">{i.icon}</span>
-                <span className="text-[10px] font-medium text-[#7A7F8E]">{i.label}</span>
+                <span className="text-[10px] font-medium text-[#7A7F8E] dark:text-[#9CA3AF]">{i.label}</span>
               </div>
-              <div className="text-xs font-medium text-[#0C0E12] truncate">{i.value}</div>
+              <div className="text-xs font-medium text-[#0C0E12] dark:text-white truncate">{i.value}</div>
             </div>
           ))}
         </div>
@@ -205,7 +205,7 @@ export default function AssistantChat({ clinicId, clinicName, clinicHours, clini
             <div className="divider my-4" />
             <button
               onClick={() => setMessages([])}
-              className="w-full text-xs text-[#7A7F8E] hover:text-red-500 transition-colors py-1"
+              className="w-full text-xs text-[#7A7F8E] dark:text-[#9CA3AF] hover:text-red-500 transition-colors py-1"
             >
               Réinitialiser la conversation
             </button>

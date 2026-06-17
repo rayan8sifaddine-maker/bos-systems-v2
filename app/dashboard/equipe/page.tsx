@@ -83,10 +83,10 @@ export default function EquipePage() {
   }
 
   const roleColors: Record<string, string> = {
-    ADMIN: 'bg-red-50 text-red-700 border-red-200',
-    MANAGER: 'bg-purple-50 text-purple-700 border-purple-200',
-    AGENT: 'bg-blue-50 text-blue-700 border-blue-200',
-    VIEWER: 'bg-gray-50 text-gray-600 border-gray-200',
+    ADMIN: 'bg-red-50 text-red-700 border-red-200 dark:bg-red-500/10 dark:text-red-400 dark:border-red-500/20',
+    MANAGER: 'bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-500/10 dark:text-purple-400 dark:border-purple-500/20',
+    AGENT: 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/20',
+    VIEWER: 'bg-gray-50 text-gray-600 border-gray-200 dark:bg-white/5 dark:text-[#9CA3AF] dark:border-white/10',
   }
 
   return (
@@ -111,8 +111,8 @@ export default function EquipePage() {
               <div className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold border mb-3 ${roleColors[r]}`}>
                 {STATUS_LABELS[r]}
               </div>
-              <div className="text-2xl font-bold text-[#0C0E12]">{count}</div>
-              <div className="text-xs text-[#B0B5C3]">{ROLE_PERMS[r]?.[0]}</div>
+              <div className="text-2xl font-bold text-[#0C0E12] dark:text-white">{count}</div>
+              <div className="text-xs text-[#B0B5C3] dark:text-[#5A5F6B]">{ROLE_PERMS[r]?.[0]}</div>
             </div>
           )
         })}
@@ -134,19 +134,19 @@ export default function EquipePage() {
               </div>
             </div>
           ) : members.map((m, i) => (
-            <div key={m.id} className={`flex items-center gap-4 px-6 py-4 hover:bg-[#F7F8FA] transition-colors ${i < members.length - 1 ? 'border-b border-[rgba(12,14,18,0.04)]' : ''}`}>
+            <div key={m.id} className={`flex items-center gap-4 px-6 py-4 hover:bg-[#F7F8FA] dark:hover:bg-white/5 transition-colors ${i < members.length - 1 ? 'border-b border-[rgba(12,14,18,0.04)] dark:border-white/10' : ''}`}>
               <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold flex-shrink-0 ${avatarColor(m.name)}`}>
                 {initials(m.name)}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-sm font-semibold text-[#0C0E12]">{m.name}</div>
-                <div className="text-xs text-[#7A7F8E]">{m.email}</div>
+                <div className="text-sm font-semibold text-[#0C0E12] dark:text-white">{m.name}</div>
+                <div className="text-xs text-[#7A7F8E] dark:text-[#9CA3AF]">{m.email}</div>
               </div>
               <div className="hidden md:block">
-                <div className="text-xs text-[#B0B5C3] mb-1">Permissions</div>
+                <div className="text-xs text-[#B0B5C3] dark:text-[#5A5F6B] mb-1">Permissions</div>
                 <div className="flex gap-1">
                   {ROLE_PERMS[m.role]?.slice(0, 2).map(p => (
-                    <span key={p} className="text-[10px] bg-[#F7F8FA] border border-[rgba(12,14,18,0.06)] rounded px-1.5 py-0.5 text-[#7A7F8E]">{p}</span>
+                    <span key={p} className="text-[10px] bg-[#F7F8FA] dark:bg-white/5 border border-[rgba(12,14,18,0.06)] dark:border-white/10 rounded px-1.5 py-0.5 text-[#7A7F8E] dark:text-[#9CA3AF]">{p}</span>
                   ))}
                 </div>
               </div>
@@ -167,7 +167,7 @@ export default function EquipePage() {
 
       {/* Role permissions reference */}
       <div className="card p-6 mt-6">
-        <h3 className="text-sm font-semibold text-[#0C0E12] mb-4">Référentiel des rôles</h3>
+        <h3 className="text-sm font-semibold text-[#0C0E12] dark:text-white mb-4">Référentiel des rôles</h3>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {ROLES.map(r => (
             <div key={r}>
@@ -176,7 +176,7 @@ export default function EquipePage() {
               </div>
               <ul className="space-y-1">
                 {ROLE_PERMS[r]?.map(p => (
-                  <li key={p} className="flex items-center gap-1.5 text-xs text-[#3A3D45]">
+                  <li key={p} className="flex items-center gap-1.5 text-xs text-[#3A3D45] dark:text-[#D1D5DB]">
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 5-5" stroke="#1A56FF" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                     {p}
                   </li>
@@ -190,20 +190,20 @@ export default function EquipePage() {
       <Modal open={showAdd} onClose={() => setShowAdd(false)} title="Inviter un collaborateur">
         <form onSubmit={saveMember} className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Nom complet *</label>
+            <label className="block text-xs font-medium text-[#3A3D45] dark:text-[#D1D5DB] mb-1.5">Nom complet *</label>
             <input className="input" placeholder="Karim Benali" value={form.name} onChange={e => setForm(f => ({...f, name: e.target.value}))} required />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Email *</label>
+            <label className="block text-xs font-medium text-[#3A3D45] dark:text-[#D1D5DB] mb-1.5">Email *</label>
             <input type="email" className="input" placeholder="karim@votreclinique.ma" value={form.email} onChange={e => setForm(f => ({...f, email: e.target.value}))} required />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Rôle</label>
+            <label className="block text-xs font-medium text-[#3A3D45] dark:text-[#D1D5DB] mb-1.5">Rôle</label>
             <select className="select" value={form.role} onChange={e => setForm(f => ({...f, role: e.target.value}))}>
               {ROLES.map(r => <option key={r} value={r}>{STATUS_LABELS[r]} — {ROLE_PERMS[r]?.[0]}</option>)}
             </select>
           </div>
-          <div className="p-3 bg-[#EEF2FF] rounded-xl text-xs text-[#1A56FF]">
+          <div className="p-3 bg-[#EEF2FF] dark:bg-blue-500/10 rounded-xl text-xs text-[#1A56FF] dark:text-[#5B8DFF]">
             Un email d'invitation sera envoyé à cette adresse.
           </div>
           <div className="flex gap-3 pt-1">

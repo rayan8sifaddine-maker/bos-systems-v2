@@ -15,13 +15,13 @@ export default async function AssistantPage() {
 
   return (
     <div className="h-full flex flex-col">
-      <div className="px-6 lg:px-8 py-5 border-b border-[rgba(12,14,18,0.06)] bg-white flex-shrink-0">
+      <div className="px-6 lg:px-8 py-5 border-b border-[rgba(12,14,18,0.06)] dark:border-white/10 bg-white dark:bg-[#13151A] flex-shrink-0">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-lg font-bold text-[#0C0E12]">Assistant IA</h1>
-            <p className="text-xs text-[#7A7F8E] mt-0.5">Simulez une conversation client · Propulsé par Gemini AI</p>
+            <h1 className="text-lg font-bold text-[#0C0E12] dark:text-white">Assistant IA</h1>
+            <p className="text-xs text-[#7A7F8E] dark:text-[#9CA3AF] mt-0.5">Simulez une conversation client · Propulsé par Gemini AI</p>
           </div>
-          <div className="flex items-center gap-2 text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1.5 rounded-lg font-medium">
+          <div className="flex items-center gap-2 text-xs bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20 px-3 py-1.5 rounded-lg font-medium">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             IA active
           </div>
