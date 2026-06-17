@@ -161,7 +161,7 @@ export default async function AutomatisationPage() {
           <h1 className="page-title">Automatisation</h1>
           <p className="page-subtitle">{enabledCount} workflow{enabledCount !== 1 ? 's' : ''} actif{enabledCount !== 1 ? 's' : ''} · Tout fonctionne en arrière-plan</p>
         </div>
-        <div className="flex items-center gap-2 text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1.5 rounded-lg font-medium">
+        <div className="flex items-center gap-2 text-xs bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20 px-3 py-1.5 rounded-lg font-medium">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-dot" />
           {enabledCount} actif{enabledCount !== 1 ? 's' : ''}
         </div>
@@ -175,9 +175,9 @@ export default async function AutomatisationPage() {
               {s.icon}
             </div>
             <div>
-              <div className="text-xl font-bold text-[#0C0E12]">{s.value}</div>
-              <div className="text-xs font-medium text-[#3A3D45] mt-0.5">{s.label}</div>
-              <div className="text-[10px] text-[#B0B5C3]">{s.sub}</div>
+              <div className="text-xl font-bold text-[#0C0E12] dark:text-white">{s.value}</div>
+              <div className="text-xs font-medium text-[#3A3D45] dark:text-[#D1D5DB] mt-0.5">{s.label}</div>
+              <div className="text-[10px] text-[#B0B5C3] dark:text-[#5A5F6B]">{s.sub}</div>
             </div>
           </div>
         ))}
@@ -186,7 +186,7 @@ export default async function AutomatisationPage() {
       {/* Automations by category */}
       {categories.map(cat => (
         <div key={cat} className="mb-8">
-          <h3 className="text-xs font-semibold text-[#7A7F8E] uppercase tracking-wider mb-3">{cat}</h3>
+          <h3 className="text-xs font-semibold text-[#7A7F8E] dark:text-[#9CA3AF] uppercase tracking-wider mb-3">{cat}</h3>
           <div className="space-y-3">
             {AUTOMATIONS.filter(a => a.category === cat).map(auto => (
               <div
@@ -204,21 +204,21 @@ export default async function AutomatisationPage() {
                 {/* Info */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-sm font-semibold text-[#0C0E12]">{auto.name}</span>
+                    <span className="text-sm font-semibold text-[#0C0E12] dark:text-white">{auto.name}</span>
                     {auto.enabled && (
-                      <span className="text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 px-1.5 py-0.5 rounded-full">Actif</span>
+                      <span className="text-[10px] font-semibold bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20 px-1.5 py-0.5 rounded-full">Actif</span>
                     )}
                   </div>
-                  <p className="text-xs text-[#7A7F8E]">{auto.description}</p>
+                  <p className="text-xs text-[#7A7F8E] dark:text-[#9CA3AF]">{auto.description}</p>
                   <div className="flex items-center gap-3 mt-2">
-                    <span className="flex items-center gap-1 text-[10px] text-[#B0B5C3]">
+                    <span className="flex items-center gap-1 text-[10px] text-[#B0B5C3] dark:text-[#5A5F6B]">
                       <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
                       {auto.trigger}
                     </span>
-                    <svg viewBox="0 0 16 16" fill="currentColor" className="w-3 h-3 text-[#B0B5C3]">
+                    <svg viewBox="0 0 16 16" fill="currentColor" className="w-3 h-3 text-[#B0B5C3] dark:text-[#5A5F6B]">
                       <path fillRule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" clipRule="evenodd"/>
                     </svg>
-                    <span className="flex items-center gap-1 text-[10px] text-[#B0B5C3]">
+                    <span className="flex items-center gap-1 text-[10px] text-[#B0B5C3] dark:text-[#5A5F6B]">
                       <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                       {auto.action}
                     </span>
@@ -227,15 +227,15 @@ export default async function AutomatisationPage() {
 
                 {/* Impact */}
                 <div className="text-right flex-shrink-0">
-                  <div className="text-xs font-semibold text-emerald-600">{auto.impact}</div>
-                  <div className="text-[10px] text-[#B0B5C3] mt-0.5">
+                  <div className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">{auto.impact}</div>
+                  <div className="text-[10px] text-[#B0B5C3] dark:text-[#5A5F6B] mt-0.5">
                     {auto.enabled ? 'En cours' : 'Inactif'}
                   </div>
                 </div>
 
                 {/* Toggle */}
                 <div
-                  className={`flex-shrink-0 flex items-center transition-all cursor-pointer rounded-full ${auto.enabled ? 'bg-emerald-400' : 'bg-gray-200'}`}
+                  className={`flex-shrink-0 flex items-center transition-all cursor-pointer rounded-full ${auto.enabled ? 'bg-emerald-400' : 'bg-gray-200 dark:bg-white/10'}`}
                   style={{ width: 40, height: 22 }}
                 >
                   <div className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${auto.enabled ? 'translate-x-5' : 'translate-x-0.5'}`} />
@@ -261,7 +261,7 @@ export default async function AutomatisationPage() {
             </svg>
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-white mb-1">Connecter WhatsApp Business</h3>
+            <h3 className="text-sm font-semibold text-white mb-1 dark:text-white">Connecter WhatsApp Business</h3>
             <p className="text-xs text-white/60 mb-4 max-w-md">Connectez votre numéro WhatsApp Business pour activer l'envoi automatique de messages à vos clients.</p>
             <a
               href="mailto:support@bossystems.ma?subject=WhatsApp%20Integration"

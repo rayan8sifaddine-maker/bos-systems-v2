@@ -179,9 +179,9 @@ const SECTORS = [
 ]
 
 const PLANS = [
-  { name: 'Starter', price: '500', desc: 'Pour démarrer et valider', features: ['Assistant IA WhatsApp', 'Gestion des rendez-vous', 'Rappels automatiques', '200 conversations/mois', 'CRM basique', '1 utilisateur'], featured: false, cta: 'Commencer' },
-  { name: 'Pro', price: '1 500', desc: 'Pour les équipes actives', features: ['Tout Starter inclus', 'Conversations illimitées', 'Relances automatiques', 'CRM complet', 'Analytics avancés', '3 utilisateurs', 'Support prioritaire'], featured: true, cta: 'Commencer maintenant' },
-  { name: 'Enterprise', price: '5 000+', desc: 'Pour les grandes structures', features: ['Tout Pro inclus', 'Équipe illimitée', 'Intégrations custom', 'API dédiée', 'SLA garanti', 'Account manager dédié', 'Onboarding personnalisé'], featured: false, cta: 'Contacter l\'équipe' },
+  { name: 'Starter', price: '749', desc: 'Pour démarrer et valider', features: ['Assistant IA WhatsApp', 'Gestion des rendez-vous', 'Rappels automatiques', '200 conversations/mois', 'CRM basique', '1 utilisateur'], featured: false, cta: 'Commencer' },
+  { name: 'Pro', price: '2 749', desc: 'Pour les équipes actives', features: ['Tout Starter inclus', 'Conversations illimitées', 'Relances automatiques', 'CRM complet', 'Analytics avancés', '3 utilisateurs', 'Support prioritaire'], featured: true, cta: 'Commencer maintenant' },
+  { name: 'Enterprise', price: '4 489', desc: 'Pour les grandes structures', features: ['Tout Pro inclus', 'Équipe illimitée', 'Intégrations custom', 'API dédiée', 'SLA garanti', 'Account manager dédié', 'Onboarding personnalisé'], featured: false, cta: 'Contacter l\'équipe' },
 ]
 
 /* ─── Page ─────────────────────────────────────────────────── */
@@ -652,49 +652,62 @@ export default function HomePage() {
       </section>
 
       {/* ── PRICING ── */}
-      <section id="tarifs" className="py-24 px-6 md:px-12">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
-              Tarifs
-            </div>
-            <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Simples et transparents</h2>
-            <p className="text-lg text-[#3A3D45] font-light">Sans engagement. 7 jours d&apos;essai gratuit. Annulez à tout moment.</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-4 items-center">
-            {PLANS.map(p => (
-              <div key={p.name} className={`rounded-2xl overflow-hidden transition-all duration-200 ${p.featured ? 'ring-2 ring-[#1A56FF] ring-offset-2 scale-[1.02] hover:scale-[1.03]' : 'border border-[rgba(12,14,18,0.08)] hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(12,14,18,0.08)]'}`} style={p.featured ? { background:'#0C0E12', boxShadow:'0 16px 40px rgba(12,14,18,0.25)' } : { background:'white', boxShadow:'0 1px 3px rgba(12,14,18,0.06)' }}>
-                {p.featured && (
-                  <div className="text-center py-2 text-[11px] font-bold uppercase tracking-widest" style={{ background:'rgba(26,86,255,0.15)', color:'#6BA3FF' }}>
-                    ⭐ Le plus populaire
-                  </div>
-                )}
-                <div className="p-8">
-                  <div className={`text-xs font-semibold tracking-wider uppercase mb-1 ${p.featured ? 'text-white/40' : 'text-[#7A7F8E]'}`}>{p.name}</div>
-                  <div className={`text-xs mb-5 ${p.featured ? 'text-white/30' : 'text-[#B0B5C3]'}`}>{p.desc}</div>
-                  <div className="flex items-baseline gap-1 mb-6">
-                    <span className={`text-4xl font-bold tracking-tight font-display ${p.featured ? 'text-white' : 'text-[#0C0E12]'}`}>{p.price}</span>
-                    <span className={`text-sm ${p.featured ? 'text-white/30' : 'text-[#B0B5C3]'}`}>DH/mois</span>
-                  </div>
-                  <ul className="space-y-2.5 mb-8">
-                    {p.features.map(f => (
-                      <li key={f} className={`flex items-center gap-2.5 text-sm ${p.featured ? 'text-white/70' : 'text-[#3A3D45]'}`}>
-                        <svg className="flex-shrink-0" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                          <circle cx="8" cy="8" r="7" fill={p.featured ? 'rgba(26,86,255,0.25)' : '#EEF2FF'}/>
-                          <path d="M5 8l2 2 4-4" stroke={p.featured ? '#6BA3FF' : '#1A56FF'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link href={p.name === 'Enterprise' ? 'mailto:sales@bossystems.ma' : '/inscription'} className={`block text-center py-3 rounded-xl text-sm font-semibold transition-all ${p.featured ? 'text-white hover:opacity-90' : 'bg-[#0C0E12] text-white hover:bg-[#1e2330]'}`} style={p.featured ? { background:'linear-gradient(135deg,#1A56FF,#7C3AED)', boxShadow:'0 4px 14px rgba(26,86,255,0.4)' } : {}}>
-                    {p.cta}
-                  </Link>
-                </div>
+      <section id="tarifs" className="py-24 px-6 md:px-12 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none" aria-hidden>
+          <div style={{ position:'absolute', top:'10%', left:'50%', transform:'translateX(-50%)', width:900, height:500, background:'radial-gradient(ellipse, rgba(26,86,255,0.06) 0%, transparent 70%)' }} />
+        </div>
+        <div className="max-w-5xl mx-auto relative">
+          <ScrollReveal>
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
+                Tarifs
               </div>
+              <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Un plan pour chaque taille d&apos;équipe</h2>
+              <p className="text-lg text-[#3A3D45] font-light">Sans engagement. 7 jours d&apos;essai gratuit. Annulez à tout moment.</p>
+            </div>
+          </ScrollReveal>
+          <div className="grid md:grid-cols-3 gap-5 items-stretch">
+            {PLANS.map((p, i) => (
+              <ScrollReveal key={p.name} delay={i * 90}>
+                <div className={`relative h-full flex flex-col rounded-[20px] overflow-hidden transition-all duration-300 ${p.featured ? 'md:-translate-y-3 hover:-translate-y-4' : 'hover:-translate-y-1.5'}`} style={p.featured ? { background:'linear-gradient(160deg,#0C0E12 0%,#161B2E 100%)', boxShadow:'0 24px 56px rgba(12,14,18,0.3), 0 0 0 1px rgba(26,86,255,0.4)' } : { background:'white', boxShadow:'0 2px 8px rgba(12,14,18,0.05), 0 0 0 1px rgba(12,14,18,0.06)' }}>
+                  {p.featured && (
+                    <div className="absolute -top-px left-0 right-0 h-[3px]" style={{ background:'linear-gradient(90deg,#1A56FF,#7C3AED,#1A56FF)' }} />
+                  )}
+                  {p.featured && (
+                    <div className="flex items-center justify-center gap-1.5 py-2.5 text-[11px] font-bold uppercase tracking-widest" style={{ background:'rgba(26,86,255,0.14)', color:'#6BA3FF' }}>
+                      <svg width="11" height="11" viewBox="0 0 16 16" fill="#6BA3FF"><path d="M8 1l2 4.5 5 .7-3.6 3.5.9 5-4.3-2.3-4.3 2.3.9-5L1 6.2l5-.7L8 1z"/></svg>
+                      Le plus populaire
+                    </div>
+                  )}
+                  <div className="p-8 flex flex-col flex-1">
+                    <div className={`text-xs font-semibold tracking-wider uppercase mb-1 ${p.featured ? 'text-white/40' : 'text-[#7A7F8E]'}`}>{p.name}</div>
+                    <div className={`text-xs mb-6 ${p.featured ? 'text-white/30' : 'text-[#B0B5C3]'}`}>{p.desc}</div>
+                    <div className="flex items-baseline gap-1.5 mb-7">
+                      <span className={`text-[44px] font-bold tracking-tight font-display leading-none ${p.featured ? 'text-white' : 'text-[#0C0E12]'}`}>{p.price}</span>
+                      <span className={`text-sm ${p.featured ? 'text-white/30' : 'text-[#B0B5C3]'}`}>DH/mois</span>
+                    </div>
+                    <ul className="space-y-3 mb-8 flex-1">
+                      {p.features.map(f => (
+                        <li key={f} className={`flex items-center gap-2.5 text-sm ${p.featured ? 'text-white/75' : 'text-[#3A3D45]'}`}>
+                          <svg className="flex-shrink-0" width="18" height="18" viewBox="0 0 16 16" fill="none">
+                            <circle cx="8" cy="8" r="7" fill={p.featured ? 'rgba(26,86,255,0.25)' : '#EEF2FF'}/>
+                            <path d="M5 8l2 2 4-4" stroke={p.featured ? '#6BA3FF' : '#1A56FF'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                    <Link href={p.name === 'Enterprise' ? 'mailto:sales@bossystems.ma' : '/inscription'} className={`block text-center py-3.5 rounded-xl text-sm font-semibold transition-all hover:-translate-y-px ${p.featured ? 'text-white hover:opacity-90' : 'bg-[#0C0E12] text-white hover:bg-[#1e2330]'}`} style={p.featured ? { background:'linear-gradient(135deg,#1A56FF,#7C3AED)', boxShadow:'0 8px 20px rgba(26,86,255,0.4)' } : {}}>
+                      {p.cta}
+                    </Link>
+                  </div>
+                </div>
+              </ScrollReveal>
             ))}
           </div>
-          <p className="text-center text-xs text-[#B0B5C3] mt-8">Tous les prix sont en DH HT/mois · Paiement mensuel ou annuel (−20%)</p>
+          <ScrollReveal delay={280}>
+            <p className="text-center text-xs text-[#B0B5C3] mt-10">Tous les prix sont en DH HT/mois · Paiement mensuel ou annuel (−20%) · Sans carte bancaire pour l&apos;essai</p>
+          </ScrollReveal>
         </div>
       </section>
 

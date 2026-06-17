@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useToast } from '@/components/ui/toast'
+import { usePlanModal } from '@/components/dashboard/plan-modal-provider'
 
 interface Clinic {
   id: string
@@ -28,6 +29,7 @@ const SECTORS = [
 
 export default function ParamsPage() {
   const { toast } = useToast()
+  const { open: openPlanModal } = usePlanModal()
   const [clinic, setClinic] = useState<Clinic | null>(null)
   const [form, setForm] = useState<Partial<Clinic>>({})
   const [loading, setLoading] = useState(true)
@@ -182,9 +184,9 @@ export default function ParamsPage() {
                 </div>
               </div>
               <div className="mt-5 pt-4 border-t border-[rgba(12,14,18,0.06)] dark:border-white/10">
-                <a href="mailto:sales@bossystems.ma" className="btn-blue w-full justify-center text-xs">
-                  Passer à Enterprise →
-                </a>
+                <button type="button" onClick={openPlanModal} className="btn-blue w-full justify-center text-xs">
+                  Changer de plan →
+                </button>
               </div>
             </div>
           </div>
