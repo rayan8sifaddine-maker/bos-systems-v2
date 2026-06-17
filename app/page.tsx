@@ -5,6 +5,9 @@ import { HeroCanvas } from '@/components/landing/hero-canvas'
 import { ScrollReveal } from '@/components/landing/scroll-reveal'
 import { AnimatedCounter } from '@/components/landing/animated-counter'
 import { FaqItem } from '@/components/landing/faq-item'
+import { SiteNav } from '@/components/landing/site-nav'
+import { SiteFooter } from '@/components/landing/site-footer'
+import { SECTORS } from '@/lib/sectors'
 
 export const metadata: Metadata = {
   title: 'BOS Systems — Le système d\'exploitation des PME marocaines',
@@ -170,14 +173,6 @@ const FEATURES = [
   { icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="6" r="3.5" stroke="currentColor" strokeWidth="1.5"/><path d="M3 18c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Gestion d\'équipe', desc: 'Rôles et permissions granulaires. Journal d\'activité. Performance par collaborateur.', color: 'text-orange-500', bg: 'bg-orange-50' },
 ]
 
-const SECTORS = [
-  { icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 9.5L11 2l8 7.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" stroke="currentColor" strokeWidth="1.5"/><path d="M8 21v-7h6v7" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M9 6h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, name: 'Cliniques', desc: 'Médecins & cabinets' },
-  { icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="8" width="18" height="9" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M5 8V6a6 6 0 0112 0v2" stroke="currentColor" strokeWidth="1.5"/><circle cx="7" cy="17" r="2" stroke="currentColor" strokeWidth="1.5"/><circle cx="15" cy="17" r="2" stroke="currentColor" strokeWidth="1.5"/></svg>, name: 'Garages', desc: 'Auto & mécanique' },
-  { icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="currentColor" strokeWidth="1.5"/><path d="M4 19c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, name: 'Salons', desc: 'Beauté & coiffure' },
-  { icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 17l4-8 3 4 3-6 4 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><circle cx="11" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.5"/></svg>, name: 'Écoles', desc: 'Formation & éducation' },
-  { icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16l-1.5 9H4.5L3 6z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M3 6l-1-3M8 6V4M14 6V4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="8" cy="19" r="1.5" stroke="currentColor" strokeWidth="1.5"/><circle cx="14" cy="19" r="1.5" stroke="currentColor" strokeWidth="1.5"/></svg>, name: 'Restaurants', desc: 'Restauration & livraison' },
-]
-
 const PLANS = [
   { name: 'Starter', price: '749', desc: 'Pour démarrer et valider', features: ['Assistant IA WhatsApp', 'Gestion des rendez-vous', 'Rappels automatiques', '200 conversations/mois', 'CRM basique', '1 utilisateur'], featured: false, cta: 'Commencer' },
   { name: 'Pro', price: '2 749', desc: 'Pour les équipes actives', features: ['Tout Starter inclus', 'Conversations illimitées', 'Relances automatiques', 'CRM complet', 'Analytics avancés', '3 utilisateurs', 'Support prioritaire'], featured: true, cta: 'Commencer maintenant' },
@@ -189,31 +184,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
 
-      {/* ── NAV ── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-6 md:px-12 bg-white/80 backdrop-blur-xl" style={{ borderBottom: '1px solid rgba(12,14,18,0.07)', boxShadow: '0 1px 0 rgba(12,14,18,0.04)' }}>
-        <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 bg-[#0C0E12] rounded-lg flex items-center justify-center">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <rect x="1" y="1" width="6" height="6" rx="1.5" fill="white"/>
-              <rect x="9" y="1" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
-              <rect x="1" y="9" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
-              <rect x="9" y="9" width="6" height="6" rx="1.5" fill="white"/>
-            </svg>
-          </div>
-          <span className="font-bold text-[15px] tracking-wide font-display text-[#0C0E12]">BOS SYSTEMS</span>
-        </Link>
-        <div className="hidden md:flex items-center gap-1">
-          {[['Fonctionnalités','#fonctionnalites'],['Comment ça marche','#comment'],['Tarifs','#tarifs']].map(([l,h])=>(
-            <a key={h} href={h} className="px-4 py-2 text-sm text-[#3A3D45] hover:text-[#0C0E12] hover:bg-[#F7F8FA] rounded-lg transition-all">{l}</a>
-          ))}
-        </div>
-        <div className="flex items-center gap-3">
-          <Link href="/connexion" className="hidden md:block px-4 py-2 text-sm text-[#3A3D45] border border-[rgba(12,14,18,0.1)] rounded-xl hover:bg-[#F7F8FA] transition-all">Se connecter</Link>
-          <Link href="/inscription" className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-white transition-all hover:-translate-y-px" style={{ background: '#0C0E12', boxShadow: '0 2px 8px rgba(12,14,18,0.2)' }}>
-            Essai gratuit →
-          </Link>
-        </div>
-      </nav>
+      <SiteNav />
 
       {/* ── HERO ── */}
       <section className="relative pt-24 pb-16 px-6 md:px-12 overflow-hidden">
@@ -396,14 +367,21 @@ export default function HomePage() {
           </div>
           <div className="flex flex-wrap justify-center gap-3">
             {SECTORS.map(s => (
-              <div key={s.name} className="p-5 border border-[rgba(12,14,18,0.08)] rounded-2xl hover:border-[rgba(26,86,255,0.25)] hover:bg-[#EEF2FF] hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(26,86,255,0.10)] transition-all duration-200 cursor-default group w-[calc(50%-6px)] md:w-[calc(25%-9px)]" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.04)' }}>
+              <Link key={s.slug} href={`/secteurs/${s.slug}`} className="p-5 border border-[rgba(12,14,18,0.08)] rounded-2xl hover:border-[rgba(26,86,255,0.25)] hover:bg-[#EEF2FF] hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(26,86,255,0.10)] transition-all duration-200 group w-[calc(50%-6px)] md:w-[calc(25%-9px)]" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.04)' }}>
                 <div className="w-10 h-10 rounded-xl bg-[#F7F8FA] group-hover:bg-white flex items-center justify-center text-[#3A3D45] group-hover:text-[#1A56FF] mb-3 transition-all">
                   {s.icon}
                 </div>
                 <div className="text-sm font-semibold text-[#0C0E12] group-hover:text-[#1A56FF] transition-colors mb-0.5">{s.name}</div>
-                <div className="text-[11px] text-[#B0B5C3]">{s.desc}</div>
-              </div>
+                <div className="text-[11px] text-[#B0B5C3] mb-2">{s.shortDesc}</div>
+                <div className="text-[11px] font-semibold text-[#1A56FF] opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+                  En savoir plus
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </div>
+              </Link>
             ))}
+          </div>
+          <div className="flex justify-center mt-8">
+            <Link href="/secteurs" className="text-sm font-semibold text-[#1A56FF] hover:underline">Voir tous les secteurs en détail →</Link>
           </div>
         </div>
       </section>
@@ -904,62 +882,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── FOOTER ── */}
-      <footer className="border-t border-[rgba(12,14,18,0.06)] py-12 px-6 md:px-12">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-10">
-            <div className="max-w-xs">
-              <div className="flex items-center gap-2.5 mb-3">
-                <div className="w-7 h-7 bg-[#0C0E12] rounded-md flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                    <rect x="1" y="1" width="6" height="6" rx="1.5" fill="white"/>
-                    <rect x="9" y="1" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
-                    <rect x="1" y="9" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
-                    <rect x="9" y="9" width="6" height="6" rx="1.5" fill="white"/>
-                  </svg>
-                </div>
-                <span className="font-bold text-sm text-[#0C0E12] font-display">BOS SYSTEMS</span>
-              </div>
-              <p className="text-xs text-[#B0B5C3] leading-relaxed">La plateforme SaaS qui automatise la relation client des PME marocaines grâce à l&apos;IA.</p>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-sm">
-              <div>
-                <div className="text-xs font-semibold text-[#0C0E12] uppercase tracking-wider mb-3">Produit</div>
-                {[['Fonctionnalités','#fonctionnalites'],['Tarifs','#tarifs'],['Secteurs','#secteurs']].map(([l,h])=>(
-                  <a key={h} href={h} className="block text-[#7A7F8E] hover:text-[#0C0E12] transition-colors mb-2">{l}</a>
-                ))}
-              </div>
-              <div>
-                <div className="text-xs font-semibold text-[#0C0E12] uppercase tracking-wider mb-3">Compte</div>
-                {[['Se connecter','/connexion'],['Créer un compte','/inscription']].map(([l,h])=>(
-                  <Link key={h} href={h} className="block text-[#7A7F8E] hover:text-[#0C0E12] transition-colors mb-2">{l}</Link>
-                ))}
-              </div>
-              <div>
-                <div className="text-xs font-semibold text-[#0C0E12] uppercase tracking-wider mb-3">Contact</div>
-                {[['Support','mailto:support@bossystems.ma'],['Ventes','mailto:sales@bossystems.ma']].map(([l,h])=>(
-                  <a key={h} href={h} className="block text-[#7A7F8E] hover:text-[#0C0E12] transition-colors mb-2">{l}</a>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="pt-8 border-t border-[rgba(12,14,18,0.06)] flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 text-xs text-[#B0B5C3]">
-              <span>© 2025 BOS Systems — Casablanca, Maroc</span>
-              <span className="hidden md:inline">·</span>
-              <Link href="/confidentialite" className="hover:text-[#0C0E12] transition-colors">Politique de confidentialité</Link>
-              <span className="hidden md:inline">·</span>
-              <Link href="/conditions" className="hover:text-[#0C0E12] transition-colors">Conditions d&apos;utilisation</Link>
-              <span className="hidden md:inline">·</span>
-              <Link href="/conformite" className="hover:text-[#0C0E12] transition-colors">Conformité des données</Link>
-            </div>
-            <div className="flex items-center gap-1 text-xs text-[#B0B5C3]">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              Tous les systèmes opérationnels
-            </div>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
 
     </div>
   )
