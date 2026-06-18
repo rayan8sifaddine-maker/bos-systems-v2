@@ -228,6 +228,13 @@ body {
 .animate-slide-up { animation: slideUp 0.3s cubic-bezier(0.16,1,0.3,1); }
 .animate-scale-in { animation: scaleIn 0.2s cubic-bezier(0.16,1,0.3,1); }
 
+@keyframes portalZoom {
+  0%   { opacity: 0; transform: scale(0.06); border-radius: 50%; }
+  55%  { opacity: 1; transform: scale(0.5); border-radius: 38%; }
+  100% { opacity: 1; transform: scale(1); border-radius: 0%; }
+}
+.animate-portal-zoom { animation: portalZoom 0.55s cubic-bezier(0.6,0,0.4,1) forwards; }
+
 /* Logo-grid watermark — subtle recurring motif (2x2 squares) for section backgrounds */
 .bg-grid-watermark {
   background-image:

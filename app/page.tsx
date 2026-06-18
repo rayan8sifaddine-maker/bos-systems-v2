@@ -6,6 +6,7 @@ import { ScrollReveal } from '@/components/landing/scroll-reveal'
 import { AnimatedCounter } from '@/components/landing/animated-counter'
 import { FaqItem } from '@/components/landing/faq-item'
 import { SiteNav } from '@/components/landing/site-nav'
+import { EnterTransitionLink } from '@/components/landing/enter-transition-link'
 import { SiteFooter } from '@/components/landing/site-footer'
 import { SECTORS } from '@/lib/sectors'
 
@@ -220,12 +221,12 @@ export default function HomePage() {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 mb-8">
-                <Link href="/inscription" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-base font-semibold text-white transition-all hover:-translate-y-0.5" style={{ background:'linear-gradient(135deg,#0C0E12,#1e2330)', boxShadow:'0 4px 16px rgba(12,14,18,0.25)' }}>
+                <EnterTransitionLink href="/inscription" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-base font-semibold text-white transition-all hover:-translate-y-0.5" style={{ background:'linear-gradient(135deg,#0C0E12,#1e2330)', boxShadow:'0 4px 16px rgba(12,14,18,0.25)' }}>
                   Commencer gratuitement — 7 jours →
-                </Link>
-                <Link href="/connexion" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-base font-medium text-[#3A3D45] border border-[rgba(12,14,18,0.12)] hover:bg-[#F7F8FA] transition-all">
+                </EnterTransitionLink>
+                <EnterTransitionLink href="/connexion" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-base font-medium text-[#3A3D45] border border-[rgba(12,14,18,0.12)] hover:bg-[#F7F8FA] transition-all">
                   Se connecter
-                </Link>
+                </EnterTransitionLink>
               </div>
 
               <div className="flex flex-wrap items-center gap-5">
