@@ -7,7 +7,7 @@ export default function PrivacyPage() {
     <LegalLayout title="Politique de confidentialité" updated="16 juin 2026">
       <section>
         <h2>1. Qui sommes-nous</h2>
-        <p>BOS Systems (« BOS », « nous ») édite une plateforme SaaS destinée aux PME marocaines (cliniques, garages, salons, écoles, restaurants) pour automatiser la relation client via WhatsApp, l&apos;agenda et le CRM. Cette politique explique quelles données nous collectons, pourquoi, et comment elles sont protégées.</p>
+        <p>BOS Systems (« BOS », « nous ») édite une plateforme SaaS destinée aux entreprises marocaines (cliniques, garages, salons, écoles, restaurants) pour automatiser la relation client via WhatsApp, l&apos;agenda et le CRM. Cette politique explique quelles données nous collectons, pourquoi, et comment elles sont protégées.</p>
       </section>
 
       <section>

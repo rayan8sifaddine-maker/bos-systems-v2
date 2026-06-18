@@ -29,7 +29,7 @@ export default function LegalLayout({ title, updated, children }: { title: strin
       </main>
 
       <footer className="border-t border-[rgba(12,14,18,0.06)] py-8 px-6 md:px-12">
-        <div className="max-w-3xl mx-auto text-xs text-[#B0B5C3]">© 2025 BOS Systems — Casablanca, Maroc</div>
+        <div className="max-w-3xl mx-auto text-xs text-[#B0B5C3]">© 2026 BOS Systems — Casablanca, Maroc</div>
       </footer>
     </div>
   )

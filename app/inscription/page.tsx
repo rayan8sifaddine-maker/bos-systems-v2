@@ -81,7 +81,7 @@ export default function RegisterPage() {
             </span>
           </h2>
           <p className="text-white/50 text-base leading-relaxed mb-10">
-            Rejoignez les PME marocaines qui utilisent BOS pour automatiser leurs rendez-vous, relancer leurs clients et booster leur CA.
+            Rejoignez les entreprises marocaines qui utilisent BOS pour automatiser leurs rendez-vous, relancer leurs clients et booster leur CA.
           </p>
 
           <div className="space-y-3 mb-10">
@@ -107,13 +107,13 @@ export default function RegisterPage() {
               ))}
             </div>
             <div>
-              <div className="text-xs font-semibold text-white">+240 PME marocaines</div>
+              <div className="text-xs font-semibold text-white">+240 entreprises marocaines</div>
               <div className="text-[11px] text-white/40">nous font déjà confiance</div>
             </div>
           </div>
         </div>
 
-        <div className="relative text-xs text-white/30">© 2025 BOS Systems</div>
+        <div className="relative text-xs text-white/30">© 2026 BOS Systems</div>
       </div>
 
       {/* ── Right panel (form) ── */}

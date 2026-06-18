@@ -17,7 +17,7 @@ export function SiteFooter() {
               </div>
               <span className="font-bold text-sm text-[#0C0E12] font-display">BOS SYSTEMS</span>
             </div>
-            <p className="text-xs text-[#B0B5C3] leading-relaxed">La plateforme SaaS qui automatise la relation client des PME marocaines grâce à l&apos;IA.</p>
+            <p className="text-xs text-[#B0B5C3] leading-relaxed">La plateforme SaaS qui automatise la relation client des entreprises marocaines grâce à l&apos;IA.</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
             <div>
@@ -48,7 +48,7 @@ export function SiteFooter() {
         </div>
         <div className="pt-8 border-t border-[rgba(12,14,18,0.06)] flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 text-xs text-[#B0B5C3]">
-            <span>© 2025 BOS Systems — Casablanca, Maroc</span>
+            <span>© 2026 BOS Systems — Casablanca, Maroc</span>
             <span className="hidden md:inline">·</span>
             <Link href="/confidentialite" className="hover:text-[#0C0E12] transition-colors">Politique de confidentialité</Link>
             <span className="hidden md:inline">·</span>

@@ -6,7 +6,7 @@ import { ScrollReveal } from '@/components/landing/scroll-reveal'
 
 export const metadata: Metadata = {
   title: 'Carrières — BOS Systems',
-  description: 'Rejoignez BOS Systems pour aider les PME marocaines à automatiser leur relation client.',
+  description: 'Rejoignez BOS Systems pour aider les entreprises marocaines à automatiser leur relation client.',
 }
 
 export default function CarrieresPage() {
@@ -24,7 +24,7 @@ export default function CarrieresPage() {
               <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED]" />
               On recrute bientôt
             </div>
-            <h1 className="text-[36px] md:text-[48px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display mb-4">Construisez l&apos;avenir des PME marocaines avec nous</h1>
+            <h1 className="text-[36px] md:text-[48px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display mb-4">Construisez l&apos;avenir des entreprises marocaines avec nous</h1>
             <p className="text-lg text-[#3A3D45] font-light leading-relaxed max-w-xl mx-auto">BOS Systems grandit. Nous préparons l&apos;ouverture de nos premiers postes — notamment deux postes de développeur·se — pour accélérer la suite de l&apos;aventure.</p>
           </ScrollReveal>
         </div>
