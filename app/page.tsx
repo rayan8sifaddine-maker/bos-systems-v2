@@ -10,10 +10,10 @@ import { SiteFooter } from '@/components/landing/site-footer'
 import { SECTORS } from '@/lib/sectors'
 
 export const metadata: Metadata = {
-  title: 'BOS Systems — Le système d\'exploitation des PME marocaines',
+  title: 'BOS Systems — Le système d\'exploitation des entreprises marocaines',
   description: 'Remplacez WhatsApp, Excel et le carnet papier par un système IA intelligent. Rendez-vous automatisés, rappels, CRM — tout en un.',
   openGraph: {
-    title: 'BOS Systems — Le système des PME marocaines',
+    title: 'BOS Systems — Le système des entreprises marocaines',
     description: 'La plateforme SaaS qui centralise et automatise votre relation client.',
     locale: 'fr_MA',
     type: 'website',
@@ -211,7 +211,7 @@ export default function HomePage() {
               <h1 className="text-[48px] md:text-[64px] font-bold leading-[1.03] tracking-[-0.02em] text-[#0C0E12] mb-5 font-display">
                 L&apos;infrastructure<br/>client des{' '}
                 <span style={{ background:'linear-gradient(135deg,#1A56FF 0%,#7C3AED 100%)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>
-                  PME<br/>modernes
+                  entreprises<br/>marocaines
                 </span>
               </h1>
 
@@ -342,7 +342,7 @@ export default function HomePage() {
               Fonctionnalités
             </div>
             <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Tout ce dont vous avez besoin</h2>
-            <p className="text-lg text-[#3A3D45] font-light">Chaque fonctionnalité résout un problème réel des PME marocaines.</p>
+            <p className="text-lg text-[#3A3D45] font-light">Chaque fonctionnalité résout un problème réel des entreprises marocaines.</p>
           </div>
           <div className="flex flex-wrap justify-center gap-4">
             {FEATURES.map(f => (
@@ -516,13 +516,13 @@ export default function HomePage() {
               <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-white border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
                 Confiance
               </div>
-              <h2 className="text-[32px] md:text-[36px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Conçu pour les PME marocaines</h2>
+              <h2 className="text-[32px] md:text-[36px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Conçu pour les entreprises marocaines</h2>
             </div>
           </ScrollReveal>
 
           <div className="flex flex-wrap justify-center gap-4 mb-4">
             {[
-              { v:240, prefix:'+', l:'PME marocaines équipées', icon:<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="6" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.5"/><path d="M1 13c0-2.761 2.239-5 5-5s5 2.239 5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="12" cy="4" r="1.5" stroke="currentColor" strokeWidth="1.5"/><path d="M15 11c0-1.657-1.343-3-3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg> },
+              { v:240, prefix:'+', l:'entreprises marocaines équipées', icon:<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="6" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.5"/><path d="M1 13c0-2.761 2.239-5 5-5s5 2.239 5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="12" cy="4" r="1.5" stroke="currentColor" strokeWidth="1.5"/><path d="M15 11c0-1.657-1.343-3-3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg> },
               { v:99.9, suffix:'%', decimals:1, l:'disponibilité garantie', icon:<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l6 2.5v4.2c0 4-2.6 6.8-6 8.3-3.4-1.5-6-4.3-6-8.3V4.5L9 2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M6.2 9l2 2 3.6-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg> },
               { v:5, l:'secteurs couverts', icon:<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="6" height="6" rx="1.2" stroke="currentColor" strokeWidth="1.5"/><rect x="10" y="2" width="6" height="6" rx="1.2" stroke="currentColor" strokeWidth="1.5"/><rect x="2" y="10" width="6" height="6" rx="1.2" stroke="currentColor" strokeWidth="1.5"/><rect x="10" y="10" width="6" height="6" rx="1.2" stroke="currentColor" strokeWidth="1.5"/></svg> },
             ].map(b => (
@@ -864,7 +864,7 @@ export default function HomePage() {
           <div className="relative">
             <div className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 bg-white/10 rounded-full text-white/60 text-xs font-semibold">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Rejoignez les PME qui ont déjà automatisé
+              Rejoignez les entreprises qui ont déjà automatisé
             </div>
             <h2 className="text-[40px] font-bold tracking-tight text-white mb-4 font-display">Prêt à automatiser<br/>votre relation client ?</h2>
             <p className="text-white/50 mb-10 text-lg">7 jours gratuits. Sans carte bancaire. Résultats visibles dès le premier jour.</p>

@@ -12,7 +12,7 @@ export default function TermsPage() {
 
       <section>
         <h2>2. Description du service</h2>
-        <p>BOS Systems fournit un tableau de bord permettant de gérer les rendez-vous, les clients (CRM), la communication WhatsApp assistée par IA, les automatisations et les statistiques d&apos;activité d&apos;une PME.</p>
+        <p>BOS Systems fournit un tableau de bord permettant de gérer les rendez-vous, les clients (CRM), la communication WhatsApp assistée par IA, les automatisations et les statistiques d&apos;activité d&apos;une entreprise.</p>
       </section>
 
       <section>

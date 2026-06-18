@@ -4,13 +4,13 @@ import { ToastProvider } from '@/components/ui/toast'
 
 export const metadata: Metadata = {
   title: {
-    default: 'BOS Systems — Le système des PME marocaines',
+    default: 'BOS Systems — Le système des entreprises marocaines',
     template: '%s | BOS Systems',
   },
-  description: 'Automatisez votre relation client avec l\'IA. Rendez-vous, rappels, WhatsApp — BOS Systems gère tout pour les PME marocaines.',
-  keywords: ['CRM Maroc', 'gestion clinique', 'assistant IA WhatsApp', 'rendez-vous automatisés', 'PME marocaines'],
+  description: 'Automatisez votre relation client avec l\'IA. Rendez-vous, rappels, WhatsApp — BOS Systems gère tout pour les entreprises marocaines.',
+  keywords: ['CRM Maroc', 'gestion clinique', 'assistant IA WhatsApp', 'rendez-vous automatisés', 'entreprises marocaines'],
   openGraph: {
-    title: 'BOS Systems — Le système des PME marocaines',
+    title: 'BOS Systems — Le système des entreprises marocaines',
     description: 'La plateforme SaaS qui centralise et automatise votre relation client.',
     locale: 'fr_MA',
     type: 'website',

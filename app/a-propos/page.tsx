@@ -6,7 +6,7 @@ import { ScrollReveal } from '@/components/landing/scroll-reveal'
 
 export const metadata: Metadata = {
   title: 'À propos — BOS Systems',
-  description: 'Pourquoi BOS Systems a été créé, et notre vision pour les PME marocaines.',
+  description: 'Pourquoi BOS Systems a été créé, et notre vision pour les entreprises marocaines.',
 }
 
 export default function AboutPage() {
@@ -24,7 +24,7 @@ export default function AboutPage() {
             À propos
           </div>
           <h1 className="text-[36px] md:text-[48px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display mb-4">Pourquoi j&apos;ai créé BOS Systems</h1>
-          <p className="text-lg text-[#3A3D45] font-light leading-relaxed">L&apos;histoire d&apos;un fondateur, et une conviction simple : les PME marocaines méritent les mêmes outils que les grandes entreprises.</p>
+          <p className="text-lg text-[#3A3D45] font-light leading-relaxed">L&apos;histoire d&apos;un fondateur, et une conviction simple : petite ou grande, chaque entreprise marocaine mérite les mêmes outils que les géants du secteur.</p>
         </div>
       </section>
 
@@ -35,21 +35,21 @@ export default function AboutPage() {
             <p>Tout est parti d&apos;un constat simple : au Maroc, des milliers de cliniques, garages, salons, écoles et restaurants perdent des clients chaque jour — non pas parce que leur service est mauvais, mais parce que personne ne répond au téléphone pendant le rush, parce qu&apos;un rendez-vous est oublié, ou parce que le suivi client se fait encore sur un carnet papier ou un fichier Excel.</p>
           </ScrollReveal>
           <ScrollReveal delay={80}>
-            <p>J&apos;ai vu ça de près. Des amis qui gèrent un cabinet médical, un garage, un salon de coiffure — tous avec le même problème : trop de demandes, pas assez de temps, et aucun outil pensé pour leur réalité. Les solutions existantes sont soit trop chères, soit conçues pour des entreprises américaines avec des équipes IT, soit tout simplement absentes du marché marocain.</p>
+            <p>J&apos;ai vu ça de près. Des amis qui gèrent un cabinet médical, un garage, un salon de coiffure — mais aussi des structures plus grandes, avec plusieurs équipes et plusieurs sites. Le problème est le même à toutes les échelles : trop de demandes, pas assez de temps, et aucun outil vraiment pensé pour la réalité marocaine. Les solutions existantes sont soit trop chères, soit conçues pour des entreprises américaines avec des équipes IT, soit tout simplement absentes du marché local.</p>
           </ScrollReveal>
           <ScrollReveal delay={160}>
-            <p>BOS Systems est né de cette frustration. L&apos;idée : donner à chaque petite et moyenne entreprise marocaine un assistant IA capable de répondre sur WhatsApp 24/7, de gérer les rendez-vous, de centraliser les clients dans un vrai CRM, et de relancer automatiquement ceux qu&apos;on oublie — sans embaucher une secrétaire supplémentaire, sans formation compliquée, et à un prix pensé pour le marché local.</p>
+            <p>BOS Systems est né de cette frustration. L&apos;idée : donner à chaque entreprise marocaine, quelle que soit sa taille, un assistant IA capable de répondre sur WhatsApp 24/7, de gérer les rendez-vous, de centraliser les clients dans un vrai CRM, et de relancer automatiquement ceux qu&apos;on oublie — sans embaucher une équipe supplémentaire, sans formation compliquée, et à un prix pensé pour le marché local.</p>
           </ScrollReveal>
           <ScrollReveal delay={240}>
             <div className="my-10 p-7 rounded-2xl border border-[rgba(26,86,255,0.15)]" style={{ background: '#EEF2FF' }}>
-              <p className="text-[#0C0E12] font-medium text-lg leading-relaxed">&ldquo;Je ne construis pas BOS Systems pour les grandes entreprises qui ont déjà dix outils. Je le construis pour le médecin qui répond à ses messages entre deux consultations, pour le garagiste qui note les rendez-vous sur un carnet, pour la coiffeuse qui répond à ses clientes à 22h depuis son téléphone.&rdquo;</p>
+              <p className="text-[#0C0E12] font-medium text-lg leading-relaxed">&ldquo;Je ne construis pas BOS Systems pour un seul type d&apos;entreprise. Je le construis pour le médecin dont le téléphone n&apos;arrête pas de sonner, pour le garagiste qui note les rendez-vous sur un carnet, pour la directrice d&apos;une chaîne de salons qui gère cinq équipes à distance. Petite ou grande, chaque structure marocaine mérite les mêmes outils que les géants du secteur.&rdquo;</p>
             </div>
           </ScrollReveal>
           <ScrollReveal delay={320}>
-            <p>Aujourd&apos;hui, BOS Systems démarre comme un projet solo — je construis, je teste, j&apos;écoute chaque retour de mes premiers clients pour améliorer le produit semaine après semaine. Ma vision est claire : devenir l&apos;outil de référence pour la relation client des PME marocaines, secteur par secteur, ville par ville. La prochaine étape ? Agrandir l&apos;équipe avec des développeurs qui partagent cette conviction.</p>
+            <p>Aujourd&apos;hui, BOS Systems démarre comme un projet solo — je construis, je teste, j&apos;écoute chaque retour de mes premiers clients pour améliorer le produit semaine après semaine. Ma vision est claire : devenir l&apos;outil de référence pour la relation client des entreprises marocaines, des indépendants aux réseaux multi-sites, secteur par secteur, ville par ville. La prochaine étape ? Agrandir l&apos;équipe avec des développeurs qui partagent cette conviction.</p>
           </ScrollReveal>
           <ScrollReveal delay={400}>
-            <p>Si vous dirigez une PME au Maroc et que vous perdez des clients à cause d&apos;un téléphone qui sonne dans le vide, j&apos;aimerais vous montrer ce que BOS peut faire pour vous.</p>
+            <p>Si vous dirigez une entreprise au Maroc et que vous perdez des clients à cause d&apos;un téléphone qui sonne dans le vide, j&apos;aimerais vous montrer ce que BOS peut faire pour vous.</p>
           </ScrollReveal>
         </div>
       </section>

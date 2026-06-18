@@ -97,7 +97,7 @@ function LoginForm() {
           </div>
         </div>
 
-        <div className="relative text-xs text-white/30">© 2025 BOS Systems</div>
+        <div className="relative text-xs text-white/30">© 2026 BOS Systems</div>
       </div>
 
       {/* ── Right panel (form) ── */}
