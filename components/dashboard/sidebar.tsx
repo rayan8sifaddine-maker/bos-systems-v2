@@ -257,7 +257,7 @@ export function Sidebar({ clinicName, plan }: SidebarProps) {
       {/* Signout */}
       <div className="p-3 border-t border-[rgba(12,14,18,0.06)] dark:border-white/10 flex-shrink-0">
         <Link
-          href="/api/auth/signout"
+          href="/deconnexion"
           className="flex items-center gap-2 px-3 py-2 text-xs text-[#7A7F8E] hover:text-[#0C0E12] dark:text-[#9CA3AF] dark:hover:text-white rounded-xl hover:bg-[#F7F8FA] dark:hover:bg-white/5 transition-all"
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
