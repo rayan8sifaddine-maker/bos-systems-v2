@@ -36,25 +36,31 @@ export default function SectorPage({ params }: { params: { slug: string } }) {
       <SiteNav />
 
       {/* ── HERO ── */}
-      <section className="relative pt-32 pb-16 px-6 md:px-12 overflow-hidden">
+      <section className="relative pt-32 pb-20 px-6 md:px-12 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" aria-hidden>
-          <div style={{ position:'absolute', top:'-15%', left:'10%', width:560, height:560, background:`radial-gradient(ellipse, ${sector.color}1A 0%, transparent 65%)`, borderRadius:'50%' }}/>
+          <div style={{ position:'absolute', top:'-25%', left:'50%', transform:'translateX(-50%)', width:900, height:900, background:`radial-gradient(ellipse, ${sector.color}1F 0%, transparent 60%)`, borderRadius:'50%' }}/>
         </div>
         <div className="max-w-3xl mx-auto relative text-center">
-          <div className="text-xs text-[#B0B5C3] mb-6 flex items-center justify-center gap-1.5">
+          <div className="text-xs text-[#B0B5C3] mb-8 flex items-center justify-center gap-1.5">
             <Link href="/" className="hover:text-[#0C0E12] transition-colors">Accueil</Link>
             <span>/</span>
             <Link href="/secteurs" className="hover:text-[#0C0E12] transition-colors">Secteurs</Link>
             <span>/</span>
             <span className="text-[#3A3D45]">{sector.name}</span>
           </div>
-          <div className="inline-flex w-16 h-16 rounded-2xl items-center justify-center mb-6" style={{ background: sector.bg, color: sector.color }}>
+
+          <div className="inline-flex w-20 h-20 rounded-3xl items-center justify-center mb-7 border" style={{ background: sector.bg, color: sector.color, borderColor: `${sector.color}26`, boxShadow: `0 12px 32px ${sector.color}1F` }}>
             {sector.icon}
           </div>
-          <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
+
+          <div className="inline-flex items-center gap-2 mb-3 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider" style={{ background: sector.bg, color: sector.color }}>
             {sector.shortDesc}
           </div>
-          <h1 className="text-[36px] md:text-[48px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display mb-4">{sector.tagline}</h1>
+
+          <h1 className="text-[48px] md:text-[68px] font-bold tracking-[-0.02em] leading-[1] font-display mb-5" style={{ background: `linear-gradient(135deg, #0C0E12, ${sector.color})`, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
+            {sector.name}
+          </h1>
+          <p className="text-xl md:text-2xl font-semibold text-[#0C0E12] font-display mb-5 leading-snug">{sector.tagline}</p>
           <p className="text-lg text-[#3A3D45] font-light leading-relaxed mb-8 max-w-xl mx-auto">{sector.intro}</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/inscription" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-base font-semibold text-white transition-all hover:-translate-y-0.5" style={{ background:'linear-gradient(135deg,#0C0E12,#1e2330)', boxShadow:'0 4px 16px rgba(12,14,18,0.25)' }}>

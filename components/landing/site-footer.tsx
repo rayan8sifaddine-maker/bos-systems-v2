@@ -19,11 +19,17 @@ export function SiteFooter() {
             </div>
             <p className="text-xs text-[#B0B5C3] leading-relaxed">La plateforme SaaS qui automatise la relation client des PME marocaines grâce à l&apos;IA.</p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-sm">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
             <div>
               <div className="text-xs font-semibold text-[#0C0E12] uppercase tracking-wider mb-3">Produit</div>
-              {[['Fonctionnalités','/#fonctionnalites'],['Tarifs','/#tarifs'],['Secteurs','/secteurs']].map(([l,h])=>(
-                <a key={h} href={h} className="block text-[#7A7F8E] hover:text-[#0C0E12] transition-colors mb-2">{l}</a>
+              {[['Fonctionnalités','/#fonctionnalites'],['Tarifs','/#tarifs'],['Secteurs','/secteurs'],['Comparatif','/comparatif']].map(([l,h])=>(
+                <Link key={h} href={h} className="block text-[#7A7F8E] hover:text-[#0C0E12] transition-colors mb-2">{l}</Link>
+              ))}
+            </div>
+            <div>
+              <div className="text-xs font-semibold text-[#0C0E12] uppercase tracking-wider mb-3">Entreprise</div>
+              {[['À propos','/a-propos'],['Carrières','/carrieres'],['Centre d’aide','/aide']].map(([l,h])=>(
+                <Link key={h} href={h} className="block text-[#7A7F8E] hover:text-[#0C0E12] transition-colors mb-2">{l}</Link>
               ))}
             </div>
             <div>
