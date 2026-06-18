@@ -18,6 +18,19 @@ export function SiteNav() {
         {[['Fonctionnalités','/#fonctionnalites'],['Comment ça marche','/#comment'],['Tarifs','/#tarifs'],['Secteurs','/secteurs']].map(([l,h])=>(
           <a key={h} href={h} className="px-4 py-2 text-sm text-[#3A3D45] hover:text-[#0C0E12] hover:bg-[#F7F8FA] rounded-lg transition-all">{l}</a>
         ))}
+        <div className="relative group">
+          <button className="px-4 py-2 text-sm text-[#3A3D45] hover:text-[#0C0E12] hover:bg-[#F7F8FA] rounded-lg transition-all flex items-center gap-1">
+            Ressources
+            <svg width="9" height="9" viewBox="0 0 10 10" fill="none" className="transition-transform group-hover:rotate-180"><path d="M2 3.5l3 3 3-3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </button>
+          <div className="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+            <div className="w-56 bg-white border border-[rgba(12,14,18,0.08)] rounded-xl p-1.5" style={{ boxShadow: '0 12px 32px rgba(12,14,18,0.12)' }}>
+              {[['Comparatif','/comparatif'],['Centre d’aide','/aide'],['À propos','/a-propos'],['Carrières','/carrieres'],['Nouveautés','/nouveautes']].map(([l,h])=>(
+                <Link key={h} href={h} className="block px-3 py-2 text-sm text-[#3A3D45] hover:text-[#0C0E12] hover:bg-[#F7F8FA] rounded-lg transition-all">{l}</Link>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
       <div className="flex items-center gap-3">
         <Link href="/connexion" className="hidden md:block px-4 py-2 text-sm text-[#3A3D45] border border-[rgba(12,14,18,0.1)] rounded-xl hover:bg-[#F7F8FA] transition-all">Se connecter</Link>

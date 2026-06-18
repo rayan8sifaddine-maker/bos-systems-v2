@@ -21,7 +21,7 @@ const ROWS: { feature: string; bos: Cell; wa: Cell; excel: Cell }[] = [
   { feature: 'Accès multi-utilisateurs avec permissions', bos: true, wa: false, excel: 'Limité' },
   { feature: 'Aucune saisie manuelle requise', bos: true, wa: false, excel: false },
   { feature: 'Fonctionne pendant que vous êtes occupé', bos: true, wa: false, excel: true },
-  { feature: 'Coût mensuel', bos: 'Dès 199 MAD', wa: 'Gratuit*', excel: 'Gratuit*' },
+  { feature: 'Coût mensuel', bos: 'Dès 749 DH', wa: 'Gratuit*', excel: 'Gratuit*' },
 ]
 
 function CellValue({ value }: { value: Cell }) {
