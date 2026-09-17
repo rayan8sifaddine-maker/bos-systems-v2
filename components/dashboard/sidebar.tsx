@@ -153,7 +153,7 @@ export function Sidebar({ clinicName, plan }: SidebarProps) {
   }, [pathname])
 
   return (
-    <aside className="w-[220px] bg-white dark:bg-[#13151A] border-r border-[rgba(12,14,18,0.06)] dark:border-white/10 flex flex-col sticky top-0 h-screen flex-shrink-0">
+    <aside className="hidden md:flex w-[220px] bg-white dark:bg-[#13151A] border-r border-[rgba(12,14,18,0.06)] dark:border-white/10 flex-col sticky top-0 h-screen flex-shrink-0">
       {/* Logo */}
       <div className="h-14 flex items-center gap-2.5 px-4 border-b border-[rgba(12,14,18,0.06)] dark:border-white/10 flex-shrink-0">
         <div className="w-7 h-7 bg-[#0C0E12] dark:bg-white/10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ boxShadow: '0 2px 6px rgba(12,14,18,0.25)' }}>
