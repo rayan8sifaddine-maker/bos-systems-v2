@@ -2,63 +2,80 @@ import Link from 'next/link'
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-[rgba(12,14,18,0.06)] py-12 px-6 md:px-12">
-      <div className="max-w-5xl mx-auto">
-        <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-10">
-          <div className="max-w-xs">
-            <div className="flex items-center gap-2.5 mb-3">
-              <div className="w-7 h-7 bg-[#0C0E12] rounded-md flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                  <rect x="1" y="1" width="6" height="6" rx="1.5" fill="white"/>
-                  <rect x="9" y="1" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
-                  <rect x="1" y="9" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
-                  <rect x="9" y="9" width="6" height="6" rx="1.5" fill="white"/>
-                </svg>
-              </div>
-              <span className="font-bold text-sm text-[#0C0E12] font-display">BOS SYSTEMS</span>
+    <footer style={{ background: '#0A0C10' }}>
+      {/* Logotype + tagline */}
+      <div className="px-6 md:px-12 pt-16 pb-10" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <div>
+            <div className="font-bold font-display leading-none tracking-[-0.02em] text-white/8 select-none" style={{ fontSize: 'clamp(36px, 5vw, 64px)', color: 'rgba(255,255,255,0.06)' }}>
+              BOS SYSTEMS
             </div>
-            <p className="text-xs text-[#B0B5C3] leading-relaxed">La plateforme SaaS qui automatise la relation client des entreprises marocaines grâce à l&apos;IA.</p>
+            <p className="text-[#5A5F6B] text-sm mt-4 max-w-xs leading-relaxed">
+              La plateforme IA qui automatise la relation client des entreprises marocaines.
+            </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
-            <div>
-              <div className="text-xs font-semibold text-[#0C0E12] uppercase tracking-wider mb-3">Produit</div>
-              {[['Fonctionnalités','/#fonctionnalites'],['Tarifs','/#tarifs'],['Secteurs','/secteurs'],['Comparatif','/comparatif']].map(([l,h])=>(
-                <Link key={h} href={h} className="block text-[#7A7F8E] hover:text-[#0C0E12] transition-colors mb-2">{l}</Link>
-              ))}
-            </div>
-            <div>
-              <div className="text-xs font-semibold text-[#0C0E12] uppercase tracking-wider mb-3">Entreprise</div>
-              {[['À propos','/a-propos'],['Carrières','/carrieres'],['Centre d’aide','/aide']].map(([l,h])=>(
-                <Link key={h} href={h} className="block text-[#7A7F8E] hover:text-[#0C0E12] transition-colors mb-2">{l}</Link>
-              ))}
-            </div>
-            <div>
-              <div className="text-xs font-semibold text-[#0C0E12] uppercase tracking-wider mb-3">Compte</div>
-              {[['Se connecter','/connexion'],['Créer un compte','/inscription']].map(([l,h])=>(
-                <Link key={h} href={h} className="block text-[#7A7F8E] hover:text-[#0C0E12] transition-colors mb-2">{l}</Link>
-              ))}
-            </div>
-            <div>
-              <div className="text-xs font-semibold text-[#0C0E12] uppercase tracking-wider mb-3">Contact</div>
-              {[['Support','mailto:support@bossystems.ma'],['Ventes','mailto:sales@bossystems.ma']].map(([l,h])=>(
-                <a key={h} href={h} className="block text-[#7A7F8E] hover:text-[#0C0E12] transition-colors mb-2">{l}</a>
-              ))}
+          <div className="flex items-center gap-3 pb-1">
+            <Link href="/inscription" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 hover:-translate-y-px" style={{ background: 'linear-gradient(135deg, #1A56FF, #7C3AED)', boxShadow: '0 4px 16px rgba(26,86,255,0.25)' }}>
+              Essai gratuit →
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Links grid */}
+      <div className="px-6 md:px-12 py-12">
+        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div>
+            <div className="text-[11px] font-semibold text-[#3A3D45] uppercase tracking-[0.12em] mb-4">Produit</div>
+            {[
+              ['Fonctionnalités', '/#fonctionnalites'],
+              ['Tarifs', '/#tarifs'],
+              ['Secteurs', '/secteurs'],
+              ['Comparatif', '/comparatif'],
+              ['Nouveautés', '/nouveautes'],
+            ].map(([l, h]) => (
+              <Link key={h} href={h} className="block text-[13px] text-[#4A4F5A] hover:text-[#9CA3AF] transition-colors mb-2.5">{l}</Link>
+            ))}
+          </div>
+          <div>
+            <div className="text-[11px] font-semibold text-[#3A3D45] uppercase tracking-[0.12em] mb-4">Entreprise</div>
+            {[
+              ['À propos', '/a-propos'],
+              ['Carrières', '/carrieres'],
+              ['Centre d\'aide', '/aide'],
+            ].map(([l, h]) => (
+              <Link key={h} href={h} className="block text-[13px] text-[#4A4F5A] hover:text-[#9CA3AF] transition-colors mb-2.5">{l}</Link>
+            ))}
+          </div>
+          <div>
+            <div className="text-[11px] font-semibold text-[#3A3D45] uppercase tracking-[0.12em] mb-4">Compte</div>
+            {[
+              ['Se connecter', '/connexion'],
+              ['Créer un compte', '/inscription'],
+            ].map(([l, h]) => (
+              <Link key={h} href={h} className="block text-[13px] text-[#4A4F5A] hover:text-[#9CA3AF] transition-colors mb-2.5">{l}</Link>
+            ))}
+          </div>
+          <div>
+            <div className="text-[11px] font-semibold text-[#3A3D45] uppercase tracking-[0.12em] mb-4">Contact</div>
+            <a href="mailto:support@bossystems.ma" className="block text-[13px] text-[#4A4F5A] hover:text-[#9CA3AF] transition-colors mb-2.5">Support</a>
+            <a href="mailto:sales@bossystems.ma" className="block text-[13px] text-[#4A4F5A] hover:text-[#9CA3AF] transition-colors mb-2.5">Ventes</a>
+            <div className="mt-5 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
+              <span className="text-[11px] text-[#4A4F5A]">Tous les systèmes op.</span>
             </div>
           </div>
         </div>
-        <div className="pt-8 border-t border-[rgba(12,14,18,0.06)] flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 text-xs text-[#B0B5C3]">
-            <span>© 2026 BOS Systems — Casablanca, Maroc</span>
-            <span className="hidden md:inline">·</span>
-            <Link href="/confidentialite" className="hover:text-[#0C0E12] transition-colors">Politique de confidentialité</Link>
-            <span className="hidden md:inline">·</span>
-            <Link href="/conditions" className="hover:text-[#0C0E12] transition-colors">Conditions d&apos;utilisation</Link>
-            <span className="hidden md:inline">·</span>
-            <Link href="/conformite" className="hover:text-[#0C0E12] transition-colors">Conformité des données</Link>
-          </div>
-          <div className="flex items-center gap-1 text-xs text-[#B0B5C3]">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-            Tous les systèmes opérationnels
+      </div>
+
+      {/* Legal */}
+      <div className="px-6 md:px-12 py-5" style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}>
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          <span className="text-[12px] text-[#3A3D45]">© 2026 BOS Systems — Casablanca, Maroc</span>
+          <div className="flex items-center gap-5">
+            <Link href="/confidentialite" className="text-[12px] text-[#3A3D45] hover:text-[#6B7280] transition-colors">Confidentialité</Link>
+            <Link href="/conditions" className="text-[12px] text-[#3A3D45] hover:text-[#6B7280] transition-colors">Conditions</Link>
+            <Link href="/conformite" className="text-[12px] text-[#3A3D45] hover:text-[#6B7280] transition-colors">Conformité</Link>
           </div>
         </div>
       </div>
