@@ -1,15 +1,13 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import type { Metadata } from 'next'
-import { HeroCanvas } from '@/components/landing/hero-canvas'
 import { ScrollReveal } from '@/components/landing/scroll-reveal'
 import { AnimatedCounter } from '@/components/landing/animated-counter'
 import { FaqItem } from '@/components/landing/faq-item'
 import { SiteNav } from '@/components/landing/site-nav'
 import { TiltCard } from '@/components/landing/tilt-card'
-import { FlowPulse } from '@/components/landing/flow-pulse'
 import { MagneticButton } from '@/components/landing/magnetic-button'
 import { SiteFooter } from '@/components/landing/site-footer'
+import { Marquee } from '@/components/landing/marquee'
 import { SECTORS } from '@/lib/sectors'
 
 export const metadata: Metadata = {
@@ -23,57 +21,38 @@ export const metadata: Metadata = {
   },
 }
 
-/* ─── Dashboard Mockup (hero visual) ──────────────────────── */
+/* ─── Dashboard Mockup ─────────────────────────────────────── */
 function DashboardMockup() {
   return (
-    <div className="relative select-none" aria-hidden>
-      {/* Floating badge top-right */}
-      <div className="absolute -top-4 -right-4 z-10 flex items-center gap-2 bg-white rounded-2xl px-3 py-2 shadow-lg border border-[rgba(12,14,18,0.08)]" style={{ boxShadow: '0 4px 20px rgba(12,14,18,0.12)' }}>
+    <div className="relative select-none">
+      {/* Floating badges */}
+      <div className="absolute -top-5 -right-3 z-10 flex items-center gap-2 bg-white rounded-2xl px-3 py-2 shadow-lg" style={{ boxShadow: '0 4px 24px rgba(12,14,18,0.14)', border: '1px solid rgba(12,14,18,0.07)' }}>
         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
-        <span className="text-[11px] font-semibold text-[#0C0E12]">Assistant IA actif</span>
+        <span className="text-[11px] font-semibold text-[#0C0E12]">IA active · réponse en 2s</span>
       </div>
-
-      {/* Floating badge bottom-left */}
-      <div className="absolute -bottom-4 -left-4 z-10 flex items-center gap-2 bg-white rounded-2xl px-3 py-2 shadow-lg border border-[rgba(12,14,18,0.08)]" style={{ boxShadow: '0 4px 20px rgba(12,14,18,0.12)' }}>
+      <div className="absolute -bottom-4 -left-3 z-10 flex items-center gap-2 bg-white rounded-2xl px-3 py-2.5" style={{ boxShadow: '0 8px 28px rgba(12,14,18,0.12)', border: '1px solid rgba(12,14,18,0.06)' }}>
         <div className="w-7 h-7 rounded-xl bg-emerald-50 flex items-center justify-center flex-shrink-0">
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 9l3-5 2.5 3 2-3 2.5 5" stroke="#10B981" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
         </div>
         <div>
-          <div className="text-[10px] font-bold text-[#0C0E12]">+38% RDV</div>
+          <div className="text-[10px] font-bold text-[#0C0E12]">+38% rendez-vous</div>
           <div className="text-[9px] text-[#B0B5C3]">vs mois dernier</div>
         </div>
       </div>
-
-      {/* Notification badge */}
-      <div className="absolute top-16 -left-6 z-10 flex items-center gap-2 bg-white rounded-2xl px-3 py-2 shadow-lg border border-[rgba(12,14,18,0.08)]" style={{ boxShadow: '0 4px 20px rgba(12,14,18,0.10)' }}>
-        <div className="w-7 h-7 rounded-xl bg-[#EEF2FF] flex items-center justify-center flex-shrink-0">
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="2" width="11" height="9" rx="1.5" stroke="#1A56FF" strokeWidth="1.2"/><path d="M1 5l5.5 3.5L12 5" stroke="#1A56FF" strokeWidth="1.2" strokeLinecap="round"/></svg>
-        </div>
-        <div>
-          <div className="text-[10px] font-bold text-[#0C0E12]">Rappel envoyé</div>
-          <div className="text-[9px] text-[#B0B5C3]">3 clients notifiés</div>
-        </div>
-      </div>
-
-      {/* Browser frame */}
-      <div className="rounded-2xl overflow-hidden border border-[rgba(12,14,18,0.10)]" style={{ boxShadow: '0 24px 60px rgba(12,14,18,0.15), 0 8px 20px rgba(12,14,18,0.08)' }}>
-        {/* Chrome */}
-        <div className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F7F8FA] border-b border-[rgba(12,14,18,0.06)]">
-          <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
-          <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
-          <div className="flex-1 mx-4 h-5 bg-white rounded-md border border-[rgba(12,14,18,0.08)] flex items-center gap-1.5 px-2">
-            <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><circle cx="4" cy="4" r="3" stroke="#B0B5C3" strokeWidth="1"/><path d="M4 2v2l1.5 1.5" stroke="#B0B5C3" strokeWidth="1" strokeLinecap="round"/></svg>
-            <span className="text-[9px] text-[#B0B5C3]">app.bossystems.ma/dashboard</span>
+      {/* Browser */}
+      <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 32px 80px rgba(0,0,0,0.5), 0 8px 24px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.06)' }}>
+        <div className="flex items-center gap-1.5 px-4 py-2.5 bg-[#1A1D24] border-b border-white/5">
+          <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+          <div className="w-2.5 h-2.5 rounded-full bg-amber-400/70" />
+          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/70" />
+          <div className="flex-1 mx-4 h-5 bg-white/5 rounded-md border border-white/5 flex items-center justify-center">
+            <span className="text-[9px] text-white/30">app.bossystems.ma/dashboard</span>
           </div>
         </div>
-
-        {/* Dashboard UI */}
-        <div className="flex bg-[#F7F8FA]" style={{ height: 340 }}>
-          {/* Sidebar */}
-          <div className="w-[110px] bg-white border-r border-[rgba(12,14,18,0.06)] flex flex-col flex-shrink-0">
-            <div className="flex items-center gap-1.5 px-3 py-3 border-b border-[rgba(12,14,18,0.06)]">
-              <div className="w-5 h-5 bg-[#0C0E12] rounded-md flex items-center justify-center flex-shrink-0">
+        <div className="flex bg-[#13151A]" style={{ height: 330 }}>
+          <div className="w-[108px] bg-[#0F1116] border-r border-white/5 flex flex-col flex-shrink-0">
+            <div className="flex items-center gap-1.5 px-3 py-3 border-b border-white/5">
+              <div className="w-5 h-5 bg-[#1A56FF] rounded-md flex items-center justify-center flex-shrink-0">
                 <svg width="10" height="10" viewBox="0 0 16 16" fill="none">
                   <rect x="1" y="1" width="6" height="6" rx="1.5" fill="white"/>
                   <rect x="9" y="1" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
@@ -81,7 +60,7 @@ function DashboardMockup() {
                   <rect x="9" y="9" width="6" height="6" rx="1.5" fill="white"/>
                 </svg>
               </div>
-              <span className="text-[9px] font-bold text-[#0C0E12]">BOS</span>
+              <span className="text-[9px] font-bold text-white/80">BOS</span>
             </div>
             <div className="p-2 space-y-0.5">
               {[
@@ -91,69 +70,60 @@ function DashboardMockup() {
                 { label: 'Analytics', active: false },
                 { label: 'Assistant IA', active: false },
               ].map(item => (
-                <div key={item.label} className={`px-2 py-1.5 rounded-lg text-[9px] font-medium ${item.active ? 'bg-[#EEF2FF] text-[#1A56FF]' : 'text-[#7A7F8E]'}`}>
+                <div key={item.label} className={`px-2 py-1.5 rounded-lg text-[9px] font-medium ${item.active ? 'bg-[#1A56FF]/20 text-[#6BA3FF]' : 'text-white/30'}`}>
                   {item.label}
                 </div>
               ))}
             </div>
           </div>
-
-          {/* Main content */}
           <div className="flex-1 p-3 overflow-hidden">
-            <div className="text-[11px] font-bold text-[#0C0E12] mb-2.5">Bonjour, Dr. Bennani</div>
-
-            {/* Stat cards */}
+            <div className="text-[11px] font-bold text-white/80 mb-2.5">Bonjour, Dr. Bennani 👋</div>
             <div className="grid grid-cols-4 gap-1.5 mb-2.5">
               {[
-                { label: 'Clients', value: '248', color: '#1A56FF', bg: '#EEF2FF', trend: '+12%' },
-                { label: 'RDV/jour', value: '14', color: '#7C3AED', bg: '#F5F3FF', trend: '+5' },
-                { label: 'CA mois', value: '48k', color: '#10B981', bg: '#ECFDF5', trend: '+22%' },
-                { label: 'Taux RDV', value: '94%', color: '#F59E0B', bg: '#FFFBEB', trend: '↑' },
+                { label: 'Clients', value: '248', color: '#6BA3FF', bg: 'rgba(26,86,255,0.15)', trend: '+12%' },
+                { label: 'RDV/jour', value: '14', color: '#A78BFA', bg: 'rgba(124,58,237,0.15)', trend: '+5' },
+                { label: 'CA mois', value: '48k', color: '#34D399', bg: 'rgba(16,185,129,0.15)', trend: '+22%' },
+                { label: 'Taux RDV', value: '94%', color: '#FBBF24', bg: 'rgba(245,158,11,0.15)', trend: '↑' },
               ].map(s => (
-                <div key={s.label} className="bg-white rounded-xl p-2 border border-[rgba(12,14,18,0.06)]">
-                  <div className="text-[8px] text-[#B0B5C3] mb-1">{s.label}</div>
-                  <div className="text-[13px] font-bold text-[#0C0E12] leading-none mb-1">{s.value}</div>
+                <div key={s.label} className="rounded-xl p-2" style={{ background: s.bg }}>
+                  <div className="text-[8px] text-white/30 mb-1">{s.label}</div>
+                  <div className="text-[13px] font-bold text-white leading-none mb-1">{s.value}</div>
                   <div className="text-[8px] font-semibold" style={{ color: s.color }}>{s.trend}</div>
                 </div>
               ))}
             </div>
-
-            {/* Chart */}
-            <div className="bg-white rounded-xl p-2.5 border border-[rgba(12,14,18,0.06)] mb-2">
+            <div className="rounded-xl p-2.5 mb-2" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[9px] font-semibold text-[#0C0E12]">Rendez-vous — 30 jours</span>
-                <span className="text-[8px] text-emerald-500 font-medium">↑ +38%</span>
+                <span className="text-[9px] font-semibold text-white/50">Rendez-vous — 30 jours</span>
+                <span className="text-[8px] text-emerald-400 font-medium">↑ +38%</span>
               </div>
-              <svg viewBox="0 0 280 55" className="w-full" style={{ height: 55 }}>
+              <svg viewBox="0 0 280 50" className="w-full" style={{ height: 50 }}>
                 <defs>
-                  <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#1A56FF" stopOpacity="0.15"/>
+                  <linearGradient id="chartGradDark" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#1A56FF" stopOpacity="0.3"/>
                     <stop offset="100%" stopColor="#1A56FF" stopOpacity="0"/>
                   </linearGradient>
                 </defs>
-                <path d="M0,50 C20,46 35,44 55,38 C75,32 90,35 110,28 C130,21 145,24 165,16 C185,8 210,10 230,6 C250,2 265,4 280,3" fill="none" stroke="#1A56FF" strokeWidth="1.5" strokeLinecap="round"/>
-                <path d="M0,55 L0,50 C20,46 35,44 55,38 C75,32 90,35 110,28 C130,21 145,24 165,16 C185,8 210,10 230,6 C250,2 265,4 280,3 L280,55 Z" fill="url(#chartGrad)"/>
-                {/* Dots */}
-                {[[55,38],[110,28],[165,16],[230,6]].map(([x,y], i) => (
-                  <circle key={i} cx={x} cy={y} r="2.5" fill="white" stroke="#1A56FF" strokeWidth="1.5"/>
+                <path d="M0,48 C20,44 35,42 55,36 C75,30 90,33 110,26 C130,19 145,22 165,14 C185,6 210,8 230,4 C250,0 265,2 280,1" fill="none" stroke="#1A56FF" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M0,50 L0,48 C20,44 35,42 55,36 C75,30 90,33 110,26 C130,19 145,22 165,14 C185,6 210,8 230,4 C250,0 265,2 280,1 L280,50 Z" fill="url(#chartGradDark)"/>
+                {[[55,36],[110,26],[165,14],[230,4]].map(([x,y], i) => (
+                  <circle key={i} cx={x} cy={y} r="2.5" fill="#13151A" stroke="#1A56FF" strokeWidth="1.5"/>
                 ))}
               </svg>
             </div>
-
-            {/* Appointment list */}
-            <div className="bg-white rounded-xl border border-[rgba(12,14,18,0.06)] overflow-hidden">
-              <div className="px-2.5 py-1.5 border-b border-[rgba(12,14,18,0.04)]">
-                <span className="text-[9px] font-semibold text-[#0C0E12]">Prochains RDV</span>
+            <div className="rounded-xl overflow-hidden" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <div className="px-2.5 py-1.5 border-b border-white/5">
+                <span className="text-[9px] font-semibold text-white/50">Prochains RDV</span>
               </div>
               {[
-                { time: '10:00', name: 'Youssef M.', status: 'Confirmé', color: 'text-emerald-600 bg-emerald-50' },
-                { time: '11:30', name: 'Fatima B.', status: 'En attente', color: 'text-amber-600 bg-amber-50' },
-                { time: '14:00', name: 'Karim L.', status: 'Confirmé', color: 'text-emerald-600 bg-emerald-50' },
+                { time: '10:00', name: 'Youssef M.', color: 'text-emerald-400', dot: 'bg-emerald-400' },
+                { time: '11:30', name: 'Fatima B.', color: 'text-amber-400', dot: 'bg-amber-400' },
+                { time: '14:00', name: 'Karim L.', color: 'text-emerald-400', dot: 'bg-emerald-400' },
               ].map((a, i) => (
-                <div key={i} className="flex items-center gap-2 px-2.5 py-1.5 border-b border-[rgba(12,14,18,0.04)] last:border-0">
-                  <span className="text-[9px] font-bold text-[#0C0E12] w-8 flex-shrink-0">{a.time}</span>
-                  <span className="text-[9px] text-[#3A3D45] flex-1 truncate">{a.name}</span>
-                  <span className={`text-[8px] font-medium px-1.5 py-0.5 rounded-full ${a.color}`}>{a.status}</span>
+                <div key={i} className="flex items-center gap-2 px-2.5 py-1.5 border-b border-white/5 last:border-0">
+                  <span className="text-[9px] font-bold text-white/60 w-8 flex-shrink-0">{a.time}</span>
+                  <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${a.dot}`} />
+                  <span className="text-[9px] text-white/40 flex-1">{a.name}</span>
                 </div>
               ))}
             </div>
@@ -166,136 +136,226 @@ function DashboardMockup() {
 
 /* ─── Data ─────────────────────────────────────────────────── */
 const FEATURES = [
-  { icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 5a2 2 0 012-2h10a2 2 0 012 2v7a2 2 0 01-2 2H6l-4 3V5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M7 9h6M7 6h3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Assistant IA WhatsApp', desc: 'Répond à vos clients 24h/24. Tarifs, disponibilités, prise de RDV — dans votre style.', color: 'text-blue-500', bg: 'bg-blue-50' },
-  { icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="15" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M6 1v4M14 1v4M2 9h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><rect x="5" y="12" width="3" height="3" rx="0.5" fill="currentColor"/></svg>, title: 'Agenda intelligent', desc: 'Le client demande, l\'IA propose et confirme. Synchronisation temps réel. Zéro conflit.', color: 'text-violet-500', bg: 'bg-violet-50' },
-  { icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a6 6 0 016 6c0 4-6 10-6 10S4 12 4 8a6 6 0 016-6z" stroke="currentColor" strokeWidth="1.5"/><circle cx="10" cy="8" r="2" stroke="currentColor" strokeWidth="1.5"/></svg>, title: 'Rappels automatiques', desc: 'J-1 et 2h avant. Les absences chutent de 78%. Plus jamais un créneau perdu.', color: 'text-emerald-500', bg: 'bg-emerald-50' },
-  { icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 14l4-7 3 4 2-3 4 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><circle cx="16" cy="5" r="2" stroke="currentColor" strokeWidth="1.5"/><path d="M16 3V1M14 5h-2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>, title: 'Relances intelligentes', desc: 'BOS identifie les clients inactifs et les relance au bon moment. Fidélisation automatique.', color: 'text-rose-500', bg: 'bg-rose-50' },
-  { icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 15l4-5 3 3 4-6 5 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><rect x="2" y="2" width="16" height="16" rx="2" stroke="currentColor" strokeWidth="1.5"/></svg>, title: 'Analytics temps réel', desc: 'CA, taux de conversion, performance équipe — tout sur un seul tableau de bord.', color: 'text-amber-500', bg: 'bg-amber-50' },
-  { icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="7" cy="6" r="3" stroke="currentColor" strokeWidth="1.5"/><path d="M2 17c0-3.314 2.239-6 5-6s5 2.686 5 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="15" cy="5" r="2" stroke="currentColor" strokeWidth="1.5"/><path d="M18 13c0-2.209-1.343-4-3-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'CRM complet', desc: 'Historique client, notes, statuts, pipeline commercial. Votre mémoire institutionnelle.', color: 'text-cyan-500', bg: 'bg-cyan-50' },
-  { icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2v4M10 14v4M2 10h4M14 10h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="10" cy="10" r="3" stroke="currentColor" strokeWidth="1.5"/></svg>, title: 'Automatisations', desc: 'Workflows personnalisés, séquences emails, relances clients — sans intervention.', color: 'text-indigo-500', bg: 'bg-indigo-50' },
-  { icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="6" r="3.5" stroke="currentColor" strokeWidth="1.5"/><path d="M3 18c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Gestion d\'équipe', desc: 'Rôles et permissions granulaires. Journal d\'activité. Performance par collaborateur.', color: 'text-orange-500', bg: 'bg-orange-50' },
+  {
+    title: 'Assistant IA WhatsApp',
+    desc: 'Répond à vos clients 24h/24 en français et en darija. Gère les rendez-vous, les tarifs, les disponibilités — dans votre style.',
+    color: '#1A56FF', bg: 'rgba(26,86,255,0.1)',
+    icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M2 5a2 2 0 012-2h10a2 2 0 012 2v7a2 2 0 01-2 2H6l-4 3V5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M7 9h6M7 6h3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>,
+    size: 'large',
+  },
+  {
+    title: 'Agenda intelligent',
+    desc: 'Le client demande, l\'IA confirme. Zéro conflit, synchronisation temps réel.',
+    color: '#7C3AED', bg: 'rgba(124,58,237,0.08)',
+    icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="15" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M6 1v4M14 1v4M2 9h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><rect x="5" y="12" width="3" height="3" rx="0.5" fill="currentColor"/></svg>,
+    size: 'small',
+  },
+  {
+    title: 'Rappels automatiques',
+    desc: 'J-1 et 2h avant. −78% d\'absences. Plus jamais un créneau perdu.',
+    color: '#10B981', bg: 'rgba(16,185,129,0.08)',
+    icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a6 6 0 016 6c0 4-6 10-6 10S4 12 4 8a6 6 0 016-6z" stroke="currentColor" strokeWidth="1.5"/><circle cx="10" cy="8" r="2" stroke="currentColor" strokeWidth="1.5"/></svg>,
+    size: 'small',
+  },
+  {
+    title: 'Relances intelligentes',
+    desc: 'BOS identifie les clients inactifs et les relance au bon moment.',
+    color: '#F59E0B', bg: 'rgba(245,158,11,0.08)',
+    icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 14l4-7 3 4 2-3 4 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+    size: 'small',
+  },
+  {
+    title: 'Analytics temps réel',
+    desc: 'CA, conversions, performance — tout sur un seul dashboard.',
+    color: '#EF4444', bg: 'rgba(239,68,68,0.08)',
+    icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 15l4-5 3 3 4-6 5 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><rect x="2" y="2" width="16" height="16" rx="2" stroke="currentColor" strokeWidth="1.5"/></svg>,
+    size: 'small',
+  },
+  {
+    title: 'CRM complet',
+    desc: 'Historique client, notes, statuts, pipeline. La mémoire de votre établissement.',
+    color: '#06B6D4', bg: 'rgba(6,182,212,0.08)',
+    icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="7" cy="6" r="3" stroke="currentColor" strokeWidth="1.5"/><path d="M2 17c0-3.314 2.239-6 5-6s5 2.686 5 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="15" cy="5" r="2" stroke="currentColor" strokeWidth="1.5"/><path d="M18 13c0-2.209-1.343-4-3-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>,
+    size: 'medium',
+  },
+  {
+    title: 'Automatisations',
+    desc: 'Workflows, séquences emails, relances — tournent seuls, sans intervention.',
+    color: '#8B5CF6', bg: 'rgba(139,92,246,0.08)',
+    icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2v4M10 14v4M2 10h4M14 10h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="10" cy="10" r="3" stroke="currentColor" strokeWidth="1.5"/></svg>,
+    size: 'medium',
+  },
+  {
+    title: 'Gestion d\'équipe',
+    desc: 'Rôles et permissions granulaires. Journal d\'activité. Performance par collaborateur.',
+    color: '#F97316', bg: 'rgba(249,115,22,0.08)',
+    icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="6" r="3.5" stroke="currentColor" strokeWidth="1.5"/><path d="M3 18c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>,
+    size: 'small',
+  },
 ]
 
 const PLANS = [
-  { name: 'Starter', price: '749', desc: 'Pour démarrer et valider', features: ['Assistant IA WhatsApp', 'Gestion des rendez-vous', 'Rappels automatiques', '200 conversations/mois', 'CRM basique', '1 utilisateur'], featured: false, cta: 'Commencer' },
-  { name: 'Pro', price: '2 749', desc: 'Pour les équipes actives', features: ['Tout Starter inclus', 'Conversations illimitées', 'Relances automatiques', 'CRM complet', 'Analytics avancés', '3 utilisateurs', 'Support prioritaire'], featured: true, cta: 'Commencer maintenant' },
-  { name: 'Enterprise', price: '4 489', desc: 'Pour les grandes structures', features: ['Tout Pro inclus', 'Équipe illimitée', 'Intégrations custom', 'API dédiée', 'SLA garanti', 'Account manager dédié', 'Onboarding personnalisé'], featured: false, cta: 'Contacter l\'équipe' },
+  {
+    name: 'Starter',
+    price: '749',
+    desc: 'Pour démarrer et valider',
+    features: ['Assistant IA WhatsApp', 'Gestion des rendez-vous', 'Rappels automatiques', '200 conversations/mois', 'CRM basique', '1 utilisateur'],
+    featured: false,
+    cta: 'Commencer',
+  },
+  {
+    name: 'Pro',
+    price: '2 749',
+    desc: 'Pour les équipes actives',
+    features: ['Tout Starter inclus', 'Conversations illimitées', 'Relances automatiques', 'CRM complet', 'Analytics avancés', '3 utilisateurs', 'Support prioritaire'],
+    featured: true,
+    cta: 'Commencer maintenant',
+  },
+  {
+    name: 'Enterprise',
+    price: '4 489',
+    desc: 'Pour les grandes structures',
+    features: ['Tout Pro inclus', 'Équipe illimitée', 'Intégrations custom', 'API dédiée', 'SLA garanti', 'Account manager dédié', 'Onboarding personnalisé'],
+    featured: false,
+    cta: 'Contacter l\'équipe',
+  },
 ]
+
+/* ─── Section label component ──────────────────────────────── */
+function SectionLabel({ num, label }: { num: string; label: string }) {
+  return (
+    <div className="flex items-center gap-3 mb-10">
+      <span className="text-[11px] font-bold tracking-[0.15em] uppercase" style={{ color: '#1A56FF' }}>{num}</span>
+      <div className="w-8 h-px" style={{ background: '#1A56FF' }} />
+      <span className="text-[11px] font-medium text-[#9CA3AF] tracking-[0.1em] uppercase">{label}</span>
+    </div>
+  )
+}
 
 /* ─── Page ─────────────────────────────────────────────────── */
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
-
       <SiteNav />
 
-      {/* ── HERO ── */}
-      <section className="relative pt-24 pb-16 px-6 md:px-12 overflow-hidden">
-        {/* Background: animated mesh gradient + particles + grid watermark + grain */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
-          <div className="animate-mesh" style={{ position:'absolute', top:'-25%', left:'15%', width:780, height:780, background:'radial-gradient(ellipse, rgba(26,86,255,0.10) 0%, transparent 65%)', borderRadius:'50%' }}/>
-          <div className="animate-mesh" style={{ position:'absolute', top:'5%', right:'0%', width:560, height:560, background:'radial-gradient(ellipse, rgba(124,58,237,0.08) 0%, transparent 65%)', borderRadius:'50%', animationDelay:'-4s' }}/>
-          <div className="animate-mesh" style={{ position:'absolute', bottom:'-15%', left:'40%', width:480, height:480, background:'radial-gradient(ellipse, rgba(16,185,129,0.05) 0%, transparent 65%)', borderRadius:'50%', animationDelay:'-8s' }}/>
-          <HeroCanvas />
-          <div className="absolute inset-0 bg-grid-watermark" style={{ maskImage: 'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)' }} />
-          <div className="absolute inset-0 bg-grain" />
+      {/* ══════════════════════════════════════
+          HERO — dark, centered, dashboard below
+      ══════════════════════════════════════ */}
+      <section style={{ background: 'linear-gradient(180deg, #080A0E 0%, #0C0E12 100%)' }} className="relative pt-28 overflow-hidden">
+        {/* Background glows */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden>
+          <div style={{ position: 'absolute', top: '-5%', left: '50%', transform: 'translateX(-50%)', width: 900, height: 700, background: 'radial-gradient(ellipse, rgba(26,86,255,0.14) 0%, transparent 55%)', borderRadius: '50%' }} />
+          <div style={{ position: 'absolute', top: '30%', right: '-5%', width: 500, height: 500, background: 'radial-gradient(ellipse, rgba(124,58,237,0.1) 0%, transparent 60%)', borderRadius: '50%' }} />
+          {/* Grid overlay */}
+          <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)', backgroundSize: '56px 56px' }} />
         </div>
 
-        <div className="max-w-6xl mx-auto relative">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left */}
-            <div className="animate-slide-up">
-              <Link href="/nouveautes" className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 bg-[#EEF2FF] border border-[rgba(26,86,255,0.2)] rounded-full text-[#1A56FF] text-xs font-semibold hover:bg-[#E0E7FF] transition-colors">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#1A56FF] animate-pulse flex-shrink-0" />
-                Nouveau : pages secteurs détaillées & comparatif
-                <svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </Link>
+        <div className="max-w-5xl mx-auto px-6 text-center relative">
+          {/* Badge */}
+          <Link href="/nouveautes" className="inline-flex items-center gap-2.5 mb-10 px-4 py-2 rounded-full text-[12px] text-white/40 hover:text-white/60 transition-colors" style={{ border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)' }}>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#1A56FF] flex-shrink-0" />
+            Nouveau : pages secteurs détaillées & comparatif
+            <span className="opacity-40">→</span>
+          </Link>
 
-              <h1 className="text-[48px] md:text-[64px] font-bold leading-[1.03] tracking-[-0.02em] text-[#0C0E12] mb-5 font-display">
-                L&apos;infrastructure<br/>client des{' '}
-                <span style={{ background:'linear-gradient(135deg,#1A56FF 0%,#7C3AED 100%)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>
-                  entreprises<br/>marocaines
-                </span>
-              </h1>
+          {/* Headline */}
+          <h1 className="font-bold leading-[0.92] tracking-[-0.03em] text-white mb-7 font-display" style={{ fontSize: 'clamp(52px, 8vw, 92px)' }}>
+            L&apos;infrastructure<br />
+            <span style={{ background: 'linear-gradient(135deg, #5B8DFF 0%, #A78BFA 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+              client
+            </span>
+            {' '}des<br />
+            entreprises<br />
+            marocaines.
+          </h1>
 
-              <p className="text-lg text-[#3A3D45] leading-relaxed mb-8 max-w-lg font-light">
-                BOS remplace WhatsApp, Excel et le carnet papier par un système IA complet — rendez-vous automatisés, rappels, CRM, analytics. Tout sur une plateforme.
-              </p>
+          <p className="text-white/35 text-lg max-w-lg mx-auto mb-10 font-light leading-relaxed">
+            BOS remplace WhatsApp, Excel et le carnet papier — rendez-vous automatisés, rappels, CRM, analytics. Tout sur une plateforme.
+          </p>
 
-              <div className="flex flex-col sm:flex-row gap-3 mb-8">
-                <MagneticButton href="/inscription" className="items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-base font-semibold text-white hover:-translate-y-0.5" style={{ background:'linear-gradient(135deg,#0C0E12,#1e2330)', boxShadow:'0 4px 16px rgba(12,14,18,0.25)' }}>
-                  Commencer gratuitement — 7 jours →
-                </MagneticButton>
-                <Link href="/connexion" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-base font-medium text-[#3A3D45] border border-[rgba(12,14,18,0.12)] hover:bg-[#F7F8FA] transition-all">
-                  Se connecter
-                </Link>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-5">
-                {[
-                  { v:-78, suffix:'%', l:'de no-shows', c:'#10B981' },
-                  { v:24, suffix:'/7', l:'disponibilité', c:'#1A56FF' },
-                  { v:40, prefix:'+', suffix:'%', l:'conversions', c:'#7C3AED' },
-                ].map(({ v, l, c, prefix, suffix }) => (
-                  <div key={l} className="flex items-center gap-2">
-                    <span className="text-xl font-bold font-display" style={{ color:c }}>
-                      <AnimatedCounter value={v} prefix={prefix} suffix={suffix} />
-                    </span>
-                    <span className="text-sm text-[#7A7F8E]">{l}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right — Dashboard mockup */}
-            <div className="hidden lg:block relative animate-float-slow">
-              <TiltCard>
-                <DashboardMockup />
-              </TiltCard>
-            </div>
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-14">
+            <MagneticButton
+              href="/inscription"
+              className="items-center justify-center gap-2 px-8 py-4 rounded-2xl text-[15px] font-semibold text-white"
+              style={{ background: 'linear-gradient(135deg, #1A56FF, #7C3AED)', boxShadow: '0 0 0 1px rgba(26,86,255,0.4), 0 8px 32px rgba(26,86,255,0.35)' }}
+            >
+              Commencer gratuitement — 7 jours
+            </MagneticButton>
+            <Link href="/connexion" className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-[15px] font-medium text-white/50 hover:text-white/70 transition-colors" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
+              Se connecter
+            </Link>
           </div>
-        </div>
-      </section>
 
-      {/* ── TRUSTED BY / STATS BAR ── */}
-      <section className="py-10 px-6 md:px-12 border-y border-[rgba(12,14,18,0.06)] bg-[#F7F8FA]">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-            <p className="text-xs font-semibold text-[#B0B5C3] uppercase tracking-widest text-center md:text-left">Résultats moyens observés</p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {[
-                { v:78, suffix:'%', l:'de réduction des absences' },
-                { v:3, suffix:'×', l:'plus de clients convertis' },
-                { v:3, prefix:'< ', suffix:'s', l:'temps de réponse IA' },
-                { v:2, suffix:'h', l:'gagnées par jour' },
-              ].map(({ v, l, prefix, suffix }) => (
-                <div key={l} className="text-center">
-                  <div className="text-2xl font-bold text-[#0C0E12] font-display">
-                    <AnimatedCounter value={v} prefix={prefix} suffix={suffix} />
-                  </div>
-                  <div className="text-xs text-[#7A7F8E] mt-0.5">{l}</div>
+          {/* Stats row */}
+          <div className="flex flex-wrap justify-center gap-10 pb-16" style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '3rem', marginTop: '0' }}>
+            {[
+              { v: -78, suffix: '%', l: 'de no-shows en moins' },
+              { v: 24, suffix: '/7', l: 'disponibilité IA' },
+              { v: 40, prefix: '+', suffix: '%', l: 'de conversions' },
+              { v: 2, suffix: 'h', l: 'gagnées par jour' },
+            ].map(s => (
+              <div key={s.l} className="text-center">
+                <div className="text-[28px] font-bold text-white font-display leading-none mb-1">
+                  <AnimatedCounter value={s.v} prefix={s.prefix} suffix={s.suffix} />
                 </div>
-              ))}
-            </div>
+                <div className="text-[12px] text-white/25">{s.l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Dashboard showcase — bleeds into white below */}
+        <div className="relative px-6 md:px-12 max-w-5xl mx-auto" style={{ paddingBottom: 0 }}>
+          <div className="absolute inset-x-0 -top-8" style={{ height: 120, background: 'radial-gradient(ellipse 50% 100% at 50% 50%, rgba(26,86,255,0.18) 0%, transparent 70%)' }} />
+          <TiltCard>
+            <DashboardMockup />
+          </TiltCard>
+        </div>
+
+        {/* Gradient to white */}
+        <div style={{ height: 80, background: 'linear-gradient(to bottom, #0C0E12, white)', marginTop: -1 }} />
+      </section>
+
+      {/* ══════════════════════════════════════
+          MARQUEE
+      ══════════════════════════════════════ */}
+      <Marquee />
+
+      {/* ══════════════════════════════════════
+          STATS BAR
+      ══════════════════════════════════════ */}
+      <section className="py-20 px-6 bg-white" style={{ borderBottom: '1px solid rgba(12,14,18,0.06)' }}>
+        <div className="max-w-5xl mx-auto">
+          <p className="text-center text-[11px] font-semibold text-[#C0C4CE] uppercase tracking-[0.18em] mb-12">Résultats observés en moyenne sur nos clients</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-0 divide-x divide-[rgba(12,14,18,0.06)]">
+            {[
+              { v: 78, suffix: '%', l: 'de réduction des absences', color: '#10B981' },
+              { v: 3, suffix: '×', l: 'plus de clients convertis', color: '#1A56FF' },
+              { v: 3, prefix: '< ', suffix: 's', l: 'temps de réponse IA', color: '#7C3AED' },
+              { v: 240, prefix: '+', l: 'entreprises équipées', color: '#F59E0B' },
+            ].map(({ v, l, prefix, suffix, color }) => (
+              <div key={l} className="text-center py-4 px-4">
+                <div className="text-[42px] font-bold font-display leading-none mb-2" style={{ color }}>
+                  <AnimatedCounter value={v} prefix={prefix} suffix={suffix} />
+                </div>
+                <div className="text-[12px] text-[#9CA3AF] leading-snug">{l}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ── COMMENT ÇA MARCHE ── */}
-      <section id="comment" className="py-24 px-6 md:px-12">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
-              En 3 étapes
-            </div>
-            <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Opérationnel en 5 minutes</h2>
-            <p className="text-lg text-[#3A3D45] mt-3 font-light">Pas de formation. Pas de technicien. Juste votre navigateur.</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6 relative">
-            {/* Connecting line — animated automation pulse */}
-            <FlowPulse />
-
+      {/* ══════════════════════════════════════
+          COMMENT ÇA MARCHE — vertical steps
+      ══════════════════════════════════════ */}
+      <section id="comment" className="py-24 px-6 bg-white">
+        <div className="max-w-3xl mx-auto">
+          <SectionLabel num="01" label="Comment ça marche" />
+          <h2 className="font-bold text-[#0C0E12] tracking-[-0.02em] leading-tight mb-16 font-display" style={{ fontSize: 'clamp(36px, 5vw, 52px)' }}>
+            Opérationnel<br />en 5 minutes.
+          </h2>
+          <div className="space-y-0">
             {[
               {
                 n: '01',
@@ -303,15 +363,15 @@ export default function HomePage() {
                 desc: 'Inscrivez-vous en 30 secondes. Choisissez votre secteur, renseignez votre établissement. Aucune carte bancaire requise.',
                 color: '#1A56FF',
                 bg: '#EEF2FF',
-                icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="currentColor" strokeWidth="1.5"/><path d="M4 19c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><path d="M15 5h4M17 3v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>,
+                icon: <svg width="20" height="20" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="currentColor" strokeWidth="1.5"/><path d="M4 19c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><path d="M15 5h4M17 3v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>,
               },
               {
                 n: '02',
                 title: 'Configurez l\'IA',
-                desc: 'Donnez à l\'IA votre style de communication, vos horaires et vos services. Elle apprend votre façon de parler à vos clients.',
+                desc: 'Donnez à l\'IA votre style, vos horaires et vos services. Elle apprend votre façon de parler à vos clients.',
                 color: '#7C3AED',
                 bg: '#F5F3FF',
-                icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="1.5"/><path d="M8.5 10c0-1.38.895-2.5 2-2.5s2 1.12 2 2.5c0 1.663-2 3-2 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="11" cy="15.5" r=".75" fill="currentColor"/></svg>,
+                icon: <svg width="20" height="20" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="1.5"/><path d="M8.5 10c0-1.38.895-2.5 2-2.5s2 1.12 2 2.5c0 1.663-2 3-2 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="11" cy="15.5" r=".75" fill="currentColor"/></svg>,
               },
               {
                 n: '03',
@@ -319,19 +379,21 @@ export default function HomePage() {
                 desc: 'L\'IA répond sur WhatsApp, confirme les RDV, envoie des rappels, relance les inactifs. Vous vous concentrez sur votre métier.',
                 color: '#10B981',
                 bg: '#ECFDF5',
-                icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 11l5 5 9-9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+                icon: <svg width="20" height="20" viewBox="0 0 22 22" fill="none"><path d="M4 11l5 5 9-9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
               },
             ].map((step, i) => (
               <ScrollReveal key={step.n} delay={i * 100}>
-                <div className="relative bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-7 hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(12,14,18,0.08)] transition-all duration-200" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.06)' }}>
-                  <div className="flex items-start justify-between mb-5">
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background:step.bg, color:step.color }}>
+                <div className="flex gap-8 py-10" style={{ borderBottom: i < 2 ? '1px solid rgba(12,14,18,0.06)' : undefined }}>
+                  <div className="font-bold font-display leading-none text-right w-14 flex-shrink-0 pt-3 select-none" style={{ fontSize: 48, color: 'rgba(12,14,18,0.05)' }}>
+                    {step.n}
+                  </div>
+                  <div className="flex-1 pt-1">
+                    <div className="w-10 h-10 rounded-2xl flex items-center justify-center mb-5 flex-shrink-0" style={{ background: step.bg, color: step.color }}>
                       {step.icon}
                     </div>
-                    <span className="text-5xl font-bold font-display leading-none" style={{ color:'rgba(12,14,18,0.05)' }}>{step.n}</span>
+                    <h3 className="text-[18px] font-bold text-[#0C0E12] mb-2">{step.title}</h3>
+                    <p className="text-[#7A7F8E] leading-relaxed">{step.desc}</p>
                   </div>
-                  <h3 className="text-base font-bold text-[#0C0E12] mb-2">{step.title}</h3>
-                  <p className="text-sm text-[#7A7F8E] leading-relaxed">{step.desc}</p>
                 </div>
               </ScrollReveal>
             ))}
@@ -339,88 +401,184 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── FEATURES ── */}
-      <section id="fonctionnalites" className="py-24 px-6 md:px-12 bg-[#F7F8FA]">
+      {/* ══════════════════════════════════════
+          FEATURES — bento grid
+      ══════════════════════════════════════ */}
+      <section id="fonctionnalites" className="py-24 px-6" style={{ background: '#F8F7F4' }}>
         <div className="max-w-5xl mx-auto">
-          <div className="mb-14 max-w-xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-white border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
-              Fonctionnalités
-            </div>
-            <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Tout ce dont vous avez besoin</h2>
-            <p className="text-lg text-[#3A3D45] font-light">Chaque fonctionnalité résout un problème réel des entreprises marocaines.</p>
+          <SectionLabel num="02" label="Fonctionnalités" />
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+            <h2 className="font-bold text-[#0C0E12] tracking-[-0.02em] leading-tight font-display" style={{ fontSize: 'clamp(32px, 4vw, 46px)' }}>
+              Tout ce dont vous<br />avez besoin.
+            </h2>
+            <p className="text-[#7A7F8E] max-w-xs leading-relaxed text-sm">Chaque fonctionnalité résout un problème réel des entreprises marocaines.</p>
           </div>
-          <div className="flex flex-wrap justify-center gap-4">
-            {FEATURES.map(f => (
-              <div key={f.title} className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-6 hover:border-[rgba(26,86,255,0.2)] hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(12,14,18,0.08)] transition-all duration-200 group w-full md:w-[calc(33.333%-11px)]" style={{ boxShadow:'0 1px 2px rgba(12,14,18,0.04), 0 2px 6px rgba(12,14,18,0.03)' }}>
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${f.bg} ${f.color}`}>{f.icon}</div>
-                <div className="text-sm font-semibold text-[#0C0E12] mb-2 group-hover:text-[#1A56FF] transition-colors">{f.title}</div>
-                <div className="text-sm text-[#7A7F8E] leading-relaxed">{f.desc}</div>
+
+          {/* Bento grid */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+            {/* LARGE — Assistant IA (spans 2 rows, 5 cols) */}
+            <ScrollReveal className="md:col-span-5 md:row-span-2">
+              <div className="h-full rounded-3xl p-8 flex flex-col" style={{ background: '#0C0E12', minHeight: 280 }}>
+                <div className="w-11 h-11 rounded-2xl flex items-center justify-center mb-6 flex-shrink-0" style={{ background: 'rgba(26,86,255,0.2)', color: '#6BA3FF' }}>
+                  {FEATURES[0].icon}
+                </div>
+                <div className="text-white text-[18px] font-bold mb-3">{FEATURES[0].title}</div>
+                <div className="text-white/40 leading-relaxed text-sm flex-1">{FEATURES[0].desc}</div>
+                <div className="mt-8 flex flex-wrap gap-2">
+                  {['darija', 'français', 'arabe', '24/7'].map(tag => (
+                    <span key={tag} className="px-2.5 py-1 rounded-full text-[11px] font-medium text-[#5B8DFF]" style={{ background: 'rgba(26,86,255,0.15)' }}>{tag}</span>
+                  ))}
+                </div>
               </div>
-            ))}
+            </ScrollReveal>
+
+            {/* SMALL top-right: Agenda */}
+            <ScrollReveal className="md:col-span-4" delay={60}>
+              <div className="rounded-3xl p-6 bg-white h-full" style={{ border: '1px solid rgba(12,14,18,0.07)' }}>
+                <div className="w-10 h-10 rounded-2xl flex items-center justify-center mb-4" style={{ background: FEATURES[1].bg, color: FEATURES[1].color }}>
+                  {FEATURES[1].icon}
+                </div>
+                <div className="text-[15px] font-bold text-[#0C0E12] mb-1.5">{FEATURES[1].title}</div>
+                <div className="text-[13px] text-[#7A7F8E] leading-relaxed">{FEATURES[1].desc}</div>
+              </div>
+            </ScrollReveal>
+
+            {/* SMALL top-right: Rappels */}
+            <ScrollReveal className="md:col-span-3" delay={100}>
+              <div className="rounded-3xl p-6 h-full" style={{ background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.12)' }}>
+                <div className="w-10 h-10 rounded-2xl flex items-center justify-center mb-4" style={{ background: 'rgba(16,185,129,0.15)', color: '#10B981' }}>
+                  {FEATURES[2].icon}
+                </div>
+                <div className="text-[15px] font-bold text-[#0C0E12] mb-1.5">{FEATURES[2].title}</div>
+                <div className="text-[13px] text-[#7A7F8E] leading-relaxed">{FEATURES[2].desc}</div>
+              </div>
+            </ScrollReveal>
+
+            {/* SMALL row 2: Relances */}
+            <ScrollReveal className="md:col-span-4" delay={80}>
+              <div className="rounded-3xl p-6 bg-white h-full" style={{ border: '1px solid rgba(12,14,18,0.07)' }}>
+                <div className="w-10 h-10 rounded-2xl flex items-center justify-center mb-4" style={{ background: FEATURES[3].bg, color: FEATURES[3].color }}>
+                  {FEATURES[3].icon}
+                </div>
+                <div className="text-[15px] font-bold text-[#0C0E12] mb-1.5">{FEATURES[3].title}</div>
+                <div className="text-[13px] text-[#7A7F8E] leading-relaxed">{FEATURES[3].desc}</div>
+              </div>
+            </ScrollReveal>
+
+            {/* SMALL row 2: Analytics */}
+            <ScrollReveal className="md:col-span-3" delay={120}>
+              <div className="rounded-3xl p-6 h-full" style={{ background: 'rgba(239,68,68,0.04)', border: '1px solid rgba(239,68,68,0.1)' }}>
+                <div className="w-10 h-10 rounded-2xl flex items-center justify-center mb-4" style={{ background: 'rgba(239,68,68,0.1)', color: '#EF4444' }}>
+                  {FEATURES[4].icon}
+                </div>
+                <div className="text-[15px] font-bold text-[#0C0E12] mb-1.5">{FEATURES[4].title}</div>
+                <div className="text-[13px] text-[#7A7F8E] leading-relaxed">{FEATURES[4].desc}</div>
+              </div>
+            </ScrollReveal>
+
+            {/* WIDE bottom: CRM */}
+            <ScrollReveal className="md:col-span-7" delay={60}>
+              <div className="rounded-3xl p-6 h-full flex gap-5" style={{ background: 'rgba(6,182,212,0.04)', border: '1px solid rgba(6,182,212,0.12)' }}>
+                <div className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0 mt-1" style={{ background: 'rgba(6,182,212,0.1)', color: '#06B6D4' }}>
+                  {FEATURES[5].icon}
+                </div>
+                <div>
+                  <div className="text-[15px] font-bold text-[#0C0E12] mb-1.5">{FEATURES[5].title}</div>
+                  <div className="text-[13px] text-[#7A7F8E] leading-relaxed">{FEATURES[5].desc}</div>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            {/* Auto */}
+            <ScrollReveal className="md:col-span-5" delay={100}>
+              <div className="rounded-3xl p-6 h-full flex gap-5" style={{ background: 'rgba(139,92,246,0.05)', border: '1px solid rgba(139,92,246,0.12)' }}>
+                <div className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0 mt-1" style={{ background: 'rgba(139,92,246,0.1)', color: '#8B5CF6' }}>
+                  {FEATURES[6].icon}
+                </div>
+                <div>
+                  <div className="text-[15px] font-bold text-[#0C0E12] mb-1.5">{FEATURES[6].title}</div>
+                  <div className="text-[13px] text-[#7A7F8E] leading-relaxed">{FEATURES[6].desc}</div>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            {/* Équipe — full width */}
+            <ScrollReveal className="md:col-span-12" delay={80}>
+              <div className="rounded-3xl p-6 flex flex-col md:flex-row md:items-center gap-5 justify-between" style={{ background: '#0C0E12' }}>
+                <div className="flex gap-5 items-start">
+                  <div className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(249,115,22,0.2)', color: '#FB923C' }}>
+                    {FEATURES[7].icon}
+                  </div>
+                  <div>
+                    <div className="text-[15px] font-bold text-white mb-1">{FEATURES[7].title}</div>
+                    <div className="text-[13px] text-white/40 leading-relaxed">{FEATURES[7].desc}</div>
+                  </div>
+                </div>
+                <Link href="/inscription" className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-[13px] font-semibold text-white hover:opacity-90 transition-all" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                  Voir toutes les fonctionnalités →
+                </Link>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* ── SECTORS ── */}
-      <section id="secteurs" className="py-24 px-6 md:px-12">
+      {/* ══════════════════════════════════════
+          SECTORS
+      ══════════════════════════════════════ */}
+      <section id="secteurs" className="py-24 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col items-center text-center gap-4 mb-14">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
-              Secteurs
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+              <SectionLabel num="03" label="Secteurs" />
+              <h2 className="font-bold text-[#0C0E12] tracking-[-0.02em] leading-tight font-display" style={{ fontSize: 'clamp(32px, 4vw, 46px)' }}>
+                Une plateforme,<br />tous les métiers.
+              </h2>
             </div>
-            <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Une plateforme<br/>Tous les secteurs</h2>
-            <p className="text-lg text-[#3A3D45] font-light max-w-md">Adapté à chaque métier, conçu pour la réalité marocaine.</p>
+            <p className="text-[#7A7F8E] max-w-xs text-sm leading-relaxed">Adapté à chaque secteur, conçu pour la réalité marocaine.</p>
           </div>
-          <div className="flex flex-wrap justify-center gap-3">
-            {SECTORS.map(s => (
-              <Link key={s.slug} href={`/secteurs/${s.slug}`} className="p-5 border border-[rgba(12,14,18,0.08)] rounded-2xl hover:border-[rgba(26,86,255,0.25)] hover:bg-[#EEF2FF] hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(26,86,255,0.10)] transition-all duration-200 group w-[calc(50%-6px)] md:w-[calc(25%-9px)]" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.04)' }}>
-                <div className="w-10 h-10 rounded-xl bg-[#F7F8FA] group-hover:bg-white flex items-center justify-center text-[#3A3D45] group-hover:text-[#1A56FF] mb-3 transition-all">
-                  {s.icon}
-                </div>
-                <div className="text-sm font-semibold text-[#0C0E12] group-hover:text-[#1A56FF] transition-colors mb-0.5">{s.name}</div>
-                <div className="text-[11px] text-[#B0B5C3] mb-2">{s.shortDesc}</div>
-                <div className="text-[11px] font-semibold text-[#1A56FF] opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                  En savoir plus
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                </div>
-              </Link>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {SECTORS.map((s, i) => (
+              <ScrollReveal key={s.slug} delay={i * 40}>
+                <Link href={`/secteurs/${s.slug}`} className="group block p-5 rounded-2xl transition-all duration-200 hover:-translate-y-1" style={{ border: '1px solid rgba(12,14,18,0.07)', background: 'white' }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(26,86,255,0.25)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 12px 32px rgba(26,86,255,0.08)'; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(12,14,18,0.07)'; (e.currentTarget as HTMLElement).style.boxShadow = ''; }}>
+                  <div className="w-10 h-10 rounded-xl bg-[#F7F8FA] group-hover:bg-[#EEF2FF] flex items-center justify-center text-[#7A7F8E] group-hover:text-[#1A56FF] mb-3 transition-all">
+                    {s.icon}
+                  </div>
+                  <div className="text-[13px] font-semibold text-[#0C0E12] mb-0.5">{s.name}</div>
+                  <div className="text-[11px] text-[#B0B5C3]">{s.shortDesc}</div>
+                </Link>
+              </ScrollReveal>
             ))}
           </div>
-          <div className="flex justify-center mt-8">
-            <Link href="/secteurs" className="text-sm font-semibold text-[#1A56FF] hover:underline">Voir tous les secteurs en détail →</Link>
+          <div className="flex justify-start mt-8">
+            <Link href="/secteurs" className="text-[13px] font-semibold text-[#1A56FF] hover:underline flex items-center gap-1.5">
+              Voir tous les secteurs
+              <svg width="12" height="12" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* ── AVANT / APRÈS ── */}
-      <section className="py-24 px-6 md:px-12 relative overflow-hidden" style={{ background:'linear-gradient(135deg,#0C0E12 0%,#141A30 60%,#0A1020 100%)' }}>
-        {/* Background glows */}
-        <div className="absolute inset-0 pointer-events-none" aria-hidden>
-          <div style={{ position:'absolute', top:'-20%', left:'10%', width:600, height:600, background:'radial-gradient(ellipse, rgba(26,86,255,0.12) 0%, transparent 60%)', borderRadius:'50%' }}/>
-          <div style={{ position:'absolute', bottom:'-20%', right:'5%', width:500, height:500, background:'radial-gradient(ellipse, rgba(124,58,237,0.1) 0%, transparent 60%)', borderRadius:'50%' }}/>
-          {/* Dot grid */}
-          <div className="absolute inset-0" style={{ backgroundImage:'radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)', backgroundSize:'28px 28px' }}/>
-        </div>
-
-        <div className="max-w-5xl mx-auto relative">
-          <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 bg-white/10 rounded-full text-white/50 text-xs font-semibold">
-              Transformation
-            </div>
-            <h2 className="text-[40px] font-bold tracking-tight text-white font-display mb-3">Remplacez le chaos par la clarté</h2>
-            <p className="text-white/40 text-lg font-light">Tout ce que BOS remplace. Tout ce qu&apos;il apporte.</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-4">
-            {/* AVANT */}
-            <div className="rounded-2xl p-8 border" style={{ background:'rgba(239,68,68,0.04)', borderColor:'rgba(239,68,68,0.15)' }}>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background:'rgba(239,68,68,0.15)' }}>
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 2l10 10M12 2L2 12" stroke="#ef4444" strokeWidth="1.8" strokeLinecap="round"/></svg>
+      {/* ══════════════════════════════════════
+          AVANT / APRÈS — true split screen
+      ══════════════════════════════════════ */}
+      <section className="overflow-hidden">
+        <div className="grid md:grid-cols-2">
+          {/* AVANT — dark */}
+          <div className="px-8 md:px-12 lg:px-16 py-20" style={{ background: '#0C0E12' }}>
+            <div className="max-w-md ml-auto">
+              <div className="flex items-center gap-2 mb-10">
+                <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(239,68,68,0.2)' }}>
+                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 1l6 6M7 1L1 7" stroke="#ef4444" strokeWidth="1.5" strokeLinecap="round"/></svg>
                 </div>
-                <span className="text-sm font-bold text-red-400 uppercase tracking-wider">Avant BOS</span>
+                <span className="text-[11px] font-bold text-red-400 uppercase tracking-[0.15em]">Avant BOS</span>
               </div>
-              <div className="space-y-3.5">
+              <h2 className="font-bold text-white tracking-tight mb-10 font-display" style={{ fontSize: 'clamp(28px, 3vw, 38px)' }}>
+                Le chaos du<br />quotidien.
+              </h2>
+              <div className="space-y-5">
                 {[
                   'WhatsApp débordé, messages manqués',
                   'Excel avec 47 onglets non mis à jour',
@@ -428,26 +586,31 @@ export default function HomePage() {
                   'Aucune visibilité sur le chiffre d\'affaires',
                   'Absences fréquentes, créneaux perdus',
                   'Zéro statistiques, décisions à l\'aveugle',
-                ].map(item => (
-                  <div key={item} className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background:'rgba(239,68,68,0.15)' }}>
-                      <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 1l6 6M7 1L1 7" stroke="#ef4444" strokeWidth="1.5" strokeLinecap="round"/></svg>
+                ].map((item, i) => (
+                  <ScrollReveal key={item} delay={i * 60}>
+                    <div className="flex items-start gap-3">
+                      <span className="text-red-500/30 flex-shrink-0 mt-0.5 text-lg leading-none">—</span>
+                      <span className="text-white/35 text-[14px] leading-relaxed">{item}</span>
                     </div>
-                    <span className="text-sm text-white/40 leading-relaxed">{item}</span>
-                  </div>
+                  </ScrollReveal>
                 ))}
               </div>
             </div>
+          </div>
 
-            {/* APRÈS */}
-            <div className="rounded-2xl p-8 border" style={{ background:'rgba(16,185,129,0.04)', borderColor:'rgba(16,185,129,0.2)' }}>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background:'rgba(16,185,129,0.15)' }}>
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7l4 4 8-8" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          {/* APRÈS — white */}
+          <div className="px-8 md:px-12 lg:px-16 py-20 bg-white" style={{ borderLeft: '1px solid rgba(12,14,18,0.06)' }}>
+            <div className="max-w-md">
+              <div className="flex items-center gap-2 mb-10">
+                <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(16,185,129,0.15)' }}>
+                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4l2.5 2.5 4.5-5" stroke="#10B981" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </div>
-                <span className="text-sm font-bold text-emerald-400 uppercase tracking-wider">Après BOS</span>
+                <span className="text-[11px] font-bold text-emerald-600 uppercase tracking-[0.15em]">Après BOS</span>
               </div>
-              <div className="space-y-3.5">
+              <h2 className="font-bold text-[#0C0E12] tracking-tight mb-10 font-display" style={{ fontSize: 'clamp(28px, 3vw, 38px)' }}>
+                La clarté au<br />quotidien.
+              </h2>
+              <div className="space-y-5">
                 {[
                   'IA WhatsApp qui répond en moins de 3 secondes',
                   'CRM centralisé, historique complet par client',
@@ -455,233 +618,335 @@ export default function HomePage() {
                   'Dashboard temps réel — CA, RDV, tendances',
                   '−78% d\'absences grâce aux rappels automatiques',
                   'Analytics complets chaque semaine',
-                ].map(item => (
-                  <div key={item} className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background:'rgba(16,185,129,0.15)' }}>
-                      <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4l2.5 2.5 4.5-5" stroke="#10B981" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                ].map((item, i) => (
+                  <ScrollReveal key={item} delay={i * 60}>
+                    <div className="flex items-start gap-3">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="flex-shrink-0 mt-0.5">
+                        <circle cx="8" cy="8" r="7" fill="#ECFDF5"/>
+                        <path d="M4.5 8l2.5 2.5 4.5-5" stroke="#10B981" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      <span className="text-[#3A3D45] text-[14px] leading-relaxed">{item}</span>
                     </div>
-                    <span className="text-sm text-white/70 leading-relaxed">{item}</span>
+                  </ScrollReveal>
+                ))}
+              </div>
+              <div className="mt-10">
+                <Link href="/inscription" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-[13px] font-semibold text-white hover:-translate-y-px transition-all" style={{ background: 'linear-gradient(135deg, #1A56FF, #7C3AED)', boxShadow: '0 4px 16px rgba(26,86,255,0.3)' }}>
+                  Passer à l&apos;après maintenant →
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════
+          TESTIMONIALS — featured + 2 small
+      ══════════════════════════════════════ */}
+      <section className="py-24 px-6" style={{ background: '#F8F7F4' }}>
+        <div className="max-w-5xl mx-auto">
+          <SectionLabel num="04" label="Témoignages" />
+          <h2 className="font-bold text-[#0C0E12] tracking-[-0.02em] leading-tight mb-12 font-display" style={{ fontSize: 'clamp(32px, 4vw, 46px)' }}>
+            Ce que nos clients<br />disent.
+          </h2>
+          <div className="grid md:grid-cols-3 gap-5">
+            {/* Featured */}
+            <ScrollReveal className="md:col-span-2">
+              <div className="rounded-3xl p-10 h-full flex flex-col" style={{ background: '#0C0E12' }}>
+                <div className="flex gap-1 mb-8">
+                  {[...Array(5)].map((_, j) => (
+                    <svg key={j} width="16" height="16" viewBox="0 0 14 14" fill="#F59E0B"><path d="M7 1l1.5 4h4.5l-3.5 2.5 1.5 4L7 9 3 11.5l1.5-4L1 5h4.5z"/></svg>
+                  ))}
+                </div>
+                <p className="text-white text-[22px] font-medium leading-[1.4] flex-1 mb-8">&ldquo;Depuis BOS, je ne reçois plus d&apos;appels manqués. L&apos;IA répond, planifie et rappelle mes patients. J&apos;ai récupéré 2h par jour — et mes patients sont mieux suivis que jamais.&rdquo;</p>
+                <div className="flex items-center gap-4 pt-6" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+                  <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-sm font-bold text-white flex-shrink-0">YB</div>
+                  <div>
+                    <div className="text-[13px] font-semibold text-white">Dr. Youssef Bennani</div>
+                    <div className="text-[12px] text-white/30">Dermatologue, Casablanca</div>
                   </div>
+                </div>
+              </div>
+            </ScrollReveal>
+            {/* Two small */}
+            <div className="space-y-5">
+              {[
+                { name: 'Farid Alaoui', role: 'Directeur, Garage Elite Rabat', initials: 'FA', color: 'bg-amber-500', quote: 'Mes clients reçoivent des rappels automatiques pour les révisions. Le taux de retour a augmenté de 35% en 3 mois.' },
+                { name: 'Salma Chraibi', role: 'Directrice, École Innovate', initials: 'SC', color: 'bg-violet-600', quote: 'Le tableau de bord me donne une vision complète. Je sais exactement combien d\'inscrits et ce que ça représente en CA.' },
+              ].map((t, i) => (
+                <ScrollReveal key={i} delay={i * 100}>
+                  <div className="bg-white rounded-3xl p-6 h-full" style={{ border: '1px solid rgba(12,14,18,0.07)' }}>
+                    <div className="flex gap-0.5 mb-4">
+                      {[...Array(5)].map((_, j) => (
+                        <svg key={j} width="13" height="13" viewBox="0 0 14 14" fill="#F59E0B"><path d="M7 1l1.5 4h4.5l-3.5 2.5 1.5 4L7 9 3 11.5l1.5-4L1 5h4.5z"/></svg>
+                      ))}
+                    </div>
+                    <p className="text-[13px] text-[#3A3D45] leading-relaxed mb-5">&ldquo;{t.quote}&rdquo;</p>
+                    <div className="flex items-center gap-2.5 pt-4" style={{ borderTop: '1px solid rgba(12,14,18,0.05)' }}>
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold text-white flex-shrink-0 ${t.color}`}>{t.initials}</div>
+                      <div>
+                        <div className="text-[12px] font-semibold text-[#0C0E12]">{t.name}</div>
+                        <div className="text-[11px] text-[#B0B5C3]">{t.role}</div>
+                      </div>
+                    </div>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════
+          WHATSAPP AI — centered phone
+      ══════════════════════════════════════ */}
+      <section className="py-24 px-6 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-14">
+            <SectionLabel num="05" label="Assistant WhatsApp" />
+            <h2 className="font-bold text-[#0C0E12] tracking-[-0.02em] leading-tight mb-4 font-display" style={{ fontSize: 'clamp(32px, 4vw, 46px)' }}>
+              Pourquoi l&apos;IA de BOS<br />est différente.
+            </h2>
+            <p className="text-[#7A7F8E] max-w-lg mx-auto leading-relaxed">Vos clients écrivent comme ils parlent — en darija, en français, parfois les deux. BOS les comprend instantanément.</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* iPhone */}
+            <div className="flex justify-center">
+              <div className="relative">
+                <div className="absolute inset-0 -m-16" style={{ background: 'radial-gradient(ellipse, rgba(37,211,102,0.12) 0%, transparent 60%)' }} />
+                <div className="relative" style={{ width: 280 }}>
+                  <div className="absolute -left-[3px] top-[72px] w-[3px] h-8 rounded-l-full" style={{ background: '#2a2a2a' }} />
+                  <div className="absolute -left-[3px] top-[112px] w-[3px] h-10 rounded-l-full" style={{ background: '#2a2a2a' }} />
+                  <div className="absolute -left-[3px] top-[156px] w-[3px] h-10 rounded-l-full" style={{ background: '#2a2a2a' }} />
+                  <div className="absolute -right-[3px] top-[100px] w-[3px] h-14 rounded-r-full" style={{ background: '#2a2a2a' }} />
+                  <div className="rounded-[44px] overflow-hidden" style={{ background: '#1a1a1a', padding: '3px', boxShadow: '0 40px 80px rgba(12,14,18,0.3), 0 0 0 0.5px rgba(255,255,255,0.08)' }}>
+                    <div className="rounded-[42px] overflow-hidden bg-black">
+                      <div className="bg-[#075E54]">
+                        <div className="px-6 pt-3 pb-1 flex items-center justify-between">
+                          <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-black rounded-full flex items-center justify-center gap-1.5 px-3" style={{ width: 88, height: 26, zIndex: 10 }}>
+                            <div className="w-2 h-2 rounded-full bg-[#1a1a1a] border border-[#333]" />
+                            <div className="w-1.5 h-1.5 rounded-full bg-[#1a1a1a] border border-[#333]" />
+                          </div>
+                          <span className="text-white text-[11px] font-semibold mt-1">9:41</span>
+                          <div className="flex items-center gap-1.5 mt-1">
+                            <svg width="13" height="9" viewBox="0 0 13 9" fill="white"><rect x="0" y="5" width="2.5" height="4" rx=".5"/><rect x="3.5" y="3" width="2.5" height="6" rx=".5"/><rect x="7" y="1" width="2.5" height="8" rx=".5"/><rect x="10.5" y="0" width="2.5" height="9" rx=".5"/></svg>
+                            <svg width="20" height="10" viewBox="0 0 20 10" fill="none"><rect x="0.5" y="0.5" width="16" height="9" rx="2.5" stroke="white" strokeOpacity=".5"/><rect x="1.5" y="1.5" width="12" height="7" rx="1.5" fill="white"/></svg>
+                          </div>
+                        </div>
+                        <div className="px-4 pb-3 pt-1 flex items-center gap-3">
+                          <div className="w-9 h-9 rounded-full bg-[#128C7E] flex items-center justify-center text-white text-sm font-bold flex-shrink-0 border-2 border-white/20">B</div>
+                          <div className="flex-1">
+                            <div className="text-white text-[13px] font-semibold">BOS Assistant</div>
+                            <div className="text-emerald-200 text-[10px]">● en ligne</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="px-3 py-3 space-y-2.5" style={{ background: '#ECE5DD', minHeight: 340 }}>
+                        <div className="flex justify-center mb-2">
+                          <span className="text-[9px] bg-[#E1F2FB] text-[#667781] px-2 py-0.5 rounded-full">Aujourd&apos;hui</span>
+                        </div>
+                        <div className="flex justify-end">
+                          <div className="bg-[#DCF8C6] rounded-[16px] rounded-tr-[4px] px-3 py-2 max-w-[78%]" style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>
+                            <p className="text-[12px] text-[#111]">Salam, bghit nakhod rendez-vous pour coupe + soin 🙏</p>
+                            <p className="text-[9px] text-[#667781] text-right mt-0.5">14:23 ✓✓</p>
+                          </div>
+                        </div>
+                        <div className="flex justify-start gap-1.5">
+                          <div className="w-6 h-6 rounded-full bg-[#128C7E] flex items-center justify-center text-white text-[8px] font-bold flex-shrink-0 self-end mb-1">B</div>
+                          <div className="bg-white rounded-[16px] rounded-tl-[4px] px-3 py-2 max-w-[80%]" style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.08)' }}>
+                            <p className="text-[11.5px] text-[#111]">Bonjour ! 😊 Voici les créneaux pour <span className="font-semibold">coupe + soin</span> :</p>
+                            <div className="mt-1.5 space-y-1">
+                              {['📅 Lundi 16 juin — 10h00', '📅 Lundi 16 juin — 14h30', '📅 Mardi 17 juin — 11h00'].map(s => (
+                                <div key={s} className="text-[10.5px] bg-[#F0F4F8] rounded-lg px-2 py-1">{s}</div>
+                              ))}
+                            </div>
+                            <p className="text-[9px] text-[#667781] text-right mt-1">14:23</p>
+                          </div>
+                        </div>
+                        <div className="flex justify-end">
+                          <div className="bg-[#DCF8C6] rounded-[16px] rounded-tr-[4px] px-3 py-2 max-w-[70%]" style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>
+                            <p className="text-[12px] text-[#111]">Le lundi à 14h30 svp</p>
+                            <p className="text-[9px] text-[#667781] text-right mt-0.5">14:24 ✓✓</p>
+                          </div>
+                        </div>
+                        <div className="flex justify-start gap-1.5">
+                          <div className="w-6 h-6 rounded-full bg-[#128C7E] flex items-center justify-center text-white text-[8px] font-bold flex-shrink-0 self-end mb-1">B</div>
+                          <div className="bg-white rounded-[16px] rounded-tl-[4px] px-3 py-2 max-w-[80%]" style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.08)' }}>
+                            <p className="text-[11.5px] text-[#111]">✅ <span className="font-semibold">Confirmé !</span> Lundi 16 juin à 14h30. Rappel la veille. À bientôt 🌟</p>
+                            <p className="text-[9px] text-[#667781] text-right mt-1">14:24</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="bg-[#F0F2F5] px-3 py-2 flex items-center gap-2">
+                        <div className="flex-1 bg-white rounded-full px-3 py-1.5 text-[11px] text-[#B0B5C3]">Message</div>
+                        <div className="w-8 h-8 rounded-full bg-[#25D366] flex items-center justify-center flex-shrink-0">
+                          <svg width="14" height="14" viewBox="0 0 14 14" fill="white"><path d="M13 7L1 1l3 6-3 6 12-6z"/></svg>
+                        </div>
+                      </div>
+                      <div className="bg-black flex justify-center py-2">
+                        <div className="w-24 h-1 rounded-full bg-white opacity-30" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute -right-10 top-16 bg-white rounded-2xl px-3 py-2.5" style={{ boxShadow: '0 8px 24px rgba(12,14,18,0.12)', border: '1px solid rgba(12,14,18,0.07)' }}>
+                  <div className="text-[9px] text-[#7A7F8E]">Réponse en</div>
+                  <div className="text-[20px] font-bold text-[#25D366]">2 sec</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Features list */}
+            <div className="space-y-5">
+              {[
+                { color: '#10B981', bg: '#ECFDF5', title: 'Répond en moins de 3 secondes', desc: 'Même à 23h, même le week-end. Vos clients n\'attendent plus.' },
+                { color: '#1A56FF', bg: '#EEF2FF', title: 'Comprend le français et la darija', desc: 'Adapté à la réalité marocaine. Pas besoin d\'écrire parfaitement.' },
+                { color: '#F59E0B', bg: '#FFFBEB', title: 'Prend les RDV automatiquement', desc: 'Vérifie les disponibilités, confirme, envoie un rappel — tout seul.' },
+                { color: '#7C3AED', bg: '#F5F3FF', title: 'Parle dans votre style', desc: 'Vous configurez le ton. Il s\'adapte à votre image.' },
+              ].map((item, i) => (
+                <ScrollReveal key={item.title} delay={i * 80}>
+                  <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-[#F8F7F4] transition-colors">
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: item.bg, color: item.color }}>
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5 6.5-7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    </div>
+                    <div>
+                      <div className="text-[14px] font-semibold text-[#0C0E12] mb-0.5">{item.title}</div>
+                      <div className="text-[13px] text-[#7A7F8E] leading-relaxed">{item.desc}</div>
+                    </div>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════
+          SÉCURITÉ
+      ══════════════════════════════════════ */}
+      <section className="py-24 px-6" style={{ background: '#F8F7F4' }}>
+        <div className="max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            <div>
+              <SectionLabel num="06" label="Sécurité" />
+              <h2 className="font-bold text-[#0C0E12] tracking-[-0.02em] leading-tight mb-4 font-display" style={{ fontSize: 'clamp(32px, 4vw, 46px)' }}>
+                Vos données sont<br />protégées.
+              </h2>
+              <p className="text-[#7A7F8E] leading-relaxed mb-8">Sécurité et conformité prises au sérieux dès le premier jour.</p>
+              <div className="flex flex-wrap gap-3">
+                {['RGPD', 'Loi 09-08', 'TLS/HTTPS', 'Europe-hosted'].map(tag => (
+                  <span key={tag} className="px-3 py-1.5 rounded-full text-[12px] font-medium text-[#3A3D45] bg-white" style={{ border: '1px solid rgba(12,14,18,0.08)' }}>{tag}</span>
                 ))}
               </div>
             </div>
-          </div>
-
-          {/* Bottom CTA inside section */}
-          <div className="mt-10 text-center">
-            <Link href="/inscription" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:-translate-y-0.5" style={{ background:'linear-gradient(135deg,#1A56FF,#7C3AED)', boxShadow:'0 4px 16px rgba(26,86,255,0.35)' }}>
-              Passer à l&apos;après maintenant →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── TESTIMONIALS ── */}
-      <section className="py-24 px-6 md:px-12 bg-[#F7F8FA]">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-white border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
-              Témoignages
-            </div>
-            <h2 className="text-[36px] font-bold tracking-tight text-[#0C0E12] font-display">Ce que nos clients disent</h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { name:'Dr. Youssef Bennani', role:'Dermatologue, Casablanca', initials:'YB', color:'bg-blue-100 text-blue-600', quote:'Depuis BOS, je ne reçois plus d\'appels manqués. L\'IA répond, planifie et rappelle mes patients. J\'ai récupéré 2h par jour.' },
-              { name:'Farid Alaoui', role:'Directeur, Garage Elite Rabat', initials:'FA', color:'bg-amber-100 text-amber-600', quote:'Mes clients reçoivent des rappels automatiques pour les révisions. Le taux de retour a augmenté de 35% en 3 mois.' },
-              { name:'Salma Chraibi', role:'Directrice, École Innovate', initials:'SC', color:'bg-violet-100 text-violet-600', quote:'Le tableau de bord me donne une vision complète. Je sais exactement combien d\'inscrits, de prospects, et ce que ça représente en CA.' },
-            ].map((t, i) => (
-              <ScrollReveal key={i} delay={i * 100}>
-                <div className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-6 flex flex-col h-full hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(12,14,18,0.08)] transition-all duration-200" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.05)' }}>
-                  <div className="flex gap-0.5 mb-4">
-                    {[...Array(5)].map((_, j) => (
-                      <svg key={j} width="14" height="14" viewBox="0 0 14 14" fill="#F59E0B"><path d="M7 1l1.5 4h4.5l-3.5 2.5 1.5 4L7 9 3 11.5l1.5-4L1 5h4.5z"/></svg>
-                    ))}
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { title: 'Chiffrement TLS', desc: 'Connexions HTTPS. Données jamais en clair.', color: '#1A56FF', bg: '#EEF2FF', icon: <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><rect x="4" y="9" width="12" height="9" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M6 9V6a4 4 0 018 0v3" stroke="currentColor" strokeWidth="1.5"/></svg> },
+                { title: 'Conformité Maroc', desc: 'Loi 09-08 & RGPD. Standards européens.', color: '#10B981', bg: '#ECFDF5', icon: <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 2l7 3v5c0 4.4-2.9 7.6-7 9-4.1-1.4-7-4.6-7-9V5l7-3z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/></svg> },
+                { title: 'Hébergement Europe', desc: 'Cloud certifié avec sauvegardes régulières.', color: '#7C3AED', bg: '#F5F3FF', icon: <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M2 7h16M5 14v2M15 14v2M4 18h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg> },
+                { title: 'Isolation totale', desc: 'Chaque compte totalement cloisonné.', color: '#F59E0B', bg: '#FFFBEB', icon: <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5"/></svg> },
+              ].map((f, i) => (
+                <ScrollReveal key={f.title} delay={i * 70}>
+                  <div className="bg-white rounded-2xl p-5" style={{ border: '1px solid rgba(12,14,18,0.07)' }}>
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-3" style={{ background: f.bg, color: f.color }}>{f.icon}</div>
+                    <div className="text-[13px] font-semibold text-[#0C0E12] mb-1">{f.title}</div>
+                    <div className="text-[12px] text-[#7A7F8E] leading-relaxed">{f.desc}</div>
                   </div>
-                  <p className="text-sm text-[#3A3D45] leading-relaxed flex-1 mb-5">&ldquo;{t.quote}&rdquo;</p>
-                  <div className="flex items-center gap-3 pt-4 border-t border-[rgba(12,14,18,0.06)]">
-                    <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${t.color}`}>{t.initials}</div>
-                    <div>
-                      <div className="text-xs font-semibold text-[#0C0E12]">{t.name}</div>
-                      <div className="text-[11px] text-[#B0B5C3]">{t.role}</div>
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
+                </ScrollReveal>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── CONFIANCE / PREUVE SOCIALE ── */}
-      <section className="py-20 px-6 md:px-12 bg-[#F7F8FA] border-y border-[rgba(12,14,18,0.06)]">
+      {/* ══════════════════════════════════════
+          FAQ — two columns
+      ══════════════════════════════════════ */}
+      <section className="py-24 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
-          <ScrollReveal>
-            <div className="text-center mb-10">
-              <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-white border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
-                Confiance
-              </div>
-              <h2 className="text-[32px] md:text-[36px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Conçu pour les entreprises marocaines</h2>
+          <div className="grid md:grid-cols-5 gap-12">
+            <div className="md:col-span-2">
+              <SectionLabel num="07" label="FAQ" />
+              <h2 className="font-bold text-[#0C0E12] tracking-[-0.02em] leading-tight mb-5 font-display" style={{ fontSize: 'clamp(28px, 3.5vw, 40px)' }}>
+                Questions<br />fréquentes.
+              </h2>
+              <p className="text-[#7A7F8E] text-[14px] leading-relaxed mb-8">Tout ce que vous devez savoir avant de vous lancer.</p>
+              <Link href="/aide" className="text-[13px] font-semibold text-[#1A56FF] hover:underline flex items-center gap-1.5">
+                Centre d&apos;aide complet
+                <svg width="12" height="12" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </Link>
             </div>
-          </ScrollReveal>
-
-          <div className="flex flex-wrap justify-center gap-4 mb-4">
-            {[
-              { v:240, prefix:'+', l:'entreprises marocaines équipées', icon:<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="6" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.5"/><path d="M1 13c0-2.761 2.239-5 5-5s5 2.239 5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="12" cy="4" r="1.5" stroke="currentColor" strokeWidth="1.5"/><path d="M15 11c0-1.657-1.343-3-3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg> },
-              { v:99.9, suffix:'%', decimals:1, l:'disponibilité garantie', icon:<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l6 2.5v4.2c0 4-2.6 6.8-6 8.3-3.4-1.5-6-4.3-6-8.3V4.5L9 2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M6.2 9l2 2 3.6-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg> },
-              { v:5, l:'secteurs couverts', icon:<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="6" height="6" rx="1.2" stroke="currentColor" strokeWidth="1.5"/><rect x="10" y="2" width="6" height="6" rx="1.2" stroke="currentColor" strokeWidth="1.5"/><rect x="2" y="10" width="6" height="6" rx="1.2" stroke="currentColor" strokeWidth="1.5"/><rect x="10" y="10" width="6" height="6" rx="1.2" stroke="currentColor" strokeWidth="1.5"/></svg> },
-            ].map(b => (
-              <div key={b.l} className="flex items-center gap-3 bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl px-5 py-3.5" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.05)' }}>
-                <span className="w-9 h-9 rounded-xl bg-[#EEF2FF] text-[#1A56FF] flex items-center justify-center flex-shrink-0">{b.icon}</span>
-                <div>
-                  <div className="text-lg font-bold text-[#0C0E12] font-display leading-none">
-                    <AnimatedCounter value={b.v} prefix={b.prefix} suffix={b.suffix} decimals={b.decimals} />
-                  </div>
-                  <div className="text-[11px] text-[#7A7F8E] mt-0.5">{b.l}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-3 mt-6">
-            {[
-              { l:'Support en français/darija', icon:<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 4a1 1 0 011-1h8a1 1 0 011 1v5.5a1 1 0 01-1 1H6l-2.5 2v-2H3a1 1 0 01-1-1V4z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/></svg> },
-              { l:'Sans engagement', icon:<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3 3 7-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg> },
-            ].map(badge => (
-              <div key={badge.l} className="inline-flex items-center gap-2 px-3.5 py-2 bg-white border border-[rgba(12,14,18,0.08)] rounded-full text-xs font-medium text-[#3A3D45]">
-                <span className="text-[#1A56FF] flex-shrink-0">{badge.icon}</span>
-                {badge.l}
-              </div>
-            ))}
+            <div className="md:col-span-3 space-y-3">
+              {[
+                { q: 'Combien de temps faut-il pour démarrer ?', a: 'Comptez 5 minutes : création du compte, choix du secteur, configuration de l\'assistant IA. Aucune installation, aucun technicien requis.' },
+                { q: 'Mes données sont-elles en sécurité ?', a: 'Oui. Données hébergées en Europe, chiffrées au repos et en transit. Conformité RGPD et loi marocaine 09-08.' },
+                { q: 'L\'IA comprend-elle vraiment la darija ?', a: 'Oui. L\'assistant comprend le français, l\'arabe et la darija — y compris les messages mélangeant plusieurs langues.' },
+                { q: 'Puis-je annuler à tout moment ?', a: 'Aucun engagement. Annulation depuis les paramètres, sans frais ni justification.' },
+                { q: 'Le support est-il disponible en français ?', a: 'Notre équipe répond en français et darija, via WhatsApp et email, avec un temps de réponse moyen < 2h en semaine.' },
+              ].map((item, i) => (
+                <ScrollReveal key={item.q} delay={i * 60}>
+                  <FaqItem question={item.q} answer={item.a} />
+                </ScrollReveal>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── SÉCURITÉ ── */}
-      <section className="py-24 px-6 md:px-12">
+      {/* ══════════════════════════════════════
+          PRICING
+      ══════════════════════════════════════ */}
+      <section id="tarifs" className="py-24 px-6" style={{ background: '#F8F7F4' }}>
         <div className="max-w-5xl mx-auto">
-          <ScrollReveal>
-            <div className="mb-14 max-w-xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
-                Sécurité
-              </div>
-              <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Vos données sont protégées</h2>
-              <p className="text-lg text-[#3A3D45] font-light">Sécurité et conformité prises au sérieux, dès le premier jour.</p>
-            </div>
-          </ScrollReveal>
-          <div className="flex flex-wrap justify-center gap-4">
-            {[
-              {
-                title: 'Chiffrement de bout en bout',
-                desc: 'Connexions HTTPS/TLS et mots de passe stockés sous forme chiffrée (hash). Vos données ne circulent jamais en clair.',
-                color: 'text-blue-500', bg: 'bg-blue-50',
-                icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="4" y="9" width="12" height="9" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M6 9V6a4 4 0 018 0v3" stroke="currentColor" strokeWidth="1.5"/><circle cx="10" cy="13.5" r="1.2" fill="currentColor"/></svg>,
-              },
-              {
-                title: 'Conformité loi 09-08 & RGPD',
-                desc: 'Traitement des données conforme à la loi marocaine sur la protection des données personnelles et aux standards RGPD.',
-                color: 'text-emerald-500', bg: 'bg-emerald-50',
-                icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2l7 3v5c0 4.4-2.9 7.6-7 9-4.1-1.4-7-4.6-7-9V5l7-3z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M6.8 10l2.2 2.2 4-4.6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>,
-              },
-              {
-                title: 'Hébergement sécurisé en Europe',
-                desc: 'Base de données hébergée chez un fournisseur cloud avec chiffrement au repos et sauvegardes régulières.',
-                color: 'text-violet-500', bg: 'bg-violet-50',
-                icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M2 7h16M5 14v2M13 14v2M4 18h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>,
-              },
-              {
-                title: 'Cloisonnement par établissement',
-                desc: 'Chaque clinique, garage ou salon n\'a accès qu\'à ses propres données. Aucune fuite croisée possible entre comptes.',
-                color: 'text-amber-500', bg: 'bg-amber-50',
-                icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5"/></svg>,
-              },
-            ].map((f, i) => (
-              <ScrollReveal key={f.title} delay={i * 80}>
-                <div className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-6 hover:border-[rgba(26,86,255,0.2)] hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(12,14,18,0.08)] transition-all duration-200 w-[300px]" style={{ boxShadow:'0 1px 2px rgba(12,14,18,0.04), 0 2px 6px rgba(12,14,18,0.03)' }}>
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${f.bg} ${f.color}`}>{f.icon}</div>
-                  <div className="text-sm font-semibold text-[#0C0E12] mb-2">{f.title}</div>
-                  <div className="text-sm text-[#7A7F8E] leading-relaxed">{f.desc}</div>
-                </div>
-              </ScrollReveal>
-            ))}
+          <div className="text-center mb-16">
+            <SectionLabel num="08" label="Tarifs" />
+            <h2 className="font-bold text-[#0C0E12] tracking-[-0.02em] leading-tight mb-3 font-display" style={{ fontSize: 'clamp(32px, 4vw, 46px)' }}>
+              Un plan pour chaque<br />taille d&apos;équipe.
+            </h2>
+            <p className="text-[#7A7F8E]">Sans engagement · 7 jours d&apos;essai gratuit · Annulez à tout moment</p>
           </div>
-        </div>
-      </section>
-
-      {/* ── FAQ ── */}
-      <section className="py-24 px-6 md:px-12">
-        <div className="max-w-3xl mx-auto">
-          <ScrollReveal>
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
-                Questions fréquentes
-              </div>
-              <h2 className="text-[36px] md:text-[40px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Tout ce que vous devez savoir</h2>
-            </div>
-          </ScrollReveal>
-          <div className="space-y-3">
-            {[
-              { q:'Combien de temps faut-il pour démarrer ?', a:'Comptez 5 minutes : création du compte, choix du secteur, configuration de l\'assistant IA avec vos horaires et services. Aucune installation, aucun technicien requis.' },
-              { q:'Mes données sont-elles en sécurité ?', a:'Oui. Toutes les données sont hébergées en Europe, chiffrées au repos et en transit, et nous respectons les exigences RGPD ainsi que la loi marocaine 09-08 sur la protection des données personnelles.' },
-              { q:'L\'IA comprend-elle vraiment la darija ?', a:'Oui, l\'assistant IA est entraîné pour comprendre le français, l\'arabe et la darija — y compris les messages mélangeant plusieurs langues, comme le font naturellement vos clients.' },
-              { q:'Puis-je annuler à tout moment ?', a:'Aucun engagement. Vous pouvez annuler votre abonnement à tout moment depuis les paramètres, sans frais ni justification.' },
-              { q:'Le support est-il disponible en français ?', a:'Notre équipe support répond en français et en darija, par WhatsApp et email, avec un temps de réponse moyen inférieur à 2 heures en semaine.' },
-            ].map((item, i) => (
-              <ScrollReveal key={item.q} delay={i * 60}>
-                <FaqItem question={item.q} answer={item.a} />
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── PRICING ── */}
-      <section id="tarifs" className="py-24 px-6 md:px-12 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none" aria-hidden>
-          <div style={{ position:'absolute', top:'10%', left:'50%', transform:'translateX(-50%)', width:900, height:500, background:'radial-gradient(ellipse, rgba(26,86,255,0.06) 0%, transparent 70%)' }} />
-        </div>
-        <div className="max-w-5xl mx-auto relative">
-          <ScrollReveal>
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
-                Tarifs
-              </div>
-              <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Un plan pour chaque taille d&apos;équipe</h2>
-              <p className="text-lg text-[#3A3D45] font-light">Sans engagement. 7 jours d&apos;essai gratuit. Annulez à tout moment.</p>
-            </div>
-          </ScrollReveal>
-          <div className="grid md:grid-cols-3 gap-5 items-stretch">
+          <div className="grid md:grid-cols-3 gap-5">
             {PLANS.map((p, i) => (
-              <ScrollReveal key={p.name} delay={i * 90}>
-                <div className={`relative h-full flex flex-col rounded-[20px] overflow-hidden transition-all duration-300 ${p.featured ? 'md:-translate-y-3 hover:-translate-y-4' : 'hover:-translate-y-1.5'}`} style={p.featured ? { background:'linear-gradient(160deg,#0C0E12 0%,#161B2E 100%)', boxShadow:'0 24px 56px rgba(12,14,18,0.3), 0 0 0 1px rgba(26,86,255,0.4)' } : { background:'white', boxShadow:'0 2px 8px rgba(12,14,18,0.05), 0 0 0 1px rgba(12,14,18,0.06)' }}>
+              <ScrollReveal key={p.name} delay={i * 80}>
+                <div
+                  className="relative flex flex-col rounded-3xl overflow-hidden transition-all duration-300 h-full"
+                  style={p.featured
+                    ? { background: '#0C0E12', boxShadow: '0 24px 64px rgba(12,14,18,0.25), 0 0 0 1px rgba(26,86,255,0.35)', transform: 'translateY(-6px)' }
+                    : { background: 'white', border: '1px solid rgba(12,14,18,0.07)' }
+                  }
+                >
                   {p.featured && (
-                    <div className="absolute -top-px left-0 right-0 h-[3px]" style={{ background:'linear-gradient(90deg,#1A56FF,#7C3AED,#1A56FF)' }} />
+                    <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: 'linear-gradient(90deg, #1A56FF, #7C3AED)' }} />
                   )}
                   {p.featured && (
-                    <div className="flex items-center justify-center gap-1.5 py-2.5 text-[11px] font-bold uppercase tracking-widest" style={{ background:'rgba(26,86,255,0.14)', color:'#6BA3FF' }}>
-                      <svg width="11" height="11" viewBox="0 0 16 16" fill="#6BA3FF"><path d="M8 1l2 4.5 5 .7-3.6 3.5.9 5-4.3-2.3-4.3 2.3.9-5L1 6.2l5-.7L8 1z"/></svg>
-                      Le plus populaire
+                    <div className="flex items-center justify-center gap-1.5 py-2 text-[11px] font-bold uppercase tracking-widest" style={{ background: 'rgba(26,86,255,0.12)', color: '#6BA3FF' }}>
+                      ✦ Le plus populaire
                     </div>
                   )}
                   <div className="p-8 flex flex-col flex-1">
-                    <div className={`text-xs font-semibold tracking-wider uppercase mb-1 ${p.featured ? 'text-white/40' : 'text-[#7A7F8E]'}`}>{p.name}</div>
-                    <div className={`text-xs mb-6 ${p.featured ? 'text-white/30' : 'text-[#B0B5C3]'}`}>{p.desc}</div>
-                    <div className="flex items-baseline gap-1.5 mb-7">
-                      <span className={`text-[44px] font-bold tracking-tight font-display leading-none ${p.featured ? 'text-white' : 'text-[#0C0E12]'}`}>{p.price}</span>
-                      <span className={`text-sm ${p.featured ? 'text-white/30' : 'text-[#B0B5C3]'}`}>DH/mois</span>
+                    <div className={`text-[12px] font-semibold tracking-wider uppercase mb-1 ${p.featured ? 'text-white/40' : 'text-[#9CA3AF]'}`}>{p.name}</div>
+                    <div className={`text-[12px] mb-6 ${p.featured ? 'text-white/25' : 'text-[#C0C4CE]'}`}>{p.desc}</div>
+                    <div className="flex items-baseline gap-1.5 mb-8">
+                      <span className={`font-bold tracking-tight font-display leading-none ${p.featured ? 'text-white' : 'text-[#0C0E12]'}`} style={{ fontSize: 48 }}>{p.price}</span>
+                      <span className={`text-sm ${p.featured ? 'text-white/25' : 'text-[#C0C4CE]'}`}>DH/mois</span>
                     </div>
                     <ul className="space-y-3 mb-8 flex-1">
                       {p.features.map(f => (
-                        <li key={f} className={`flex items-center gap-2.5 text-sm ${p.featured ? 'text-white/75' : 'text-[#3A3D45]'}`}>
-                          <svg className="flex-shrink-0" width="18" height="18" viewBox="0 0 16 16" fill="none">
-                            <circle cx="8" cy="8" r="7" fill={p.featured ? 'rgba(26,86,255,0.25)' : '#EEF2FF'}/>
+                        <li key={f} className={`flex items-center gap-2.5 text-[13px] ${p.featured ? 'text-white/65' : 'text-[#3A3D45]'}`}>
+                          <svg className="flex-shrink-0" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <circle cx="8" cy="8" r="7" fill={p.featured ? 'rgba(26,86,255,0.2)' : '#EEF2FF'}/>
                             <path d="M5 8l2 2 4-4" stroke={p.featured ? '#6BA3FF' : '#1A56FF'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                           </svg>
                           {f}
                         </li>
                       ))}
                     </ul>
-                    <Link href={p.name === 'Enterprise' ? 'mailto:sales@bossystems.ma' : '/inscription'} className={`block text-center py-3.5 rounded-xl text-sm font-semibold transition-all hover:-translate-y-px ${p.featured ? 'text-white hover:opacity-90' : 'bg-[#0C0E12] text-white hover:bg-[#1e2330]'}`} style={p.featured ? { background:'linear-gradient(135deg,#1A56FF,#7C3AED)', boxShadow:'0 8px 20px rgba(26,86,255,0.4)' } : {}}>
+                    <Link
+                      href={p.name === 'Enterprise' ? 'mailto:sales@bossystems.ma' : '/inscription'}
+                      className={`block text-center py-3.5 rounded-2xl text-[13px] font-semibold transition-all hover:-translate-y-px ${p.featured ? 'text-white' : 'bg-[#0C0E12] text-white hover:bg-[#1e2330]'}`}
+                      style={p.featured ? { background: 'linear-gradient(135deg, #1A56FF, #7C3AED)', boxShadow: '0 6px 20px rgba(26,86,255,0.35)' } : {}}
+                    >
                       {p.cta}
                     </Link>
                   </div>
@@ -689,207 +954,50 @@ export default function HomePage() {
               </ScrollReveal>
             ))}
           </div>
-          <ScrollReveal delay={280}>
-            <p className="text-center text-xs text-[#B0B5C3] mt-10">Tous les prix sont en DH HT/mois · Paiement mensuel ou annuel (−20%) · Sans carte bancaire pour l&apos;essai</p>
-          </ScrollReveal>
+          <p className="text-center text-[12px] text-[#C0C4CE] mt-10">Tous les prix en DH HT/mois · Paiement mensuel ou annuel (−20%) · Sans carte bancaire pour l&apos;essai</p>
         </div>
       </section>
 
-      {/* ── WHATSAPP AI ── */}
-      <section className="py-24 px-6 md:px-12 bg-[#F7F8FA]">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-
-            {/* Left: text */}
-            <div>
-              <div className="inline-flex items-center gap-2 mb-5 px-3 py-1 bg-[#ECFDF5] border border-emerald-200 rounded-full text-[10px] font-semibold text-emerald-700 uppercase tracking-wider">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-dot" />
-                Assistant IA WhatsApp
-              </div>
-              <h2 className="text-[38px] font-bold tracking-tight text-[#0C0E12] mb-5 font-display leading-tight">
-                Pourquoi l&apos;IA WhatsApp<br/>de BOS est différente
-              </h2>
-              <p className="text-[#3A3D45] text-lg font-light leading-relaxed mb-8">
-                Vos clients écrivent comme ils parlent — en darija, en français, parfois les deux. BOS les comprend, répond instantanément et prend les rendez-vous sans que vous leviez le petit doigt.
-              </p>
-              <div className="space-y-4">
-                {[
-                  { bg:'#ECFDF5', color:'#10B981', title:'Répond en moins de 3 secondes', desc:'Même à 23h, même le week-end. Vos clients n\'attendent plus.', icon:<svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm1-12a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l2.828 2.829a1 1 0 1 0 1.415-1.415L11 9.586V6z" clipRule="evenodd"/></svg> },
-                  { bg:'#EEF2FF', color:'#1A56FF', title:'Comprend le français et la darija', desc:'Adapté à la réalité marocaine. Pas besoin d\'écrire parfaitement.', icon:<svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 0 1-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd"/></svg> },
-                  { bg:'#FFF7ED', color:'#F59E0B', title:'Prend les RDV automatiquement', desc:'Vérifie les disponibilités, confirme, envoie un rappel — tout seul.', icon:<svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M6 2a1 1 0 0 0-1 1v1H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1V3a1 1 0 1 0-2 0v1H7V3a1 1 0 0 0-1-1zm0 5a1 1 0 0 0 0 2h8a1 1 0 1 0 0-2H6z" clipRule="evenodd"/></svg> },
-                  { bg:'#F5F3FF', color:'#7C3AED', title:'Parle dans votre style', desc:'Vous configurez le ton : formel ou friendly, il s\'adapte à votre image.', icon:<svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path d="M13.586 3.586a2 2 0 1 1 2.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/></svg> },
-                ].map(item => (
-                  <div key={item.title} className="flex items-start gap-4">
-                    <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: item.bg, color: item.color }}>
-                      {item.icon}
-                    </div>
-                    <div>
-                      <div className="text-sm font-semibold text-[#0C0E12] mb-0.5">{item.title}</div>
-                      <div className="text-sm text-[#7A7F8E] leading-relaxed">{item.desc}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right: iPhone mockup */}
-            <div className="flex justify-center">
-              <div className="relative">
-                {/* Glow */}
-                <div className="absolute inset-0 -m-12" style={{ background:'radial-gradient(ellipse, rgba(37,211,102,0.15) 0%, transparent 60%)' }} />
-
-                {/* iPhone outer shell */}
-                <div className="relative" style={{ width: 285 }}>
-                  {/* Side buttons left */}
-                  <div className="absolute -left-[3px] top-[72px] w-[3px] h-8 rounded-l-full" style={{ background:'#2a2a2a' }} />
-                  <div className="absolute -left-[3px] top-[112px] w-[3px] h-10 rounded-l-full" style={{ background:'#2a2a2a' }} />
-                  <div className="absolute -left-[3px] top-[156px] w-[3px] h-10 rounded-l-full" style={{ background:'#2a2a2a' }} />
-                  {/* Side button right */}
-                  <div className="absolute -right-[3px] top-[100px] w-[3px] h-14 rounded-r-full" style={{ background:'#2a2a2a' }} />
-
-                  {/* Phone body */}
-                  <div className="rounded-[44px] overflow-hidden" style={{ background:'#1a1a1a', padding:'3px', boxShadow:'0 40px 80px rgba(12,14,18,0.35), 0 0 0 0.5px rgba(255,255,255,0.08), inset 0 0 0 1px rgba(255,255,255,0.04)' }}>
-                    <div className="rounded-[42px] overflow-hidden bg-black" style={{ position:'relative' }}>
-
-                      {/* Screen content */}
-                      <div className="bg-[#075E54]" style={{ position:'relative' }}>
-
-                        {/* Status bar with Dynamic Island */}
-                        <div className="px-6 pt-3 pb-1 flex items-center justify-between" style={{ background:'#075E54' }}>
-                          {/* Dynamic Island */}
-                          <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-black rounded-full flex items-center justify-center gap-1.5 px-3" style={{ width:88, height:26, zIndex:10 }}>
-                            <div className="w-2 h-2 rounded-full bg-[#1a1a1a] border border-[#333]" />
-                            <div className="w-1.5 h-1.5 rounded-full bg-[#1a1a1a] border border-[#333]" />
-                          </div>
-                          <span className="text-white text-[11px] font-semibold mt-1">9:41</span>
-                          <div className="flex items-center gap-1.5 mt-1">
-                            <svg width="13" height="9" viewBox="0 0 13 9" fill="white"><rect x="0" y="5" width="2.5" height="4" rx=".5"/><rect x="3.5" y="3" width="2.5" height="6" rx=".5"/><rect x="7" y="1" width="2.5" height="8" rx=".5"/><rect x="10.5" y="0" width="2.5" height="9" rx=".5"/></svg>
-                            <svg width="12" height="9" viewBox="0 0 12 9" fill="white"><path d="M6 1C3.6 1 1.5 2 0 3.7L1.8 5.5C2.9 4.3 4.3 3.5 6 3.5S9.1 4.3 10.2 5.5L12 3.7C10.5 2 8.4 1 6 1z"/><circle cx="6" cy="7.5" r="1.5"/></svg>
-                            <svg width="20" height="10" viewBox="0 0 20 10" fill="none"><rect x="0.5" y="0.5" width="16" height="9" rx="2.5" stroke="white" strokeOpacity=".5"/><rect x="1.5" y="1.5" width="12" height="7" rx="1.5" fill="white"/><path d="M18 3.5v3a1.5 1.5 0 0 0 0-3z" fill="white" opacity=".4"/></svg>
-                          </div>
-                        </div>
-
-                        {/* WhatsApp top bar */}
-                        <div className="px-4 pb-3 pt-1 flex items-center gap-3">
-                          <svg width="18" height="18" viewBox="0 0 18 18" fill="white" opacity=".9"><path d="M11 9L6 5v8l5-4z"/></svg>
-                          <div className="w-9 h-9 rounded-full bg-[#128C7E] flex items-center justify-center text-white text-sm font-bold flex-shrink-0 border-2 border-white/20">B</div>
-                          <div className="flex-1">
-                            <div className="text-white text-[13px] font-semibold leading-tight">BOS Assistant</div>
-                            <div className="text-emerald-200 text-[10px]">● en ligne</div>
-                          </div>
-                          <svg width="18" height="18" viewBox="0 0 18 18" fill="white" opacity=".7"><circle cx="4" cy="9" r="1.5"/><circle cx="9" cy="9" r="1.5"/><circle cx="14" cy="9" r="1.5"/></svg>
-                        </div>
-                      </div>
-
-                      {/* Chat area */}
-                      <div className="px-3 py-3 space-y-2.5" style={{ background:'#ECE5DD', minHeight:360 }}>
-                        <div className="flex justify-center mb-2">
-                          <span className="text-[9px] bg-[#E1F2FB] text-[#667781] px-2 py-0.5 rounded-full">Aujourd&apos;hui</span>
-                        </div>
-
-                        <div className="flex justify-end">
-                          <div className="bg-[#DCF8C6] rounded-[16px] rounded-tr-[4px] px-3 py-2 max-w-[78%]" style={{ boxShadow:'0 1px 2px rgba(0,0,0,0.1)' }}>
-                            <p className="text-[12px] text-[#111] leading-relaxed">Salam, bghit nakhod rendez-vous pour coupe + soin 🙏</p>
-                            <p className="text-[9px] text-[#667781] text-right mt-0.5">14:23 ✓✓</p>
-                          </div>
-                        </div>
-
-                        <div className="flex justify-start gap-1.5">
-                          <div className="w-6 h-6 rounded-full bg-[#128C7E] flex items-center justify-center text-white text-[8px] font-bold flex-shrink-0 self-end mb-1">B</div>
-                          <div className="bg-white rounded-[16px] rounded-tl-[4px] px-3 py-2 max-w-[80%]" style={{ boxShadow:'0 1px 2px rgba(0,0,0,0.08)' }}>
-                            <p className="text-[11.5px] text-[#111] leading-relaxed">Bonjour ! 😊 Bien sûr, voici les créneaux pour <span className="font-semibold">coupe + soin</span> :</p>
-                            <div className="mt-1.5 space-y-1">
-                              {['📅 Lundi 16 juin — 10h00','📅 Lundi 16 juin — 14h30','📅 Mardi 17 juin — 11h00'].map(s => (
-                                <div key={s} className="text-[10.5px] bg-[#F0F4F8] rounded-lg px-2 py-1 text-[#1a1a1a]">{s}</div>
-                              ))}
-                            </div>
-                            <p className="text-[9px] text-[#667781] text-right mt-1">14:23</p>
-                          </div>
-                        </div>
-
-                        <div className="flex justify-end">
-                          <div className="bg-[#DCF8C6] rounded-[16px] rounded-tr-[4px] px-3 py-2 max-w-[70%]" style={{ boxShadow:'0 1px 2px rgba(0,0,0,0.1)' }}>
-                            <p className="text-[12px] text-[#111]">Le lundi à 14h30 svp</p>
-                            <p className="text-[9px] text-[#667781] text-right mt-0.5">14:24 ✓✓</p>
-                          </div>
-                        </div>
-
-                        <div className="flex justify-start gap-1.5">
-                          <div className="w-6 h-6 rounded-full bg-[#128C7E] flex items-center justify-center text-white text-[8px] font-bold flex-shrink-0 self-end mb-1">B</div>
-                          <div className="bg-white rounded-[16px] rounded-tl-[4px] px-3 py-2 max-w-[80%]" style={{ boxShadow:'0 1px 2px rgba(0,0,0,0.08)' }}>
-                            <p className="text-[11.5px] text-[#111] leading-relaxed">✅ <span className="font-semibold">Confirmé !</span> Lundi 16 juin à 14h30. Vous recevrez un rappel la veille. À bientôt 🌟</p>
-                            <p className="text-[9px] text-[#667781] text-right mt-1">14:24</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Input bar */}
-                      <div className="bg-[#F0F2F5] px-3 py-2 flex items-center gap-2">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="#8696A0"><path d="M10 2a8 8 0 1 0 0 16A8 8 0 0 0 10 2zm0 3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm0 10.5c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
-                        <div className="flex-1 bg-white rounded-full px-3 py-1.5 text-[11px] text-[#B0B5C3]">Message</div>
-                        <div className="w-8 h-8 rounded-full bg-[#25D366] flex items-center justify-center flex-shrink-0">
-                          <svg width="14" height="14" viewBox="0 0 14 14" fill="white"><path d="M13 7L1 1l3 6-3 6 12-6z"/></svg>
-                        </div>
-                      </div>
-
-                      {/* Home indicator */}
-                      <div className="bg-black flex justify-center py-2">
-                        <div className="w-24 h-1 rounded-full bg-white opacity-30" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Floating badges */}
-                <div className="absolute -right-8 top-20 bg-white rounded-2xl px-3 py-2.5 border border-[rgba(12,14,18,0.08)]" style={{ boxShadow:'0 8px 24px rgba(12,14,18,0.12)' }}>
-                  <div className="text-[9px] text-[#7A7F8E] font-medium">Réponse en</div>
-                  <div className="text-[20px] font-bold text-[#25D366] leading-tight">2 sec</div>
-                </div>
-
-                <div className="absolute -left-8 bottom-28 bg-white rounded-2xl px-3 py-2.5 border border-[rgba(12,14,18,0.08)]" style={{ boxShadow:'0 8px 24px rgba(12,14,18,0.12)' }}>
-                  <div className="flex items-center gap-1.5 mb-0.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                    <div className="text-[9px] text-[#7A7F8E] font-medium">RDV confirmé</div>
-                  </div>
-                  <div className="text-[11px] font-semibold text-[#0C0E12]">automatiquement</div>
-                </div>
-              </div>
-            </div>
-          </div>
+      {/* ══════════════════════════════════════
+          CTA — dark, minimal, big
+      ══════════════════════════════════════ */}
+      <section className="py-32 px-6 relative overflow-hidden" style={{ background: '#080A0E' }}>
+        <div className="absolute inset-0 pointer-events-none" aria-hidden>
+          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 800, height: 600, background: 'radial-gradient(ellipse, rgba(26,86,255,0.15) 0%, transparent 60%)', borderRadius: '50%' }} />
+          <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)', backgroundSize: '56px 56px' }} />
         </div>
-      </section>
-
-      {/* ── CTA ── */}
-      <section className="py-24 px-6 md:px-12">
-        <div className="max-w-4xl mx-auto rounded-3xl p-14 text-center relative overflow-hidden" style={{ background:'linear-gradient(135deg,#0C0E12 0%,#141A30 50%,#0C1020 100%)' }}>
-          <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
-            <div style={{ position:'absolute', top:'-30%', right:'-10%', width:500, height:500, background:'radial-gradient(ellipse, rgba(26,86,255,0.25) 0%, transparent 55%)', borderRadius:'50%' }}/>
-            <div style={{ position:'absolute', bottom:'-30%', left:'-10%', width:400, height:400, background:'radial-gradient(ellipse, rgba(124,58,237,0.2) 0%, transparent 55%)', borderRadius:'50%' }}/>
+        <div className="max-w-3xl mx-auto text-center relative">
+          <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full text-[12px] text-white/30" style={{ border: '1px solid rgba(255,255,255,0.06)' }}>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+            Rejoignez les entreprises déjà automatisées
           </div>
-          <div className="relative">
-            <div className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 bg-white/10 rounded-full text-white/60 text-xs font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Rejoignez les entreprises qui ont déjà automatisé
-            </div>
-            <h2 className="text-[40px] font-bold tracking-tight text-white mb-4 font-display">Prêt à automatiser<br/>votre relation client ?</h2>
-            <p className="text-white/50 mb-10 text-lg">7 jours gratuits. Sans carte bancaire. Résultats visibles dès le premier jour.</p>
-            <Link href="/inscription" className="inline-flex items-center gap-2 px-10 py-4 bg-white text-[#0C0E12] rounded-xl text-base font-semibold hover:bg-gray-50 transition-all hover:-translate-y-0.5 hover:shadow-2xl">
+          <h2 className="font-bold text-white leading-[0.95] tracking-[-0.03em] mb-8 font-display" style={{ fontSize: 'clamp(48px, 7vw, 80px)' }}>
+            Prêt à<br />
+            <span style={{ background: 'linear-gradient(135deg, #5B8DFF, #A78BFA)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>automatiser</span>
+            <br />votre relation<br />client ?
+          </h2>
+          <p className="text-white/30 text-lg mb-12">7 jours gratuits. Sans carte bancaire. Résultats dès le premier jour.</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <MagneticButton
+              href="/inscription"
+              className="items-center justify-center gap-2 px-10 py-4 rounded-2xl text-[15px] font-semibold text-[#0C0E12] bg-white hover:bg-white/90 transition-all"
+              style={{ boxShadow: '0 4px 24px rgba(255,255,255,0.15)' }}
+            >
               Commencer gratuitement →
-            </Link>
-            <div className="flex items-center justify-center gap-8 mt-10">
-              {['Sans engagement','Support inclus','Annulation simple'].map(t => (
-                <div key={t} className="flex items-center gap-1.5 text-xs text-white/40">
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  {t}
-                </div>
-              ))}
-            </div>
+            </MagneticButton>
+          </div>
+          <div className="flex items-center justify-center gap-8 mt-10">
+            {['Sans engagement', 'Support inclus', 'Annulation simple'].map(t => (
+              <div key={t} className="flex items-center gap-1.5 text-[12px] text-white/25">
+                <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                {t}
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       <SiteFooter />
-
     </div>
   )
 }
