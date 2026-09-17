@@ -540,9 +540,7 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {SECTORS.map((s, i) => (
               <ScrollReveal key={s.slug} delay={i * 40}>
-                <Link href={`/secteurs/${s.slug}`} className="group block p-5 rounded-2xl transition-all duration-200 hover:-translate-y-1" style={{ border: '1px solid rgba(12,14,18,0.07)', background: 'white' }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(26,86,255,0.25)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 12px 32px rgba(26,86,255,0.08)'; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(12,14,18,0.07)'; (e.currentTarget as HTMLElement).style.boxShadow = ''; }}>
+                <Link href={`/secteurs/${s.slug}`} className="group block p-5 rounded-2xl transition-all duration-200 hover:-translate-y-1 hover:border-[rgba(26,86,255,0.25)] hover:shadow-[0_12px_32px_rgba(26,86,255,0.08)]" style={{ border: '1px solid rgba(12,14,18,0.07)', background: 'white' }}>
                   <div className="w-10 h-10 rounded-xl bg-[#F7F8FA] group-hover:bg-[#EEF2FF] flex items-center justify-center text-[#7A7F8E] group-hover:text-[#1A56FF] mb-3 transition-all">
                     {s.icon}
                   </div>
