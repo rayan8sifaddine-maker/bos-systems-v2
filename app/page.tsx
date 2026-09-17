@@ -247,46 +247,78 @@ export default function HomePage() {
                 ))}
               </div>
 
-              {/* Mobile-only mini dashboard preview */}
-              <div className="lg:hidden mt-8 rounded-2xl overflow-hidden border border-[rgba(12,14,18,0.08)]" style={{ boxShadow:'0 8px 24px rgba(12,14,18,0.1)' }}>
-                <div className="flex items-center gap-1.5 px-3 py-2 bg-[#F7F8FA] border-b border-[rgba(12,14,18,0.06)]">
-                  <div className="w-2 h-2 rounded-full bg-red-400" /><div className="w-2 h-2 rounded-full bg-amber-400" /><div className="w-2 h-2 rounded-full bg-emerald-400" />
-                  <span className="text-[9px] text-[#B0B5C3] ml-2">app.bossystems.ma</span>
-                  <span className="ml-auto flex items-center gap-1 text-[9px] text-emerald-600 font-medium"><span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />IA active</span>
-                </div>
-                <div className="bg-white p-4">
-                  <div className="text-[11px] font-semibold text-[#0C0E12] mb-3">Bonjour, Dr. Bennani 👋</div>
-                  <div className="grid grid-cols-2 gap-2 mb-3">
+              {/* Mobile-only dashboard preview */}
+              <div className="lg:hidden mt-8">
+                <div className="rounded-2xl overflow-hidden" style={{ boxShadow:'0 20px 60px rgba(12,14,18,0.22), 0 0 0 1px rgba(12,14,18,0.08)' }}>
+                  {/* Dark header */}
+                  <div className="px-4 pt-4 pb-5" style={{ background:'linear-gradient(135deg, #0C0E12 0%, #141A30 100%)' }}>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background:'#1A56FF' }}>
+                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                            <rect x="1" y="1" width="6" height="6" rx="1.5" fill="white"/>
+                            <rect x="9" y="1" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
+                            <rect x="1" y="9" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
+                            <rect x="9" y="9" width="6" height="6" rx="1.5" fill="white"/>
+                          </svg>
+                        </div>
+                        <span className="text-white text-xs font-bold tracking-wide">BOS Systems</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full" style={{ background:'rgba(16,185,129,0.15)', border:'1px solid rgba(16,185,129,0.3)' }}>
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        <span className="text-emerald-400 text-[10px] font-semibold">IA active</span>
+                      </div>
+                    </div>
+                    <div className="text-white/50 text-[11px] mb-1">Bonjour,</div>
+                    <div className="text-white text-sm font-semibold">Dr. Bennani 👋</div>
+                  </div>
+                  {/* Stats grid */}
+                  <div className="bg-white p-3 grid grid-cols-2 gap-2.5">
                     {[
-                      { label:'Clients', value:'248', color:'#1A56FF', bg:'#EEF2FF', trend:'+12%' },
+                      { label:'Clients actifs', value:'248', color:'#1A56FF', bg:'#EEF2FF', trend:'+12%' },
                       { label:'RDV aujourd\'hui', value:'14', color:'#7C3AED', bg:'#F5F3FF', trend:'+5' },
-                      { label:'CA ce mois', value:'48k DH', color:'#10B981', bg:'#ECFDF5', trend:'+22%' },
-                      { label:'Taux présence', value:'94%', color:'#F59E0B', bg:'#FFFBEB', trend:'↑' },
+                      { label:'CA ce mois', value:'48k', color:'#10B981', bg:'#ECFDF5', trend:'+22%' },
+                      { label:'Taux présence', value:'94%', color:'#F59E0B', bg:'#FFFBEB', trend:'↑ 3pt' },
                     ].map(s => (
-                      <div key={s.label} className="rounded-xl p-3 border border-[rgba(12,14,18,0.05)]" style={{ background:s.bg }}>
-                        <div className="text-[9px] text-[#7A7F8E] mb-1">{s.label}</div>
-                        <div className="text-[15px] font-bold leading-none mb-1" style={{ color:s.color }}>{s.value}</div>
+                      <div key={s.label} className="rounded-xl p-3" style={{ background:s.bg }}>
+                        <div className="text-[9px] text-[#7A7F8E] mb-1.5">{s.label}</div>
+                        <div className="text-[22px] font-black leading-none mb-1" style={{ color:s.color }}>{s.value}</div>
                         <div className="text-[9px] font-semibold text-emerald-600">{s.trend}</div>
                       </div>
                     ))}
                   </div>
-                  <div className="rounded-xl border border-[rgba(12,14,18,0.06)] overflow-hidden">
-                    <div className="px-3 py-2 bg-[#F7F8FA] border-b border-[rgba(12,14,18,0.05)]">
-                      <span className="text-[10px] font-semibold text-[#0C0E12]">Prochains rendez-vous</span>
+                  {/* Appointments */}
+                  <div className="bg-white border-t border-[rgba(12,14,18,0.06)]">
+                    <div className="px-3 py-2.5 flex items-center justify-between">
+                      <span className="text-[11px] font-semibold text-[#0C0E12]">Prochains rendez-vous</span>
+                      <span className="text-[10px] text-[#1A56FF] font-medium">Voir tout →</span>
                     </div>
                     {[
-                      { time:'10:00', name:'Youssef M.', dot:'bg-emerald-400' },
-                      { time:'11:30', name:'Fatima B.', dot:'bg-amber-400' },
-                      { time:'14:00', name:'Karim L.', dot:'bg-emerald-400' },
+                      { time:'10:00', name:'Youssef M.', status:'Confirmé', dot:'bg-emerald-400' },
+                      { time:'11:30', name:'Fatima B.', status:'En attente', dot:'bg-amber-400' },
+                      { time:'14:00', name:'Karim L.', status:'Confirmé', dot:'bg-emerald-400' },
                     ].map((a,i) => (
-                      <div key={i} className="flex items-center gap-2.5 px-3 py-2 border-b border-[rgba(12,14,18,0.04)] last:border-0">
-                        <span className="text-[10px] font-bold text-[#0C0E12] w-9 flex-shrink-0">{a.time}</span>
-                        <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${a.dot}`} />
-                        <span className="text-[10px] text-[#7A7F8E]">{a.name}</span>
-                        <span className="ml-auto text-[9px] text-emerald-600 font-medium">Confirmé</span>
+                      <div key={i} className="flex items-center gap-3 px-3 py-2.5 border-t border-[rgba(12,14,18,0.04)]">
+                        <div className="text-[11px] font-bold text-[#0C0E12] w-10 flex-shrink-0">{a.time}</div>
+                        <span className={`w-2 h-2 rounded-full flex-shrink-0 ${a.dot}`} />
+                        <div className="text-[11px] text-[#3A3D45] flex-1">{a.name}</div>
+                        <div className={`text-[9px] font-semibold px-2 py-0.5 rounded-full ${a.dot === 'bg-emerald-400' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}`}>{a.status}</div>
                       </div>
                     ))}
                   </div>
+                </div>
+                {/* Floating notification */}
+                <div className="mt-3 mx-1 flex items-center gap-3 bg-white rounded-2xl px-4 py-3 border border-[rgba(12,14,18,0.07)]" style={{ boxShadow:'0 8px 24px rgba(12,14,18,0.1)' }}>
+                  <div className="w-9 h-9 bg-emerald-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path d="M3 8l3.5 3.5L13 4.5" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[12px] font-semibold text-[#0C0E12] leading-tight">Rappel envoyé automatiquement</div>
+                    <div className="text-[10px] text-[#B0B5C3] mt-0.5">3 clients notifiés · il y a 2 min</div>
+                  </div>
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0" />
                 </div>
               </div>
             </div>
