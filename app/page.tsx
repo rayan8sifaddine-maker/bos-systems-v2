@@ -190,7 +190,7 @@ export default function HomePage() {
       <SiteNav />
 
       {/* ── HERO ── */}
-      <section className="relative pt-24 pb-16 px-6 md:px-12 overflow-hidden">
+      <section className="relative pt-20 pb-10 md:pt-24 md:pb-16 px-6 md:px-12 overflow-hidden">
         {/* Background: animated mesh gradient + particles + grid watermark + grain */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
           <div className="animate-mesh" style={{ position:'absolute', top:'-25%', left:'15%', width:780, height:780, background:'radial-gradient(ellipse, rgba(26,86,255,0.10) 0%, transparent 65%)', borderRadius:'50%' }}/>
@@ -207,47 +207,91 @@ export default function HomePage() {
             <div className="animate-slide-up">
               <Link href="/nouveautes" className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 bg-[#EEF2FF] border border-[rgba(26,86,255,0.2)] rounded-full text-[#1A56FF] text-xs font-semibold hover:bg-[#E0E7FF] transition-colors">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#1A56FF] animate-pulse flex-shrink-0" />
-                Nouveau : pages secteurs détaillées & comparatif
+                <span className="hidden sm:inline">Nouveau : pages secteurs détaillées &amp; comparatif</span>
+                <span className="sm:hidden">Nouveautés disponibles</span>
                 <svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </Link>
 
-              <h1 className="text-[48px] md:text-[64px] font-bold leading-[1.03] tracking-[-0.02em] text-[#0C0E12] mb-5 font-display">
+              <h1 className="text-[34px] sm:text-[48px] md:text-[64px] font-bold leading-[1.05] tracking-[-0.02em] text-[#0C0E12] mb-5 font-display">
                 L&apos;infrastructure<br/>client des{' '}
                 <span style={{ background:'linear-gradient(135deg,#1A56FF 0%,#7C3AED 100%)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>
                   entreprises<br/>marocaines
                 </span>
               </h1>
 
-              <p className="text-lg text-[#3A3D45] leading-relaxed mb-8 max-w-lg font-light">
-                BOS remplace WhatsApp, Excel et le carnet papier par un système IA complet — rendez-vous automatisés, rappels, CRM, analytics. Tout sur une plateforme.
+              <p className="text-base md:text-lg text-[#3A3D45] leading-relaxed mb-7 max-w-lg font-light">
+                BOS remplace WhatsApp, Excel et le carnet papier — rendez-vous automatisés, rappels, CRM, analytics. Tout sur une plateforme.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-3 mb-8">
-                <MagneticButton href="/inscription" className="items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-base font-semibold text-white hover:-translate-y-0.5" style={{ background:'linear-gradient(135deg,#0C0E12,#1e2330)', boxShadow:'0 4px 16px rgba(12,14,18,0.25)' }}>
+              <div className="flex flex-col sm:flex-row gap-3 mb-7">
+                <MagneticButton href="/inscription" className="items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm sm:text-base font-semibold text-white hover:-translate-y-0.5" style={{ background:'linear-gradient(135deg,#0C0E12,#1e2330)', boxShadow:'0 4px 16px rgba(12,14,18,0.25)' }}>
                   Commencer gratuitement — 7 jours →
                 </MagneticButton>
-                <Link href="/connexion" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-base font-medium text-[#3A3D45] border border-[rgba(12,14,18,0.12)] hover:bg-[#F7F8FA] transition-all">
+                <Link href="/connexion" className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm sm:text-base font-medium text-[#3A3D45] border border-[rgba(12,14,18,0.12)] hover:bg-[#F7F8FA] transition-all">
                   Se connecter
                 </Link>
               </div>
 
-              <div className="flex flex-wrap items-center gap-5">
+              <div className="flex flex-wrap items-center gap-4 sm:gap-5">
                 {[
                   { v:-78, suffix:'%', l:'de no-shows', c:'#10B981' },
                   { v:24, suffix:'/7', l:'disponibilité', c:'#1A56FF' },
                   { v:40, prefix:'+', suffix:'%', l:'conversions', c:'#7C3AED' },
                 ].map(({ v, l, c, prefix, suffix }) => (
-                  <div key={l} className="flex items-center gap-2">
-                    <span className="text-xl font-bold font-display" style={{ color:c }}>
+                  <div key={l} className="flex items-center gap-1.5">
+                    <span className="text-lg sm:text-xl font-bold font-display" style={{ color:c }}>
                       <AnimatedCounter value={v} prefix={prefix} suffix={suffix} />
                     </span>
-                    <span className="text-sm text-[#7A7F8E]">{l}</span>
+                    <span className="text-xs sm:text-sm text-[#7A7F8E]">{l}</span>
                   </div>
                 ))}
               </div>
+
+              {/* Mobile-only mini dashboard preview */}
+              <div className="lg:hidden mt-8 rounded-2xl overflow-hidden border border-[rgba(12,14,18,0.08)]" style={{ boxShadow:'0 8px 24px rgba(12,14,18,0.1)' }}>
+                <div className="flex items-center gap-1.5 px-3 py-2 bg-[#F7F8FA] border-b border-[rgba(12,14,18,0.06)]">
+                  <div className="w-2 h-2 rounded-full bg-red-400" /><div className="w-2 h-2 rounded-full bg-amber-400" /><div className="w-2 h-2 rounded-full bg-emerald-400" />
+                  <span className="text-[9px] text-[#B0B5C3] ml-2">app.bossystems.ma</span>
+                  <span className="ml-auto flex items-center gap-1 text-[9px] text-emerald-600 font-medium"><span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />IA active</span>
+                </div>
+                <div className="bg-white p-4">
+                  <div className="text-[11px] font-semibold text-[#0C0E12] mb-3">Bonjour, Dr. Bennani 👋</div>
+                  <div className="grid grid-cols-2 gap-2 mb-3">
+                    {[
+                      { label:'Clients', value:'248', color:'#1A56FF', bg:'#EEF2FF', trend:'+12%' },
+                      { label:'RDV aujourd\'hui', value:'14', color:'#7C3AED', bg:'#F5F3FF', trend:'+5' },
+                      { label:'CA ce mois', value:'48k DH', color:'#10B981', bg:'#ECFDF5', trend:'+22%' },
+                      { label:'Taux présence', value:'94%', color:'#F59E0B', bg:'#FFFBEB', trend:'↑' },
+                    ].map(s => (
+                      <div key={s.label} className="rounded-xl p-3 border border-[rgba(12,14,18,0.05)]" style={{ background:s.bg }}>
+                        <div className="text-[9px] text-[#7A7F8E] mb-1">{s.label}</div>
+                        <div className="text-[15px] font-bold leading-none mb-1" style={{ color:s.color }}>{s.value}</div>
+                        <div className="text-[9px] font-semibold text-emerald-600">{s.trend}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="rounded-xl border border-[rgba(12,14,18,0.06)] overflow-hidden">
+                    <div className="px-3 py-2 bg-[#F7F8FA] border-b border-[rgba(12,14,18,0.05)]">
+                      <span className="text-[10px] font-semibold text-[#0C0E12]">Prochains rendez-vous</span>
+                    </div>
+                    {[
+                      { time:'10:00', name:'Youssef M.', dot:'bg-emerald-400' },
+                      { time:'11:30', name:'Fatima B.', dot:'bg-amber-400' },
+                      { time:'14:00', name:'Karim L.', dot:'bg-emerald-400' },
+                    ].map((a,i) => (
+                      <div key={i} className="flex items-center gap-2.5 px-3 py-2 border-b border-[rgba(12,14,18,0.04)] last:border-0">
+                        <span className="text-[10px] font-bold text-[#0C0E12] w-9 flex-shrink-0">{a.time}</span>
+                        <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${a.dot}`} />
+                        <span className="text-[10px] text-[#7A7F8E]">{a.name}</span>
+                        <span className="ml-auto text-[9px] text-emerald-600 font-medium">Confirmé</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {/* Right — Dashboard mockup */}
+            {/* Right — Dashboard mockup (desktop only) */}
             <div className="hidden lg:block relative animate-float-slow">
               <TiltCard>
                 <DashboardMockup />
@@ -258,7 +302,7 @@ export default function HomePage() {
       </section>
 
       {/* ── TRUSTED BY / STATS BAR ── */}
-      <section className="py-10 px-6 md:px-12 border-y border-[rgba(12,14,18,0.06)] bg-[#F7F8FA]">
+      <section className="py-8 md:py-10 px-6 md:px-12 border-y border-[rgba(12,14,18,0.06)] bg-[#F7F8FA]">
         <div className="max-w-5xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <p className="text-xs font-semibold text-[#B0B5C3] uppercase tracking-widest text-center md:text-left">Résultats moyens observés</p>
@@ -282,14 +326,14 @@ export default function HomePage() {
       </section>
 
       {/* ── COMMENT ÇA MARCHE ── */}
-      <section id="comment" className="py-24 px-6 md:px-12">
+      <section id="comment" className="py-14 md:py-24 px-6 md:px-12">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-10 md:mb-16">
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
               En 3 étapes
             </div>
-            <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Opérationnel en 5 minutes</h2>
-            <p className="text-lg text-[#3A3D45] mt-3 font-light">Pas de formation. Pas de technicien. Juste votre navigateur.</p>
+            <h2 className="text-[28px] sm:text-[36px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Opérationnel en 5 minutes</h2>
+            <p className="text-base md:text-lg text-[#3A3D45] mt-3 font-light">Pas de formation. Pas de technicien. Juste votre navigateur.</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 relative">
@@ -340,14 +384,14 @@ export default function HomePage() {
       </section>
 
       {/* ── FEATURES ── */}
-      <section id="fonctionnalites" className="py-24 px-6 md:px-12 bg-[#F7F8FA]">
+      <section id="fonctionnalites" className="py-14 md:py-24 px-6 md:px-12 bg-[#F7F8FA]">
         <div className="max-w-5xl mx-auto">
-          <div className="mb-14 max-w-xl mx-auto text-center">
+          <div className="mb-10 md:mb-14 max-w-xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-white border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
               Fonctionnalités
             </div>
-            <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Tout ce dont vous avez besoin</h2>
-            <p className="text-lg text-[#3A3D45] font-light">Chaque fonctionnalité résout un problème réel des entreprises marocaines.</p>
+            <h2 className="text-[28px] sm:text-[36px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Tout ce dont vous avez besoin</h2>
+            <p className="text-base md:text-lg text-[#3A3D45] font-light">Chaque fonctionnalité résout un problème réel des entreprises marocaines.</p>
           </div>
           <div className="flex flex-wrap justify-center gap-4">
             {FEATURES.map(f => (
@@ -362,14 +406,14 @@ export default function HomePage() {
       </section>
 
       {/* ── SECTORS ── */}
-      <section id="secteurs" className="py-24 px-6 md:px-12">
+      <section id="secteurs" className="py-14 md:py-24 px-6 md:px-12">
         <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col items-center text-center gap-4 mb-14">
+          <div className="flex flex-col items-center text-center gap-4 mb-10 md:mb-14">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
               Secteurs
             </div>
-            <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Une plateforme<br/>Tous les secteurs</h2>
-            <p className="text-lg text-[#3A3D45] font-light max-w-md">Adapté à chaque métier, conçu pour la réalité marocaine.</p>
+            <h2 className="text-[28px] sm:text-[36px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Une plateforme<br/>Tous les secteurs</h2>
+            <p className="text-base md:text-lg text-[#3A3D45] font-light max-w-md">Adapté à chaque métier, conçu pour la réalité marocaine.</p>
           </div>
           <div className="flex flex-wrap justify-center gap-3">
             {SECTORS.map(s => (
@@ -393,7 +437,7 @@ export default function HomePage() {
       </section>
 
       {/* ── AVANT / APRÈS ── */}
-      <section className="py-24 px-6 md:px-12 relative overflow-hidden" style={{ background:'linear-gradient(135deg,#0C0E12 0%,#141A30 60%,#0A1020 100%)' }}>
+      <section className="py-14 md:py-24 px-6 md:px-12 relative overflow-hidden" style={{ background:'linear-gradient(135deg,#0C0E12 0%,#141A30 60%,#0A1020 100%)' }}>
         {/* Background glows */}
         <div className="absolute inset-0 pointer-events-none" aria-hidden>
           <div style={{ position:'absolute', top:'-20%', left:'10%', width:600, height:600, background:'radial-gradient(ellipse, rgba(26,86,255,0.12) 0%, transparent 60%)', borderRadius:'50%' }}/>
@@ -407,7 +451,7 @@ export default function HomePage() {
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 bg-white/10 rounded-full text-white/50 text-xs font-semibold">
               Transformation
             </div>
-            <h2 className="text-[40px] font-bold tracking-tight text-white font-display mb-3">Remplacez le chaos par la clarté</h2>
+            <h2 className="text-[28px] sm:text-[36px] md:text-[40px] font-bold tracking-tight text-white font-display mb-3">Remplacez le chaos par la clarté</h2>
             <p className="text-white/40 text-lg font-light">Tout ce que BOS remplace. Tout ce qu&apos;il apporte.</p>
           </div>
 
@@ -477,13 +521,13 @@ export default function HomePage() {
       </section>
 
       {/* ── TESTIMONIALS ── */}
-      <section className="py-24 px-6 md:px-12 bg-[#F7F8FA]">
+      <section className="py-14 md:py-24 px-6 md:px-12 bg-[#F7F8FA]">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
+          <div className="text-center mb-10 md:mb-14">
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-white border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
               Témoignages
             </div>
-            <h2 className="text-[36px] font-bold tracking-tight text-[#0C0E12] font-display">Ce que nos clients disent</h2>
+            <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold tracking-tight text-[#0C0E12] font-display">Ce que nos clients disent</h2>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
@@ -514,14 +558,14 @@ export default function HomePage() {
       </section>
 
       {/* ── CONFIANCE / PREUVE SOCIALE ── */}
-      <section className="py-20 px-6 md:px-12 bg-[#F7F8FA] border-y border-[rgba(12,14,18,0.06)]">
+      <section className="py-12 md:py-20 px-6 md:px-12 bg-[#F7F8FA] border-y border-[rgba(12,14,18,0.06)]">
         <div className="max-w-5xl mx-auto">
           <ScrollReveal>
             <div className="text-center mb-10">
               <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-white border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
                 Confiance
               </div>
-              <h2 className="text-[32px] md:text-[36px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Conçu pour les entreprises marocaines</h2>
+              <h2 className="text-[24px] sm:text-[30px] md:text-[36px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Conçu pour les entreprises marocaines</h2>
             </div>
           </ScrollReveal>
 
@@ -558,15 +602,15 @@ export default function HomePage() {
       </section>
 
       {/* ── SÉCURITÉ ── */}
-      <section className="py-24 px-6 md:px-12">
+      <section className="py-14 md:py-24 px-6 md:px-12">
         <div className="max-w-5xl mx-auto">
           <ScrollReveal>
-            <div className="mb-14 max-w-xl mx-auto text-center">
+            <div className="mb-10 md:mb-14 max-w-xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
                 Sécurité
               </div>
-              <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Vos données sont protégées</h2>
-              <p className="text-lg text-[#3A3D45] font-light">Sécurité et conformité prises au sérieux, dès le premier jour.</p>
+              <h2 className="text-[28px] sm:text-[36px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Vos données sont protégées</h2>
+              <p className="text-base md:text-lg text-[#3A3D45] font-light">Sécurité et conformité prises au sérieux, dès le premier jour.</p>
             </div>
           </ScrollReveal>
           <div className="flex flex-wrap justify-center gap-4">
@@ -609,14 +653,14 @@ export default function HomePage() {
       </section>
 
       {/* ── FAQ ── */}
-      <section className="py-24 px-6 md:px-12">
+      <section className="py-14 md:py-24 px-6 md:px-12">
         <div className="max-w-3xl mx-auto">
           <ScrollReveal>
-            <div className="text-center mb-12">
+            <div className="text-center mb-8 md:mb-12">
               <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
                 Questions fréquentes
               </div>
-              <h2 className="text-[36px] md:text-[40px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Tout ce que vous devez savoir</h2>
+              <h2 className="text-[26px] sm:text-[32px] md:text-[40px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Tout ce que vous devez savoir</h2>
             </div>
           </ScrollReveal>
           <div className="space-y-3">
@@ -636,7 +680,7 @@ export default function HomePage() {
       </section>
 
       {/* ── PRICING ── */}
-      <section id="tarifs" className="py-24 px-6 md:px-12 relative overflow-hidden">
+      <section id="tarifs" className="py-14 md:py-24 px-6 md:px-12 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" aria-hidden>
           <div style={{ position:'absolute', top:'10%', left:'50%', transform:'translateX(-50%)', width:900, height:500, background:'radial-gradient(ellipse, rgba(26,86,255,0.06) 0%, transparent 70%)' }} />
         </div>
@@ -646,14 +690,14 @@ export default function HomePage() {
               <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
                 Tarifs
               </div>
-              <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Un plan pour chaque taille d&apos;équipe</h2>
-              <p className="text-lg text-[#3A3D45] font-light">Sans engagement. 7 jours d&apos;essai gratuit. Annulez à tout moment.</p>
+              <h2 className="text-[28px] sm:text-[36px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Un plan pour chaque taille d&apos;équipe</h2>
+              <p className="text-base md:text-lg text-[#3A3D45] font-light">Sans engagement. 7 jours d&apos;essai gratuit. Annulez à tout moment.</p>
             </div>
           </ScrollReveal>
           <div className="grid md:grid-cols-3 gap-5 items-stretch">
             {PLANS.map((p, i) => (
               <ScrollReveal key={p.name} delay={i * 90}>
-                <div className={`relative h-full flex flex-col rounded-[20px] overflow-hidden transition-all duration-300 ${p.featured ? 'md:-translate-y-3 hover:-translate-y-4' : 'hover:-translate-y-1.5'}`} style={p.featured ? { background:'linear-gradient(160deg,#0C0E12 0%,#161B2E 100%)', boxShadow:'0 24px 56px rgba(12,14,18,0.3), 0 0 0 1px rgba(26,86,255,0.4)' } : { background:'white', boxShadow:'0 2px 8px rgba(12,14,18,0.05), 0 0 0 1px rgba(12,14,18,0.06)' }}>
+                <div className={`relative h-full flex flex-col rounded-[20px] overflow-hidden transition-all duration-300 ${p.featured ? 'md:-translate-y-3 md:hover:-translate-y-5 hover:-translate-y-1.5' : 'hover:-translate-y-1.5'}`} style={p.featured ? { background:'linear-gradient(160deg,#0C0E12 0%,#161B2E 100%)', boxShadow:'0 24px 56px rgba(12,14,18,0.3), 0 0 0 1px rgba(26,86,255,0.4)' } : { background:'white', boxShadow:'0 2px 8px rgba(12,14,18,0.05), 0 0 0 1px rgba(12,14,18,0.06)' }}>
                   {p.featured && (
                     <div className="absolute -top-px left-0 right-0 h-[3px]" style={{ background:'linear-gradient(90deg,#1A56FF,#7C3AED,#1A56FF)' }} />
                   )}
@@ -663,7 +707,7 @@ export default function HomePage() {
                       Le plus populaire
                     </div>
                   )}
-                  <div className="p-8 flex flex-col flex-1">
+                  <div className="p-6 md:p-8 flex flex-col flex-1">
                     <div className={`text-xs font-semibold tracking-wider uppercase mb-1 ${p.featured ? 'text-white/40' : 'text-[#7A7F8E]'}`}>{p.name}</div>
                     <div className={`text-xs mb-6 ${p.featured ? 'text-white/30' : 'text-[#B0B5C3]'}`}>{p.desc}</div>
                     <div className="flex items-baseline gap-1.5 mb-7">
@@ -696,7 +740,7 @@ export default function HomePage() {
       </section>
 
       {/* ── WHATSAPP AI ── */}
-      <section className="py-24 px-6 md:px-12 bg-[#F7F8FA]">
+      <section className="py-14 md:py-24 px-6 md:px-12 bg-[#F7F8FA]">
         <div className="max-w-5xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
 
@@ -706,7 +750,7 @@ export default function HomePage() {
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-dot" />
                 Assistant IA WhatsApp
               </div>
-              <h2 className="text-[38px] font-bold tracking-tight text-[#0C0E12] mb-5 font-display leading-tight">
+              <h2 className="text-[26px] sm:text-[32px] md:text-[38px] font-bold tracking-tight text-[#0C0E12] mb-5 font-display leading-tight">
                 Pourquoi l&apos;IA WhatsApp<br/>de BOS est différente
               </h2>
               <p className="text-[#3A3D45] text-lg font-light leading-relaxed mb-8">
@@ -840,13 +884,13 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Floating badges */}
-                <div className="absolute -right-8 top-20 bg-white rounded-2xl px-3 py-2.5 border border-[rgba(12,14,18,0.08)]" style={{ boxShadow:'0 8px 24px rgba(12,14,18,0.12)' }}>
+                {/* Floating badges — hidden on small screens to avoid overflow */}
+                <div className="hidden sm:block absolute -right-8 top-20 bg-white rounded-2xl px-3 py-2.5 border border-[rgba(12,14,18,0.08)]" style={{ boxShadow:'0 8px 24px rgba(12,14,18,0.12)' }}>
                   <div className="text-[9px] text-[#7A7F8E] font-medium">Réponse en</div>
                   <div className="text-[20px] font-bold text-[#25D366] leading-tight">2 sec</div>
                 </div>
 
-                <div className="absolute -left-8 bottom-28 bg-white rounded-2xl px-3 py-2.5 border border-[rgba(12,14,18,0.08)]" style={{ boxShadow:'0 8px 24px rgba(12,14,18,0.12)' }}>
+                <div className="hidden sm:block absolute -left-8 bottom-28 bg-white rounded-2xl px-3 py-2.5 border border-[rgba(12,14,18,0.08)]" style={{ boxShadow:'0 8px 24px rgba(12,14,18,0.12)' }}>
                   <div className="flex items-center gap-1.5 mb-0.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                     <div className="text-[9px] text-[#7A7F8E] font-medium">RDV confirmé</div>
@@ -860,8 +904,8 @@ export default function HomePage() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="py-24 px-6 md:px-12">
-        <div className="max-w-4xl mx-auto rounded-3xl p-14 text-center relative overflow-hidden" style={{ background:'linear-gradient(135deg,#0C0E12 0%,#141A30 50%,#0C1020 100%)' }}>
+      <section className="py-14 md:py-24 px-4 md:px-12">
+        <div className="max-w-4xl mx-auto rounded-3xl p-8 md:p-14 text-center relative overflow-hidden" style={{ background:'linear-gradient(135deg,#0C0E12 0%,#141A30 50%,#0C1020 100%)' }}>
           <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
             <div style={{ position:'absolute', top:'-30%', right:'-10%', width:500, height:500, background:'radial-gradient(ellipse, rgba(26,86,255,0.25) 0%, transparent 55%)', borderRadius:'50%' }}/>
             <div style={{ position:'absolute', bottom:'-30%', left:'-10%', width:400, height:400, background:'radial-gradient(ellipse, rgba(124,58,237,0.2) 0%, transparent 55%)', borderRadius:'50%' }}/>
@@ -871,8 +915,8 @@ export default function HomePage() {
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               Rejoignez les entreprises qui ont déjà automatisé
             </div>
-            <h2 className="text-[40px] font-bold tracking-tight text-white mb-4 font-display">Prêt à automatiser<br/>votre relation client ?</h2>
-            <p className="text-white/50 mb-10 text-lg">7 jours gratuits. Sans carte bancaire. Résultats visibles dès le premier jour.</p>
+            <h2 className="text-[28px] sm:text-[36px] md:text-[40px] font-bold tracking-tight text-white mb-4 font-display">Prêt à automatiser<br/>votre relation client ?</h2>
+            <p className="text-white/50 mb-8 md:mb-10 text-base md:text-lg">7 jours gratuits. Sans carte bancaire. Résultats visibles dès le premier jour.</p>
             <Link href="/inscription" className="inline-flex items-center gap-2 px-10 py-4 bg-white text-[#0C0E12] rounded-xl text-base font-semibold hover:bg-gray-50 transition-all hover:-translate-y-0.5 hover:shadow-2xl">
               Commencer gratuitement →
             </Link>
