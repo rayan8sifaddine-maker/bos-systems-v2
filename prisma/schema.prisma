@@ -218,6 +218,20 @@ model AuditLog {
   @@index([clinicId, createdAt])
 }
 
+// ── License keys ─────────────────────────────────────────
+
+model LicenseKey {
+  id        String    @id @default(cuid())
+  key       String    @unique
+  plan      String    // STARTER, PRO, ENTERPRISE
+  used      Boolean   @default(false)
+  usedAt    DateTime?
+  clinicId  String?
+  createdAt DateTime  @default(now())
+
+  @@index([key])
+}
+
 // ── Automation ────────────────────────────────────────────
 
 model AutomationRule {
