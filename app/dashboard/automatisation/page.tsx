@@ -1,154 +1,127 @@
-import { auth } from '@/lib/auth'
-import { prisma } from '@/lib/prisma'
-import { redirect } from 'next/navigation'
+'use client'
 
-export const dynamic = 'force-dynamic'
-export const metadata = { title: 'Automatisation' }
+import { useEffect, useState, useCallback } from 'react'
+import { useToast } from '@/components/ui/toast'
 
-const AUTOMATIONS = [
-  {
-    id: 'reminder_24h',
-    name: 'Rappel J-1',
-    description: 'Envoie un message WhatsApp automatiquement 24h avant chaque rendez-vous.',
-    trigger: 'Rendez-vous confirmé',
-    action: 'Message WhatsApp',
-    impact: '−78% d\'absences',
-    enabled: true,
-    category: 'Rendez-vous',
-    bg: '#ECFDF5', color: '#059669',
-    icon: (
-      <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
-        <path d="M10 2a6 6 0 0 0-6 6v3.586l-.707.707A1 1 0 0 0 4 14h12a1 1 0 0 0 .707-1.707L16 11.586V8a6 6 0 0 0-6-6zm0 16a3 3 0 0 1-2.83-2h5.66A3 3 0 0 1 10 18z"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'reminder_2h',
-    name: 'Rappel 2h avant',
-    description: 'Second rappel 2 heures avant le rendez-vous pour réduire les no-shows.',
-    trigger: 'Rendez-vous dans 2h',
-    action: 'Message WhatsApp',
-    impact: 'Confirmation rapide',
-    enabled: true,
-    category: 'Rendez-vous',
-    bg: '#FFF7ED', color: '#EA580C',
-    icon: (
-      <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
-        <path fillRule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm1-12a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l2.828 2.829a1 1 0 1 0 1.415-1.415L11 9.586V6z" clipRule="evenodd"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'reactivation_30d',
-    name: 'Relance 30 jours',
-    description: 'Relance les clients inactifs depuis 30 jours pour reprendre rendez-vous.',
-    trigger: 'Client inactif 30j',
-    action: 'Message WhatsApp',
-    impact: '+28% rétention',
-    enabled: true,
-    category: 'CRM',
-    bg: '#EEF2FF', color: '#1A56FF',
-    icon: (
-      <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
-        <path fillRule="evenodd" d="M4 2a1 1 0 0 1 1 1v2.101a7.002 7.002 0 0 1 11.601 2.566 1 1 0 1 1-1.885.666A5.002 5.002 0 0 0 5.999 7H9a1 1 0 0 1 0 2H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm.008 9.057a1 1 0 0 1 1.276.61A5.002 5.002 0 0 0 14.001 13H11a1 1 0 1 1 0-2h5a1 1 0 0 1 1 1v5a1 1 0 1 1-2 0v-2.101a7.002 7.002 0 0 1-11.601-2.566 1 1 0 0 1 .61-1.276z" clipRule="evenodd"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'welcome_new',
-    name: 'Message de bienvenue',
-    description: 'Accueille automatiquement les nouveaux clients après leur premier RDV.',
-    trigger: 'Premier RDV terminé',
-    action: 'Message WhatsApp',
-    impact: 'Fidélisation',
-    enabled: false,
-    category: 'CRM',
-    bg: '#F5F3FF', color: '#7C3AED',
-    icon: (
-      <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
-        <path d="M2 10.5a1.5 1.5 0 1 1 3 0v5a1.5 1.5 0 0 1-3 0v-5zM6 10.333v5.43a2 2 0 0 0 1.106 1.79l.05.025A4 4 0 0 0 8.943 18h5.416a2 2 0 0 0 1.962-1.608l1.2-6A2 2 0 0 0 15.56 8H12V4a2 2 0 0 0-2-2 1 1 0 0 0-1 1v.667a4 4 0 0 1-.8 2.4L6.8 7.933a4 4 0 0 0-.8 2.4z"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'birthday',
-    name: 'Anniversaire client',
-    description: 'Envoie un message personnalisé le jour de l\'anniversaire du client.',
-    trigger: 'Date anniversaire',
-    action: 'Message WhatsApp',
-    impact: 'Engagement client',
-    enabled: false,
-    category: 'CRM',
-    bg: '#FFF1F2', color: '#E11D48',
-    icon: (
-      <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
-        <path fillRule="evenodd" d="M3.172 5.172a4 4 0 0 1 5.656 0L10 6.343l1.172-1.171a4 4 0 1 1 5.656 5.656L10 17.657l-6.828-6.829a4 4 0 0 1 0-5.656z" clipRule="evenodd"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'review_request',
-    name: 'Demande d\'avis',
-    description: 'Demande un avis client 24h après un rendez-vous terminé.',
-    trigger: 'RDV marqué DONE',
-    action: 'Message WhatsApp',
-    impact: 'Réputation',
-    enabled: false,
-    category: 'Satisfaction',
-    bg: '#FFFBEB', color: '#D97706',
-    icon: (
-      <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
-        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292z"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'no_show_followup',
-    name: 'Suivi no-show',
-    description: 'Contacte automatiquement les clients qui n\'ont pas honoré leur rendez-vous.',
-    trigger: 'RDV marqué NO_SHOW',
-    action: 'Message WhatsApp',
-    impact: 'Récupération',
-    enabled: false,
-    category: 'Rendez-vous',
-    bg: '#F0F9FF', color: '#0284C7',
-    icon: (
-      <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
-        <path d="M2 3a1 1 0 0 1 1-1h2.153a1 1 0 0 1 .986.836l.74 4.435a1 1 0 0 1-.54 1.06l-1.548.773a11.037 11.037 0 0 0 6.105 6.105l.774-1.548a1 1 0 0 1 1.059-.54l4.435.74a1 1 0 0 1 .836.986V17a1 1 0 0 1-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
-      </svg>
-    ),
-  },
-]
+interface AutomationRule {
+  id: string
+  name: string
+  description: string
+  trigger: string
+  action: string
+  impact: string
+  enabled: boolean
+  category: string
+  bg: string
+  color: string
+  runCount: number
+}
+
+const ICON_MAP: Record<string, JSX.Element> = {
+  // keyed by a stable slug derived from name
+  'Rappel J-1': (
+    <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+      <path d="M10 2a6 6 0 0 0-6 6v3.586l-.707.707A1 1 0 0 0 4 14h12a1 1 0 0 0 .707-1.707L16 11.586V8a6 6 0 0 0-6-6zm0 16a3 3 0 0 1-2.83-2h5.66A3 3 0 0 1 10 18z"/>
+    </svg>
+  ),
+  'Rappel 2h avant': (
+    <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+      <path fillRule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm1-12a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l2.828 2.829a1 1 0 1 0 1.415-1.415L11 9.586V6z" clipRule="evenodd"/>
+    </svg>
+  ),
+  'Relance 30 jours': (
+    <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+      <path fillRule="evenodd" d="M4 2a1 1 0 0 1 1 1v2.101a7.002 7.002 0 0 1 11.601 2.566 1 1 0 1 1-1.885.666A5.002 5.002 0 0 0 5.999 7H9a1 1 0 0 1 0 2H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm.008 9.057a1 1 0 0 1 1.276.61A5.002 5.002 0 0 0 14.001 13H11a1 1 0 1 1 0-2h5a1 1 0 0 1 1 1v5a1 1 0 1 1-2 0v-2.101a7.002 7.002 0 0 1-11.601-2.566 1 1 0 0 1 .61-1.276z" clipRule="evenodd"/>
+    </svg>
+  ),
+  'Message de bienvenue': (
+    <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+      <path d="M2 10.5a1.5 1.5 0 1 1 3 0v5a1.5 1.5 0 0 1-3 0v-5zM6 10.333v5.43a2 2 0 0 0 1.106 1.79l.05.025A4 4 0 0 0 8.943 18h5.416a2 2 0 0 0 1.962-1.608l1.2-6A2 2 0 0 0 15.56 8H12V4a2 2 0 0 0-2-2 1 1 0 0 0-1 1v.667a4 4 0 0 1-.8 2.4L6.8 7.933a4 4 0 0 0-.8 2.4z"/>
+    </svg>
+  ),
+  'Anniversaire client': (
+    <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+      <path fillRule="evenodd" d="M3.172 5.172a4 4 0 0 1 5.656 0L10 6.343l1.172-1.171a4 4 0 1 1 5.656 5.656L10 17.657l-6.828-6.829a4 4 0 0 1 0-5.656z" clipRule="evenodd"/>
+    </svg>
+  ),
+  "Demande d'avis": (
+    <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292z"/>
+    </svg>
+  ),
+  'Suivi no-show': (
+    <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+      <path d="M2 3a1 1 0 0 1 1-1h2.153a1 1 0 0 1 .986.836l.74 4.435a1 1 0 0 1-.54 1.06l-1.548.773a11.037 11.037 0 0 0 6.105 6.105l.774-1.548a1 1 0 0 1 1.059-.54l4.435.74a1 1 0 0 1 .836.986V17a1 1 0 0 1-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+    </svg>
+  ),
+}
+
+const DEFAULT_ICON = (
+  <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+    <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0 1 12 2v5h4a1 1 0 0 1 .82 1.573l-7 10A1 1 0 0 1 8 18v-5H4a1 1 0 0 1-.82-1.573l7-10a1 1 0 0 1 1.12-.38z" clipRule="evenodd"/>
+  </svg>
+)
 
 const STAT_ICONS = [
-  // Bell
   <svg key="bell" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
     <path d="M10 2a6 6 0 0 0-6 6v3.586l-.707.707A1 1 0 0 0 4 14h12a1 1 0 0 0 .707-1.707L16 11.586V8a6 6 0 0 0-6-6zm0 16a3 3 0 0 1-2.83-2h5.66A3 3 0 0 1 10 18z"/>
   </svg>,
-  // Chart down
   <svg key="chart" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
     <path fillRule="evenodd" d="M3 3a1 1 0 0 0 0 2h11l-4 4H7a1 1 0 0 0-.707 1.707l3 3a1 1 0 0 0 1.414 0l3-3A1 1 0 0 0 13 9h-1.586l4-4H17a1 1 0 1 0 0-2H3z" clipRule="evenodd"/>
   </svg>,
-  // Lightning
   <svg key="lightning" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
     <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0 1 12 2v5h4a1 1 0 0 1 .82 1.573l-7 10A1 1 0 0 1 8 18v-5H4a1 1 0 0 1-.82-1.573l7-10a1 1 0 0 1 1.12-.38z" clipRule="evenodd"/>
   </svg>,
 ]
 
-export default async function AutomatisationPage() {
-  const session = await auth()
-  if (!session?.user?.id) redirect('/connexion')
+export default function AutomatisationPage() {
+  const { toast } = useToast()
+  const [automations, setAutomations] = useState<AutomationRule[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const clinic = await prisma.clinic.findFirst({ where: { userId: session.user.id } })
-  if (!clinic) redirect('/inscription')
+  const fetchAutomations = useCallback(async () => {
+    try {
+      const res = await fetch('/api/automations')
+      if (!res.ok) throw new Error('Erreur de chargement')
+      const data = await res.json()
+      setAutomations(data)
+    } catch {
+      toast('Impossible de charger les automatisations', 'error')
+    } finally {
+      setLoading(false)
+    }
+  }, [toast])
 
-  await prisma.automationRule.findMany({ where: { clinicId: clinic.id } })
+  useEffect(() => { fetchAutomations() }, [fetchAutomations])
 
-  const enabledCount = AUTOMATIONS.filter(a => a.enabled).length
-  const categories = [...new Set(AUTOMATIONS.map(a => a.category))]
+  const handleToggle = async (id: string, currentEnabled: boolean) => {
+    const newEnabled = !currentEnabled
+    // Optimistic update
+    setAutomations(prev => prev.map(a => a.id === id ? { ...a, enabled: newEnabled } : a))
+
+    try {
+      const res = await fetch(`/api/automations/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ enabled: newEnabled }),
+      })
+      if (!res.ok) throw new Error()
+      const updated = await res.json()
+      setAutomations(prev => prev.map(a => a.id === id ? { ...a, ...updated } : a))
+      toast(newEnabled ? 'Automatisation activée' : 'Automatisation désactivée', 'success')
+    } catch {
+      // Revert
+      setAutomations(prev => prev.map(a => a.id === id ? { ...a, enabled: currentEnabled } : a))
+      toast('Erreur lors de la mise à jour', 'error')
+    }
+  }
+
+  const enabledCount = automations.filter(a => a.enabled).length
+  const totalRunCount = automations.reduce((sum, a) => sum + (a.runCount ?? 0), 0)
+  const categories = [...new Set(automations.map(a => a.category))]
 
   const stats = [
-    { icon: STAT_ICONS[0], label: 'Rappels envoyés', value: '—', sub: 'automatiquement', bg: '#EEF2FF', color: '#1A56FF' },
+    { icon: STAT_ICONS[0], label: 'Rappels envoyés', value: totalRunCount > 0 ? totalRunCount.toString() : '—', sub: 'automatiquement', bg: '#EEF2FF', color: '#1A56FF' },
     { icon: STAT_ICONS[1], label: 'Taux d\'absence', value: '−78%', sub: 'avec les rappels actifs', bg: '#ECFDF5', color: '#059669' },
     { icon: STAT_ICONS[2], label: 'Temps économisé', value: '~2h/j', sub: 'de tâches répétitives', bg: '#FFFBEB', color: '#D97706' },
   ]
@@ -159,12 +132,16 @@ export default async function AutomatisationPage() {
       <div className="page-header">
         <div>
           <h1 className="page-title">Automatisation</h1>
-          <p className="page-subtitle">{enabledCount} workflow{enabledCount !== 1 ? 's' : ''} actif{enabledCount !== 1 ? 's' : ''} · Tout fonctionne en arrière-plan</p>
+          <p className="page-subtitle">
+            {loading ? 'Chargement…' : `${enabledCount} workflow${enabledCount !== 1 ? 's' : ''} actif${enabledCount !== 1 ? 's' : ''} · Tout fonctionne en arrière-plan`}
+          </p>
         </div>
-        <div className="flex items-center gap-2 text-xs bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20 px-3 py-1.5 rounded-lg font-medium">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-dot" />
-          {enabledCount} actif{enabledCount !== 1 ? 's' : ''}
-        </div>
+        {!loading && (
+          <div className="flex items-center gap-2 text-xs bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20 px-3 py-1.5 rounded-lg font-medium">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-dot" />
+            {enabledCount} actif{enabledCount !== 1 ? 's' : ''}
+          </div>
+        )}
       </div>
 
       {/* Impact stats */}
@@ -183,12 +160,21 @@ export default async function AutomatisationPage() {
         ))}
       </div>
 
+      {/* Loading skeleton */}
+      {loading && (
+        <div className="space-y-3 mb-8">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="card p-5 h-20 animate-pulse bg-gray-100 dark:bg-white/5" />
+          ))}
+        </div>
+      )}
+
       {/* Automations by category */}
-      {categories.map(cat => (
+      {!loading && categories.map(cat => (
         <div key={cat} className="mb-8">
           <h3 className="text-xs font-semibold text-[#7A7F8E] dark:text-[#9CA3AF] uppercase tracking-wider mb-3">{cat}</h3>
           <div className="space-y-3">
-            {AUTOMATIONS.filter(a => a.category === cat).map(auto => (
+            {automations.filter(a => a.category === cat).map(auto => (
               <div
                 key={auto.id}
                 className={`card p-5 flex items-center gap-4 transition-all hover:shadow-md ${auto.enabled ? 'border-l-2 border-l-emerald-400' : ''}`}
@@ -198,7 +184,7 @@ export default async function AutomatisationPage() {
                   className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
                   style={{ background: auto.bg, color: auto.color }}
                 >
-                  {auto.icon}
+                  {ICON_MAP[auto.name] ?? DEFAULT_ICON}
                 </div>
 
                 {/* Info */}
@@ -234,12 +220,14 @@ export default async function AutomatisationPage() {
                 </div>
 
                 {/* Toggle */}
-                <div
-                  className={`flex-shrink-0 flex items-center transition-all cursor-pointer rounded-full ${auto.enabled ? 'bg-emerald-400' : 'bg-gray-200 dark:bg-white/10'}`}
+                <button
+                  onClick={() => handleToggle(auto.id, auto.enabled)}
+                  className={`flex-shrink-0 flex items-center transition-all cursor-pointer rounded-full focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-emerald-400 ${auto.enabled ? 'bg-emerald-400' : 'bg-gray-200 dark:bg-white/10'}`}
                   style={{ width: 40, height: 22 }}
+                  aria-label={auto.enabled ? 'Désactiver' : 'Activer'}
                 >
                   <div className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${auto.enabled ? 'translate-x-5' : 'translate-x-0.5'}`} />
-                </div>
+                </button>
               </div>
             ))}
           </div>

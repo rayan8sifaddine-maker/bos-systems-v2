@@ -4,9 +4,10 @@ import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { teamMemberSchema } from '@/lib/validations'
 import { ZodError } from 'zod'
+import { sendTeamInvitation } from '@/lib/email'
 
 async function getClinic(userId: string) {
-  return prisma.clinic.findFirst({ where: { userId }, select: { id: true } })
+  return prisma.clinic.findFirst({ where: { userId }, select: { id: true, name: true } })
 }
 
 export async function GET() {
@@ -38,6 +39,16 @@ export async function POST(req: Request) {
     const member = await prisma.teamMember.create({
       data: { clinicId: clinic.id, name: data.name, email: data.email, role: data.role },
     })
+
+    // Send invitation email (fire and forget)
+    const inviter = await prisma.user.findUnique({ where: { id: session.user.id }, select: { name: true } })
+    sendTeamInvitation({
+      to: data.email,
+      name: data.name,
+      invitedBy: inviter?.name ?? 'Un administrateur',
+      clinicName: clinic.name,
+      role: data.role,
+    }).catch(() => {})
 
     return NextResponse.json(member, { status: 201 })
   } catch (e) {

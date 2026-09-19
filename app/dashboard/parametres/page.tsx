@@ -3,6 +3,61 @@ import { useState, useEffect } from 'react'
 import { useToast } from '@/components/ui/toast'
 import { usePlanModal } from '@/components/dashboard/plan-modal-provider'
 
+function PasswordSection({ toast }: { toast: (msg: string, type: 'success' | 'error') => void }) {
+  const [form, setForm] = useState({ current: '', next: '', confirm: '' })
+  const [saving, setSaving] = useState(false)
+  const [showPwd, setShowPwd] = useState(false)
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (form.next !== form.confirm) { toast('Les mots de passe ne correspondent pas.', 'error'); return }
+    if (form.next.length < 8) { toast('Nouveau mot de passe trop court (min. 8 caractères).', 'error'); return }
+    setSaving(true)
+    try {
+      const res = await fetch('/api/auth/change-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ currentPassword: form.current, newPassword: form.next }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error)
+      toast('Mot de passe modifié avec succès', 'success')
+      setForm({ current: '', next: '', confirm: '' })
+    } catch (e) {
+      toast(e instanceof Error ? e.message : 'Erreur', 'error')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="card p-6">
+      <h2 className="text-sm font-semibold text-[#0C0E12] dark:text-[#F1F2F4] mb-5 pb-4 border-b border-[rgba(12,14,18,0.06)] dark:border-white/10 font-display tracking-tight">Sécurité du compte</h2>
+      <div className="space-y-4">
+        <div>
+          <label className="block text-xs font-medium text-[#3A3D45] dark:text-[#9CA3AF] mb-1.5">Mot de passe actuel</label>
+          <input type={showPwd ? 'text' : 'password'} className="input" value={form.current} onChange={e => setForm(f => ({...f, current: e.target.value}))} required autoComplete="current-password"/>
+        </div>
+        <div>
+          <label className="block text-xs font-medium text-[#3A3D45] dark:text-[#9CA3AF] mb-1.5">Nouveau mot de passe</label>
+          <input type={showPwd ? 'text' : 'password'} className="input" value={form.next} onChange={e => setForm(f => ({...f, next: e.target.value}))} required minLength={8} autoComplete="new-password"/>
+        </div>
+        <div>
+          <label className="block text-xs font-medium text-[#3A3D45] dark:text-[#9CA3AF] mb-1.5">Confirmer le nouveau mot de passe</label>
+          <input type={showPwd ? 'text' : 'password'} className="input" value={form.confirm} onChange={e => setForm(f => ({...f, confirm: e.target.value}))} required minLength={8} autoComplete="new-password"/>
+        </div>
+        <label className="flex items-center gap-2 text-xs text-[#7A7F8E] cursor-pointer">
+          <input type="checkbox" checked={showPwd} onChange={e => setShowPwd(e.target.checked)} className="rounded" />
+          Afficher les mots de passe
+        </label>
+        <button type="submit" disabled={saving || !form.current || !form.next || !form.confirm} className="btn-primary w-full justify-center">
+          {saving ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"/> : 'Changer le mot de passe'}
+        </button>
+      </div>
+    </form>
+  )
+}
+
 interface Clinic {
   id: string
   name: string
@@ -198,6 +253,11 @@ export default function ParamsPage() {
           </button>
         </div>
       </form>
+
+      {/* Password change section */}
+      <div className="mt-6 grid md:grid-cols-2 gap-6">
+        <PasswordSection toast={toast} />
+      </div>
     </div>
   )
 }

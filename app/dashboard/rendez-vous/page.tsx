@@ -1,6 +1,112 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
 import { formatDate, formatTime, STATUS_COLORS, STATUS_LABELS } from '@/lib/utils'
+
+// ── Agenda (calendar) view ───────────────────────────────────
+function AgendaView({ appointments, onAdd, onEdit }: { appointments: Appointment[]; onAdd: () => void; onEdit: (a: Appointment) => void }) {
+  const [weekOffset, setWeekOffset] = useState(0)
+  const HOURS = Array.from({ length: 13 }, (_, i) => i + 7) // 7h–19h
+  const today = new Date()
+
+  function getWeekDays(offset: number) {
+    const monday = new Date(today)
+    monday.setDate(today.getDate() - ((today.getDay() + 6) % 7) + offset * 7)
+    return Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(monday)
+      d.setDate(monday.getDate() + i)
+      return d
+    })
+  }
+
+  const days = getWeekDays(weekOffset)
+  const weekLabel = `${days[0].toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })} – ${days[6].toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })}`
+
+  function getAppts(day: Date) {
+    return appointments.filter(a => {
+      const d = new Date(a.datetime)
+      return d.toDateString() === day.toDateString()
+    }).sort((a, b) => new Date(a.datetime).getTime() - new Date(b.datetime).getTime())
+  }
+
+  const DOT_COLORS: Record<string, string> = {
+    PENDING: 'bg-amber-400', CONFIRMED: 'bg-emerald-400', DONE: 'bg-blue-400', CANCELED: 'bg-gray-400', NO_SHOW: 'bg-red-400',
+  }
+
+  return (
+    <div>
+      {/* Week navigation */}
+      <div className="flex items-center justify-between mb-4">
+        <button onClick={() => setWeekOffset(o => o - 1)} className="btn-icon">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        </button>
+        <div className="flex items-center gap-3">
+          <span className="text-sm font-semibold text-[#0C0E12] dark:text-[#F1F2F4]">{weekLabel}</span>
+          {weekOffset !== 0 && (
+            <button onClick={() => setWeekOffset(0)} className="text-xs text-[#1A56FF] hover:underline">Aujourd&apos;hui</button>
+          )}
+        </div>
+        <button onClick={() => setWeekOffset(o => o + 1)} className="btn-icon">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        </button>
+      </div>
+
+      {/* Week grid */}
+      <div className="card overflow-hidden">
+        {/* Day headers */}
+        <div className="grid grid-cols-[48px_repeat(7,1fr)] border-b border-[rgba(12,14,18,0.06)] dark:border-white/10">
+          <div className="border-r border-[rgba(12,14,18,0.04)] dark:border-white/5" />
+          {days.map(day => {
+            const isToday = day.toDateString() === today.toDateString()
+            const appts = getAppts(day)
+            return (
+              <div key={day.toISOString()} className={`px-2 py-2.5 text-center border-r border-[rgba(12,14,18,0.04)] dark:border-white/5 last:border-r-0 ${isToday ? 'bg-[#EEF2FF] dark:bg-[#1A56FF]/10' : ''}`}>
+                <div className="text-[10px] text-[#B0B5C3] dark:text-[#5A5F6B] uppercase">{day.toLocaleDateString('fr-FR', { weekday: 'short' })}</div>
+                <div className={`text-sm font-bold mt-0.5 ${isToday ? 'text-[#1A56FF]' : 'text-[#0C0E12] dark:text-[#F1F2F4]'}`}>{day.getDate()}</div>
+                {appts.length > 0 && <div className="text-[9px] text-[#B0B5C3] dark:text-[#5A5F6B] mt-0.5">{appts.length} RDV</div>}
+              </div>
+            )
+          })}
+        </div>
+
+        {/* Time slots */}
+        <div className="overflow-y-auto" style={{ maxHeight: 480 }}>
+          {HOURS.map(hour => (
+            <div key={hour} className="grid grid-cols-[48px_repeat(7,1fr)] border-b border-[rgba(12,14,18,0.04)] dark:border-white/5 last:border-b-0 min-h-[52px]">
+              <div className="flex items-start justify-end pr-2 pt-1.5 border-r border-[rgba(12,14,18,0.04)] dark:border-white/5">
+                <span className="text-[10px] text-[#B0B5C3] dark:text-[#5A5F6B] tabular-nums">{hour}h</span>
+              </div>
+              {days.map(day => {
+                const dayAppts = getAppts(day).filter(a => new Date(a.datetime).getHours() === hour)
+                const isToday = day.toDateString() === today.toDateString()
+                return (
+                  <div
+                    key={day.toISOString()}
+                    className={`border-r border-[rgba(12,14,18,0.04)] dark:border-white/5 last:border-r-0 p-1 ${isToday ? 'bg-[#EEF2FF]/30 dark:bg-[#1A56FF]/5' : ''}`}
+                  >
+                    {dayAppts.map(a => (
+                      <button
+                        key={a.id}
+                        onClick={() => onEdit(a)}
+                        className="w-full text-left rounded-lg px-1.5 py-1 mb-0.5 text-[10px] leading-tight transition-all hover:brightness-95 group"
+                        style={{ background: '#EEF2FF', borderLeft: `2px solid #1A56FF` }}
+                      >
+                        <div className="flex items-center gap-1">
+                          <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${DOT_COLORS[a.status] ?? 'bg-gray-400'}`} />
+                          <span className="font-semibold text-[#1A56FF] truncate">{formatTime(a.datetime)}</span>
+                        </div>
+                        <div className="text-[#3A3D45] truncate">{a.patientName}</div>
+                      </button>
+                    ))}
+                  </div>
+                )
+              })}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
 import { Modal } from '@/components/ui/modal'
 import { Confirm } from '@/components/ui/confirm'
 import { SkeletonTable } from '@/components/ui/skeleton'
@@ -34,6 +140,7 @@ export default function RdvPage() {
   const [deletingId, setDeletingId] = useState(false)
   const [filterStatus, setFilterStatus] = useState('')
   const [exporting, setExporting] = useState(false)
+  const [viewMode, setViewMode] = useState<'list' | 'agenda'>('list')
 
   const fetchRdv = useCallback(async () => {
     const params = new URLSearchParams()
@@ -143,6 +250,17 @@ export default function RdvPage() {
           <p className="page-subtitle">{appointments.length} au total · {today} aujourd'hui</p>
         </div>
         <div className="flex items-center gap-2">
+          {/* View toggle */}
+          <div className="flex bg-[#F7F8FA] dark:bg-[#1A1D24] border border-[rgba(12,14,18,0.08)] dark:border-white/10 rounded-xl p-1 gap-1">
+            <button onClick={() => setViewMode('list')} className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all flex items-center gap-1.5 ${viewMode === 'list' ? 'bg-white dark:bg-[#0C0E12] text-[#0C0E12] dark:text-white shadow-sm' : 'text-[#7A7F8E] hover:text-[#0C0E12] dark:hover:text-white'}`}>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 3h10M1 6h10M1 9h10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+              Liste
+            </button>
+            <button onClick={() => setViewMode('agenda')} className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all flex items-center gap-1.5 ${viewMode === 'agenda' ? 'bg-white dark:bg-[#0C0E12] text-[#0C0E12] dark:text-white shadow-sm' : 'text-[#7A7F8E] hover:text-[#0C0E12] dark:hover:text-white'}`}>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.3"/><path d="M1 4h10M4 1v3M8 1v3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>
+              Agenda
+            </button>
+          </div>
           <ExportPanel onExport={handleExport} exporting={exporting} />
           <button onClick={openAdd} className="btn-primary">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
@@ -151,8 +269,13 @@ export default function RdvPage() {
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="flex gap-1.5 mb-6 flex-wrap">
+      {/* Agenda view */}
+      {viewMode === 'agenda' && !loading && (
+        <AgendaView appointments={appointments} onAdd={openAdd} onEdit={openEdit} />
+      )}
+
+      {/* Filters — list view only */}
+      {viewMode === 'list' && <div className="flex gap-1.5 mb-6 flex-wrap">
         {['', ...STATUSES].map(s => (
           <button
             key={s}
@@ -162,10 +285,10 @@ export default function RdvPage() {
             {s ? STATUS_LABELS[s] : 'Tous'}
           </button>
         ))}
-      </div>
+      </div>}
 
-      {/* Table */}
-      {loading ? (
+      {/* Table — list view only */}
+      {viewMode === 'list' && (loading ? (
         <SkeletonTable rows={6} />
       ) : (
         <div className="table-container">
@@ -229,7 +352,7 @@ export default function RdvPage() {
             </tbody>
           </table>
         </div>
-      )}
+      ))}
 
       {/* Add / Edit Modal */}
       <Modal open={showAdd || !!editing} onClose={closeModal} title={editing ? 'Modifier le rendez-vous' : 'Nouveau rendez-vous'}>

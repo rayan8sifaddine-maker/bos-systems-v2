@@ -4,7 +4,8 @@ import bcrypt from 'bcryptjs'
 import { prisma } from '@/lib/prisma'
 import { registerSchema } from '@/lib/validations'
 import { ZodError } from 'zod'
-import { getPlanFromKey } from '@/lib/license-keys'
+import { getPlanFromKey, PLAN_LABELS } from '@/lib/license-keys'
+import { sendWelcomeEmail } from '@/lib/email'
 
 export async function POST(req: Request) {
   try {
@@ -57,6 +58,9 @@ export async function POST(req: Request) {
       where: { key: normalizedKey },
       data: { used: true, usedAt: new Date(), clinicId: clinic.id },
     })
+
+    // Send welcome email (fire and forget)
+    sendWelcomeEmail({ to: data.email, clinicName: data.clinicName, plan: PLAN_LABELS[plan] }).catch(() => {})
 
     return NextResponse.json({ message: 'Compte créé avec succès.' }, { status: 201 })
   } catch (e) {
