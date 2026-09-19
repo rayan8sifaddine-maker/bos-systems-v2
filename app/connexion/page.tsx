@@ -97,7 +97,7 @@ function LoginForm() {
           </div>
         </div>
 
-        <div className="relative text-xs text-white/30">© 2025 BOS Systems</div>
+        <div className="relative text-xs text-white/30">© 2026 BOS Systems</div>
       </div>
 
       {/* ── Right panel (form) ── */}
@@ -173,7 +173,7 @@ function LoginForm() {
 
             <p className="text-center text-sm text-[#7A7F8E] mt-6">
               Pas encore de compte ?{' '}
-              <Link href="/inscription" className="text-[#1A56FF] font-semibold hover:underline">Essai gratuit 14 jours</Link>
+              <Link href="/inscription" className="text-[#1A56FF] font-semibold hover:underline">Essai gratuit 7 jours</Link>
             </p>
           </div>
         </div>

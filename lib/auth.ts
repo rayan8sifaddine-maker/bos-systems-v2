@@ -5,7 +5,7 @@ import { prisma } from './prisma'
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: 'jwt' },
-  pages: { signIn: '/connexion' },
+  pages: { signIn: '/connexion', signOut: '/deconnexion' },
   providers: [
     CredentialsProvider({
       name: 'credentials',

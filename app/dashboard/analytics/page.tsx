@@ -41,7 +41,7 @@ function BarChart({ data, max }: { data: { label: string; value: number; clients
           const pct = max > 0 ? Math.max((m.value / max) * 100, 2) : 2
           return (
             <div key={i} className="flex-1 flex flex-col items-center justify-end gap-1">
-              <span className="text-[10px] font-bold text-[#0C0E12]">{m.value}</span>
+              <span className="text-[10px] font-bold text-[#0C0E12] dark:text-white">{m.value}</span>
               <div
                 className="w-full rounded-t-lg"
                 style={{
@@ -60,7 +60,7 @@ function BarChart({ data, max }: { data: { label: string; value: number; clients
       <div className="flex gap-2 px-1">
         {data.map((m, i) => (
           <div key={i} className="flex-1 text-center">
-            <span className="text-[10px] text-[#B0B5C3] capitalize">{m.label}</span>
+            <span className="text-[10px] text-[#B0B5C3] dark:text-[#5A5F6B] capitalize">{m.label}</span>
           </div>
         ))}
       </div>
@@ -165,7 +165,7 @@ export default async function AnalyticsPage() {
           <h1 className="page-title">Analytics</h1>
           <p className="page-subtitle">Performance et statistiques de {clinic.name}</p>
         </div>
-        <div className="flex items-center gap-2 text-xs text-[#7A7F8E] bg-white border border-[rgba(12,14,18,0.08)] rounded-xl px-4 py-2" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.05)' }}>
+        <div className="flex items-center gap-2 text-xs text-[#7A7F8E] dark:text-[#9CA3AF] bg-white dark:bg-[#1A1D24] border border-[rgba(12,14,18,0.08)] dark:border-white/10 rounded-xl px-4 py-2" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.05)' }}>
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1.5" width="10" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.2"/><path d="M4 1v2M8 1v2M1 5h10" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/></svg>
           {now.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}
         </div>
@@ -205,10 +205,10 @@ export default async function AnalyticsPage() {
         <div className="card p-6">
           <div className="flex items-center justify-between mb-2">
             <div>
-              <h3 className="text-sm font-semibold text-[#0C0E12]">Rendez-vous — 6 derniers mois</h3>
-              <p className="text-xs text-[#B0B5C3] mt-0.5">Nombre de RDV par mois</p>
+              <h3 className="text-sm font-semibold text-[#0C0E12] dark:text-white">Rendez-vous — 6 derniers mois</h3>
+              <p className="text-xs text-[#B0B5C3] dark:text-[#5A5F6B] mt-0.5">Nombre de RDV par mois</p>
             </div>
-            <div className="flex items-center gap-1.5 text-xs text-emerald-600 font-semibold bg-emerald-50 px-2.5 py-1 rounded-lg">
+            <div className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-1 rounded-lg">
               <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 8V2M2 5l3-3 3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
               {apptGrowth >= 0 ? '+' : ''}{apptGrowth}%
             </div>
@@ -217,10 +217,10 @@ export default async function AnalyticsPage() {
             <BarChart data={monthlyData} max={maxAppts} />
           </div>
           {/* Sparkline clients */}
-          <div className="mt-4 pt-4 border-t border-[rgba(12,14,18,0.06)]">
+          <div className="mt-4 pt-4 border-t border-[rgba(12,14,18,0.06)] dark:border-white/10">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs text-[#7A7F8E]">Nouveaux clients / mois</span>
-              <span className="text-xs font-semibold text-[#0C0E12]">+{newThisMonth} ce mois</span>
+              <span className="text-xs text-[#7A7F8E] dark:text-[#9CA3AF]">Nouveaux clients / mois</span>
+              <span className="text-xs font-semibold text-[#0C0E12] dark:text-white">+{newThisMonth} ce mois</span>
             </div>
             <Sparkline values={monthlyData.map(m => m.clients)} color="#10B981" />
           </div>
@@ -229,8 +229,8 @@ export default async function AnalyticsPage() {
         {/* Quality metrics */}
         <div className="card p-6">
           <div className="mb-6">
-            <h3 className="text-sm font-semibold text-[#0C0E12]">Qualité des RDV ce mois</h3>
-            <p className="text-xs text-[#B0B5C3] mt-0.5">{monthAppts} rendez-vous analysés</p>
+            <h3 className="text-sm font-semibold text-[#0C0E12] dark:text-white">Qualité des RDV ce mois</h3>
+            <p className="text-xs text-[#B0B5C3] dark:text-[#5A5F6B] mt-0.5">{monthAppts} rendez-vous analysés</p>
           </div>
 
           {/* Donut-style summary */}
@@ -242,8 +242,8 @@ export default async function AnalyticsPage() {
             ].map(m => (
               <div key={m.label} className="rounded-xl p-3 text-center" style={{ background: m.bg }}>
                 <div className="text-xl font-bold" style={{ color: m.color }}>{m.rate}%</div>
-                <div className="text-xs font-medium text-[#0C0E12] mt-0.5">{m.label}</div>
-                <div className="text-[10px] text-[#B0B5C3]">{m.count} RDV</div>
+                <div className="text-xs font-medium text-[#0C0E12] dark:text-white mt-0.5">{m.label}</div>
+                <div className="text-[10px] text-[#B0B5C3] dark:text-[#5A5F6B]">{m.count} RDV</div>
               </div>
             ))}
           </div>
@@ -256,10 +256,10 @@ export default async function AnalyticsPage() {
             ].map(m => (
               <div key={m.label}>
                 <div className="flex items-center justify-between text-xs mb-1.5">
-                  <span className="text-[#3A3D45]">{m.label}</span>
+                  <span className="text-[#3A3D45] dark:text-[#D1D5DB]">{m.label}</span>
                   <span className="font-bold" style={{ color: m.color }}>{m.value}%</span>
                 </div>
-                <div className="h-2 bg-[#F0F2F5] rounded-full overflow-hidden">
+                <div className="h-2 bg-[#F0F2F5] dark:bg-white/10 rounded-full overflow-hidden">
                   <div className="h-full rounded-full transition-all duration-700" style={{ width:`${m.value}%`, background: m.color }}/>
                 </div>
               </div>
@@ -274,8 +274,8 @@ export default async function AnalyticsPage() {
         {/* Client pipeline */}
         <div className="card p-6">
           <div className="mb-5">
-            <h3 className="text-sm font-semibold text-[#0C0E12]">Pipeline clients</h3>
-            <p className="text-xs text-[#B0B5C3] mt-0.5">{totalClients} clients au total</p>
+            <h3 className="text-sm font-semibold text-[#0C0E12] dark:text-white">Pipeline clients</h3>
+            <p className="text-xs text-[#B0B5C3] dark:text-[#5A5F6B] mt-0.5">{totalClients} clients au total</p>
           </div>
           <div className="space-y-4">
             {[
@@ -290,31 +290,31 @@ export default async function AnalyticsPage() {
                   <div className="flex items-center justify-between mb-1.5">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full" style={{ background: color }}/>
-                      <span className="text-xs text-[#3A3D45] font-medium">{label}</span>
+                      <span className="text-xs text-[#3A3D45] dark:text-[#D1D5DB] font-medium">{label}</span>
                     </div>
                     <div className="text-right">
-                      <span className="text-xs font-bold text-[#0C0E12]">{count}</span>
-                      <span className="text-xs text-[#B0B5C3] ml-1">({pct}%)</span>
+                      <span className="text-xs font-bold text-[#0C0E12] dark:text-white">{count}</span>
+                      <span className="text-xs text-[#B0B5C3] dark:text-[#5A5F6B] ml-1">({pct}%)</span>
                     </div>
                   </div>
-                  <div className="h-2 bg-[#F0F2F5] rounded-full overflow-hidden">
+                  <div className="h-2 bg-[#F0F2F5] dark:bg-white/10 rounded-full overflow-hidden">
                     <div className="h-full rounded-full transition-all duration-700" style={{ width:`${pct}%`, background: color }}/>
                   </div>
                 </div>
               )
             })}
           </div>
-          <div className="mt-5 pt-4 border-t border-[rgba(12,14,18,0.06)] flex items-center justify-between">
-            <span className="text-xs text-[#7A7F8E]">Conversion globale</span>
-            <span className="text-2xl font-bold text-[#0C0E12]">{convRate}%</span>
+          <div className="mt-5 pt-4 border-t border-[rgba(12,14,18,0.06)] dark:border-white/10 flex items-center justify-between">
+            <span className="text-xs text-[#7A7F8E] dark:text-[#9CA3AF]">Conversion globale</span>
+            <span className="text-2xl font-bold text-[#0C0E12] dark:text-white">{convRate}%</span>
           </div>
         </div>
 
         {/* Top types */}
         <div className="card p-6">
           <div className="mb-5">
-            <h3 className="text-sm font-semibold text-[#0C0E12]">Types de RDV</h3>
-            <p className="text-xs text-[#B0B5C3] mt-0.5">Les plus fréquents</p>
+            <h3 className="text-sm font-semibold text-[#0C0E12] dark:text-white">Types de RDV</h3>
+            <p className="text-xs text-[#B0B5C3] dark:text-[#5A5F6B] mt-0.5">Les plus fréquents</p>
           </div>
           <div className="space-y-3">
             {apptsByType.slice(0, 5).map((t, i) => {
@@ -327,10 +327,10 @@ export default async function AnalyticsPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs text-[#3A3D45] truncate font-medium">{t.type}</span>
-                      <span className="text-xs font-bold text-[#0C0E12] ml-2">{t._count}</span>
+                      <span className="text-xs text-[#3A3D45] dark:text-[#D1D5DB] truncate font-medium">{t.type}</span>
+                      <span className="text-xs font-bold text-[#0C0E12] dark:text-white ml-2">{t._count}</span>
                     </div>
-                    <div className="h-1.5 bg-[#F0F2F5] rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-[#F0F2F5] dark:bg-white/10 rounded-full overflow-hidden">
                       <div className="h-full rounded-full" style={{ width:`${pct}%`, background: colors[i] }}/>
                     </div>
                   </div>
@@ -338,7 +338,7 @@ export default async function AnalyticsPage() {
               )
             })}
             {apptsByType.length === 0 && (
-              <div className="text-center py-6 text-xs text-[#B0B5C3]">Aucun rendez-vous enregistré</div>
+              <div className="text-center py-6 text-xs text-[#B0B5C3] dark:text-[#5A5F6B]">Aucun rendez-vous enregistré</div>
             )}
           </div>
         </div>

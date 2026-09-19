@@ -1,12 +1,22 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import type { Metadata } from 'next'
+import { HeroCanvas } from '@/components/landing/hero-canvas'
+import { ScrollReveal } from '@/components/landing/scroll-reveal'
+import { AnimatedCounter } from '@/components/landing/animated-counter'
+import { FaqItem } from '@/components/landing/faq-item'
+import { SiteNav } from '@/components/landing/site-nav'
+import { TiltCard } from '@/components/landing/tilt-card'
+import { FlowPulse } from '@/components/landing/flow-pulse'
+import { MagneticButton } from '@/components/landing/magnetic-button'
+import { SiteFooter } from '@/components/landing/site-footer'
+import { SECTORS } from '@/lib/sectors'
 
 export const metadata: Metadata = {
-  title: 'BOS Systems — Le système d\'exploitation des PME marocaines',
+  title: 'BOS Systems — Le système d\'exploitation des entreprises marocaines',
   description: 'Remplacez WhatsApp, Excel et le carnet papier par un système IA intelligent. Rendez-vous automatisés, rappels, CRM — tout en un.',
   openGraph: {
-    title: 'BOS Systems — Le système des PME marocaines',
+    title: 'BOS Systems — Le système des entreprises marocaines',
     description: 'La plateforme SaaS qui centralise et automatise votre relation client.',
     locale: 'fr_MA',
     type: 'website',
@@ -166,18 +176,10 @@ const FEATURES = [
   { icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="6" r="3.5" stroke="currentColor" strokeWidth="1.5"/><path d="M3 18c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Gestion d\'équipe', desc: 'Rôles et permissions granulaires. Journal d\'activité. Performance par collaborateur.', color: 'text-orange-500', bg: 'bg-orange-50' },
 ]
 
-const SECTORS = [
-  { icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 9.5L11 2l8 7.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" stroke="currentColor" strokeWidth="1.5"/><path d="M8 21v-7h6v7" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M9 6h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, name: 'Cliniques', desc: 'Médecins & cabinets' },
-  { icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="8" width="18" height="9" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M5 8V6a6 6 0 0112 0v2" stroke="currentColor" strokeWidth="1.5"/><circle cx="7" cy="17" r="2" stroke="currentColor" strokeWidth="1.5"/><circle cx="15" cy="17" r="2" stroke="currentColor" strokeWidth="1.5"/></svg>, name: 'Garages', desc: 'Auto & mécanique' },
-  { icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="currentColor" strokeWidth="1.5"/><path d="M4 19c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, name: 'Salons', desc: 'Beauté & coiffure' },
-  { icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 17l4-8 3 4 3-6 4 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><circle cx="11" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.5"/></svg>, name: 'Écoles', desc: 'Formation & éducation' },
-  { icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16l-1.5 9H4.5L3 6z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M3 6l-1-3M8 6V4M14 6V4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="8" cy="19" r="1.5" stroke="currentColor" strokeWidth="1.5"/><circle cx="14" cy="19" r="1.5" stroke="currentColor" strokeWidth="1.5"/></svg>, name: 'Restaurants', desc: 'Restauration & livraison' },
-]
-
 const PLANS = [
-  { name: 'Starter', price: '500', desc: 'Pour démarrer et valider', features: ['Assistant IA WhatsApp', 'Gestion des rendez-vous', 'Rappels automatiques', '200 conversations/mois', 'CRM basique', '1 utilisateur'], featured: false, cta: 'Commencer' },
-  { name: 'Pro', price: '1 500', desc: 'Pour les équipes actives', features: ['Tout Starter inclus', 'Conversations illimitées', 'Relances automatiques', 'CRM complet', 'Analytics avancés', '3 utilisateurs', 'Support prioritaire'], featured: true, cta: 'Commencer maintenant' },
-  { name: 'Enterprise', price: '5 000+', desc: 'Pour les grandes structures', features: ['Tout Pro inclus', 'Équipe illimitée', 'Intégrations custom', 'API dédiée', 'SLA garanti', 'Account manager dédié', 'Onboarding personnalisé'], featured: false, cta: 'Contacter l\'équipe' },
+  { name: 'Starter', price: '749', desc: 'Pour démarrer et valider', features: ['Assistant IA WhatsApp', 'Gestion des rendez-vous', 'Rappels automatiques', '200 conversations/mois', 'CRM basique', '1 utilisateur'], featured: false, cta: 'Commencer', href: '/paiement?plan=starter' },
+  { name: 'Pro', price: '2 749', desc: 'Pour les équipes actives', features: ['Tout Starter inclus', 'Conversations illimitées', 'Relances automatiques', 'CRM complet', 'Analytics avancés', '3 utilisateurs', 'Support prioritaire'], featured: true, cta: 'Commencer maintenant', href: '/paiement?plan=pro' },
+  { name: 'Enterprise', price: '4 489', desc: 'Pour les grandes structures', features: ['Tout Pro inclus', 'Équipe illimitée', 'Intégrations custom', 'API dédiée', 'SLA garanti', 'Account manager dédié', 'Onboarding personnalisé'], featured: false, cta: 'Contacter l\'équipe', href: 'mailto:sales@bossystems.ma' },
 ]
 
 /* ─── Page ─────────────────────────────────────────────────── */
@@ -185,106 +187,168 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
 
-      {/* ── NAV ── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-6 md:px-12 bg-white/80 backdrop-blur-xl" style={{ borderBottom: '1px solid rgba(12,14,18,0.07)', boxShadow: '0 1px 0 rgba(12,14,18,0.04)' }}>
-        <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 bg-[#0C0E12] rounded-lg flex items-center justify-center">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <rect x="1" y="1" width="6" height="6" rx="1.5" fill="white"/>
-              <rect x="9" y="1" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
-              <rect x="1" y="9" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
-              <rect x="9" y="9" width="6" height="6" rx="1.5" fill="white"/>
-            </svg>
-          </div>
-          <span className="font-bold text-[15px] tracking-wide font-display text-[#0C0E12]">BOS SYSTEMS</span>
-        </Link>
-        <div className="hidden md:flex items-center gap-1">
-          {[['Fonctionnalités','#fonctionnalites'],['Comment ça marche','#comment'],['Tarifs','#tarifs']].map(([l,h])=>(
-            <a key={h} href={h} className="px-4 py-2 text-sm text-[#3A3D45] hover:text-[#0C0E12] hover:bg-[#F7F8FA] rounded-lg transition-all">{l}</a>
-          ))}
-        </div>
-        <div className="flex items-center gap-3">
-          <Link href="/connexion" className="hidden md:block px-4 py-2 text-sm text-[#3A3D45] border border-[rgba(12,14,18,0.1)] rounded-xl hover:bg-[#F7F8FA] transition-all">Se connecter</Link>
-          <Link href="/inscription" className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-white transition-all hover:-translate-y-px" style={{ background: '#0C0E12', boxShadow: '0 2px 8px rgba(12,14,18,0.2)' }}>
-            Essai gratuit →
-          </Link>
-        </div>
-      </nav>
+      <SiteNav />
 
       {/* ── HERO ── */}
-      <section className="relative pt-24 pb-16 px-6 md:px-12 overflow-hidden">
-        {/* Background glows */}
+      <section className="relative pt-20 pb-10 md:pt-24 md:pb-16 px-6 md:px-12 overflow-hidden">
+        {/* Background: animated mesh gradient + particles + grid watermark + grain */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
-          <div style={{ position:'absolute', top:'-20%', left:'20%', width:700, height:700, background:'radial-gradient(ellipse, rgba(26,86,255,0.06) 0%, transparent 65%)', borderRadius:'50%' }}/>
-          <div style={{ position:'absolute', top:'10%', right:'5%', width:500, height:500, background:'radial-gradient(ellipse, rgba(124,58,237,0.05) 0%, transparent 65%)', borderRadius:'50%' }}/>
+          <div className="animate-mesh" style={{ position:'absolute', top:'-25%', left:'15%', width:780, height:780, background:'radial-gradient(ellipse, rgba(26,86,255,0.10) 0%, transparent 65%)', borderRadius:'50%' }}/>
+          <div className="animate-mesh" style={{ position:'absolute', top:'5%', right:'0%', width:560, height:560, background:'radial-gradient(ellipse, rgba(124,58,237,0.08) 0%, transparent 65%)', borderRadius:'50%', animationDelay:'-4s' }}/>
+          <div className="animate-mesh" style={{ position:'absolute', bottom:'-15%', left:'40%', width:480, height:480, background:'radial-gradient(ellipse, rgba(16,185,129,0.05) 0%, transparent 65%)', borderRadius:'50%', animationDelay:'-8s' }}/>
+          <HeroCanvas />
           <div className="absolute inset-0 bg-grid-watermark" style={{ maskImage: 'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)' }} />
+          <div className="absolute inset-0 bg-grain" />
         </div>
 
         <div className="max-w-6xl mx-auto relative">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left */}
-            <div>
-              <div className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 bg-[#EEF2FF] border border-[rgba(26,86,255,0.2)] rounded-full text-[#1A56FF] text-xs font-semibold">
+            <div className="animate-slide-up">
+              <Link href="/nouveautes" className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 bg-[#EEF2FF] border border-[rgba(26,86,255,0.2)] rounded-full text-[#1A56FF] text-xs font-semibold hover:bg-[#E0E7FF] transition-colors">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#1A56FF] animate-pulse flex-shrink-0" />
-                Disponible au Maroc · 14 jours gratuits
-              </div>
+                <span className="hidden sm:inline">Nouveau : pages secteurs détaillées &amp; comparatif</span>
+                <span className="sm:hidden">Nouveautés disponibles</span>
+                <svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </Link>
 
-              <h1 className="text-[48px] md:text-[64px] font-bold leading-[1.03] tracking-[-0.02em] text-[#0C0E12] mb-5 font-display">
+              <h1 className="text-[34px] sm:text-[48px] md:text-[64px] font-bold leading-[1.05] tracking-[-0.02em] text-[#0C0E12] mb-5 font-display">
                 L&apos;infrastructure<br/>client des{' '}
                 <span style={{ background:'linear-gradient(135deg,#1A56FF 0%,#7C3AED 100%)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>
-                  PME<br/>modernes
+                  entreprises<br/>marocaines
                 </span>
               </h1>
 
-              <p className="text-lg text-[#3A3D45] leading-relaxed mb-8 max-w-lg font-light">
-                BOS remplace WhatsApp, Excel et le carnet papier par un système IA complet — rendez-vous automatisés, rappels, CRM, analytics. Tout sur une plateforme.
+              <p className="text-base md:text-lg text-[#3A3D45] leading-relaxed mb-7 max-w-lg font-light">
+                BOS remplace WhatsApp, Excel et le carnet papier — rendez-vous automatisés, rappels, CRM, analytics. Tout sur une plateforme.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-3 mb-8">
-                <Link href="/inscription" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-base font-semibold text-white transition-all hover:-translate-y-0.5" style={{ background:'linear-gradient(135deg,#0C0E12,#1e2330)', boxShadow:'0 4px 16px rgba(12,14,18,0.25)' }}>
-                  Commencer gratuitement — 14 jours →
-                </Link>
-                <Link href="/connexion" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-base font-medium text-[#3A3D45] border border-[rgba(12,14,18,0.12)] hover:bg-[#F7F8FA] transition-all">
+              <div className="flex flex-col sm:flex-row gap-3 mb-7">
+                <MagneticButton href="/inscription" className="items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm sm:text-base font-semibold text-white hover:-translate-y-0.5" style={{ background:'linear-gradient(135deg,#0C0E12,#1e2330)', boxShadow:'0 4px 16px rgba(12,14,18,0.25)' }}>
+                  Commencer gratuitement — 7 jours →
+                </MagneticButton>
+                <Link href="/connexion" className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm sm:text-base font-medium text-[#3A3D45] border border-[rgba(12,14,18,0.12)] hover:bg-[#F7F8FA] transition-all">
                   Se connecter
                 </Link>
               </div>
 
-              <div className="flex flex-wrap items-center gap-5">
+              <div className="flex flex-wrap items-center gap-4 sm:gap-5">
                 {[
-                  { v:'−78%', l:'de no-shows', c:'#10B981' },
-                  { v:'24/7', l:'disponibilité', c:'#1A56FF' },
-                  { v:'+40%', l:'conversions', c:'#7C3AED' },
-                ].map(({ v, l, c }) => (
-                  <div key={l} className="flex items-center gap-2">
-                    <span className="text-xl font-bold font-display" style={{ color:c }}>{v}</span>
-                    <span className="text-sm text-[#7A7F8E]">{l}</span>
+                  { v:-78, suffix:'%', l:'de no-shows', c:'#10B981' },
+                  { v:24, suffix:'/7', l:'disponibilité', c:'#1A56FF' },
+                  { v:40, prefix:'+', suffix:'%', l:'conversions', c:'#7C3AED' },
+                ].map(({ v, l, c, prefix, suffix }) => (
+                  <div key={l} className="flex items-center gap-1.5">
+                    <span className="text-lg sm:text-xl font-bold font-display" style={{ color:c }}>
+                      <AnimatedCounter value={v} prefix={prefix} suffix={suffix} />
+                    </span>
+                    <span className="text-xs sm:text-sm text-[#7A7F8E]">{l}</span>
                   </div>
                 ))}
               </div>
+
+              {/* Mobile-only dashboard preview */}
+              <div className="lg:hidden mt-8">
+                <div className="rounded-2xl overflow-hidden" style={{ boxShadow:'0 20px 60px rgba(12,14,18,0.22), 0 0 0 1px rgba(12,14,18,0.08)' }}>
+                  {/* Dark header */}
+                  <div className="px-4 pt-4 pb-5" style={{ background:'linear-gradient(135deg, #0C0E12 0%, #141A30 100%)' }}>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background:'#1A56FF' }}>
+                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                            <rect x="1" y="1" width="6" height="6" rx="1.5" fill="white"/>
+                            <rect x="9" y="1" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
+                            <rect x="1" y="9" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
+                            <rect x="9" y="9" width="6" height="6" rx="1.5" fill="white"/>
+                          </svg>
+                        </div>
+                        <span className="text-white text-xs font-bold tracking-wide">BOS Systems</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full" style={{ background:'rgba(16,185,129,0.15)', border:'1px solid rgba(16,185,129,0.3)' }}>
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        <span className="text-emerald-400 text-[10px] font-semibold">IA active</span>
+                      </div>
+                    </div>
+                    <div className="text-white/50 text-[11px] mb-1">Bonjour,</div>
+                    <div className="text-white text-sm font-semibold">Dr. Bennani 👋</div>
+                  </div>
+                  {/* Stats grid */}
+                  <div className="bg-white p-3 grid grid-cols-2 gap-2.5">
+                    {[
+                      { label:'Clients actifs', value:'248', color:'#1A56FF', bg:'#EEF2FF', trend:'+12%' },
+                      { label:'RDV aujourd\'hui', value:'14', color:'#7C3AED', bg:'#F5F3FF', trend:'+5' },
+                      { label:'CA ce mois', value:'48k', color:'#10B981', bg:'#ECFDF5', trend:'+22%' },
+                      { label:'Taux présence', value:'94%', color:'#F59E0B', bg:'#FFFBEB', trend:'↑ 3pt' },
+                    ].map(s => (
+                      <div key={s.label} className="rounded-xl p-3" style={{ background:s.bg }}>
+                        <div className="text-[9px] text-[#7A7F8E] mb-1.5">{s.label}</div>
+                        <div className="text-[22px] font-black leading-none mb-1" style={{ color:s.color }}>{s.value}</div>
+                        <div className="text-[9px] font-semibold text-emerald-600">{s.trend}</div>
+                      </div>
+                    ))}
+                  </div>
+                  {/* Appointments */}
+                  <div className="bg-white border-t border-[rgba(12,14,18,0.06)]">
+                    <div className="px-3 py-2.5 flex items-center justify-between">
+                      <span className="text-[11px] font-semibold text-[#0C0E12]">Prochains rendez-vous</span>
+                      <span className="text-[10px] text-[#1A56FF] font-medium">Voir tout →</span>
+                    </div>
+                    {[
+                      { time:'10:00', name:'Youssef M.', status:'Confirmé', dot:'bg-emerald-400' },
+                      { time:'11:30', name:'Fatima B.', status:'En attente', dot:'bg-amber-400' },
+                      { time:'14:00', name:'Karim L.', status:'Confirmé', dot:'bg-emerald-400' },
+                    ].map((a,i) => (
+                      <div key={i} className="flex items-center gap-3 px-3 py-2.5 border-t border-[rgba(12,14,18,0.04)]">
+                        <div className="text-[11px] font-bold text-[#0C0E12] w-10 flex-shrink-0">{a.time}</div>
+                        <span className={`w-2 h-2 rounded-full flex-shrink-0 ${a.dot}`} />
+                        <div className="text-[11px] text-[#3A3D45] flex-1">{a.name}</div>
+                        <div className={`text-[9px] font-semibold px-2 py-0.5 rounded-full ${a.dot === 'bg-emerald-400' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}`}>{a.status}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {/* Floating notification */}
+                <div className="mt-3 mx-1 flex items-center gap-3 bg-white rounded-2xl px-4 py-3 border border-[rgba(12,14,18,0.07)]" style={{ boxShadow:'0 8px 24px rgba(12,14,18,0.1)' }}>
+                  <div className="w-9 h-9 bg-emerald-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path d="M3 8l3.5 3.5L13 4.5" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[12px] font-semibold text-[#0C0E12] leading-tight">Rappel envoyé automatiquement</div>
+                    <div className="text-[10px] text-[#B0B5C3] mt-0.5">3 clients notifiés · il y a 2 min</div>
+                  </div>
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0" />
+                </div>
+              </div>
             </div>
 
-            {/* Right — Dashboard mockup */}
-            <div className="hidden lg:block relative">
-              <DashboardMockup />
+            {/* Right — Dashboard mockup (desktop only) */}
+            <div className="hidden lg:block relative animate-float-slow">
+              <TiltCard>
+                <DashboardMockup />
+              </TiltCard>
             </div>
           </div>
         </div>
       </section>
 
       {/* ── TRUSTED BY / STATS BAR ── */}
-      <section className="py-10 px-6 md:px-12 border-y border-[rgba(12,14,18,0.06)] bg-[#F7F8FA]">
+      <section className="py-8 md:py-10 px-6 md:px-12 border-y border-[rgba(12,14,18,0.06)] bg-[#F7F8FA]">
         <div className="max-w-5xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <p className="text-xs font-semibold text-[#B0B5C3] uppercase tracking-widest text-center md:text-left">Résultats moyens observés</p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {[
-                { v:'78%', l:'de réduction des absences' },
-                { v:'3×', l:'plus de clients convertis' },
-                { v:'< 3s', l:'temps de réponse IA' },
-                { v:'2h', l:'gagnées par jour' },
-              ].map(({ v, l }) => (
+                { v:78, suffix:'%', l:'de réduction des absences' },
+                { v:3, suffix:'×', l:'plus de clients convertis' },
+                { v:3, prefix:'< ', suffix:'s', l:'temps de réponse IA' },
+                { v:2, suffix:'h', l:'gagnées par jour' },
+              ].map(({ v, l, prefix, suffix }) => (
                 <div key={l} className="text-center">
-                  <div className="text-2xl font-bold text-[#0C0E12] font-display">{v}</div>
+                  <div className="text-2xl font-bold text-[#0C0E12] font-display">
+                    <AnimatedCounter value={v} prefix={prefix} suffix={suffix} />
+                  </div>
                   <div className="text-xs text-[#7A7F8E] mt-0.5">{l}</div>
                 </div>
               ))}
@@ -294,19 +358,19 @@ export default function HomePage() {
       </section>
 
       {/* ── COMMENT ÇA MARCHE ── */}
-      <section id="comment" className="py-24 px-6 md:px-12">
+      <section id="comment" className="py-14 md:py-24 px-6 md:px-12">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-10 md:mb-16">
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
               En 3 étapes
             </div>
-            <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Opérationnel en 5 minutes</h2>
-            <p className="text-lg text-[#3A3D45] mt-3 font-light">Pas de formation. Pas de technicien. Juste votre navigateur.</p>
+            <h2 className="text-[28px] sm:text-[36px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Opérationnel en 5 minutes</h2>
+            <p className="text-base md:text-lg text-[#3A3D45] mt-3 font-light">Pas de formation. Pas de technicien. Juste votre navigateur.</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 relative">
-            {/* Connecting line */}
-            <div className="hidden md:block absolute top-10 left-[calc(16.67%+1rem)] right-[calc(16.67%+1rem)] h-px border-t-2 border-dashed border-[rgba(12,14,18,0.08)]" />
+            {/* Connecting line — animated automation pulse */}
+            <FlowPulse />
 
             {[
               {
@@ -333,35 +397,37 @@ export default function HomePage() {
                 bg: '#ECFDF5',
                 icon: <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 11l5 5 9-9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
               },
-            ].map((step) => (
-              <div key={step.n} className="relative bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-7 hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(12,14,18,0.08)] transition-all duration-200" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.06)' }}>
-                <div className="flex items-start justify-between mb-5">
-                  <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background:step.bg, color:step.color }}>
-                    {step.icon}
+            ].map((step, i) => (
+              <ScrollReveal key={step.n} delay={i * 100}>
+                <div className="relative bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-7 hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(12,14,18,0.08)] transition-all duration-200" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.06)' }}>
+                  <div className="flex items-start justify-between mb-5">
+                    <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background:step.bg, color:step.color }}>
+                      {step.icon}
+                    </div>
+                    <span className="text-5xl font-bold font-display leading-none" style={{ color:'rgba(12,14,18,0.05)' }}>{step.n}</span>
                   </div>
-                  <span className="text-5xl font-bold font-display leading-none" style={{ color:'rgba(12,14,18,0.05)' }}>{step.n}</span>
+                  <h3 className="text-base font-bold text-[#0C0E12] mb-2">{step.title}</h3>
+                  <p className="text-sm text-[#7A7F8E] leading-relaxed">{step.desc}</p>
                 </div>
-                <h3 className="text-base font-bold text-[#0C0E12] mb-2">{step.title}</h3>
-                <p className="text-sm text-[#7A7F8E] leading-relaxed">{step.desc}</p>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* ── FEATURES ── */}
-      <section id="fonctionnalites" className="py-24 px-6 md:px-12 bg-[#F7F8FA]">
+      <section id="fonctionnalites" className="py-14 md:py-24 px-6 md:px-12 bg-[#F7F8FA]">
         <div className="max-w-5xl mx-auto">
-          <div className="mb-14 max-w-xl">
+          <div className="mb-10 md:mb-14 max-w-xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-white border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
               Fonctionnalités
             </div>
-            <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Tout ce dont vous avez besoin</h2>
-            <p className="text-lg text-[#3A3D45] font-light">Chaque fonctionnalité résout un problème réel des PME marocaines.</p>
+            <h2 className="text-[28px] sm:text-[36px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Tout ce dont vous avez besoin</h2>
+            <p className="text-base md:text-lg text-[#3A3D45] font-light">Chaque fonctionnalité résout un problème réel des entreprises marocaines.</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             {FEATURES.map(f => (
-              <div key={f.title} className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-6 hover:border-[rgba(26,86,255,0.2)] hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(12,14,18,0.08)] transition-all duration-200 group" style={{ boxShadow:'0 1px 2px rgba(12,14,18,0.04), 0 2px 6px rgba(12,14,18,0.03)' }}>
+              <div key={f.title} className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-6 hover:border-[rgba(26,86,255,0.2)] hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(12,14,18,0.08)] transition-all duration-200 group w-full md:w-[calc(33.333%-11px)]" style={{ boxShadow:'0 1px 2px rgba(12,14,18,0.04), 0 2px 6px rgba(12,14,18,0.03)' }}>
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${f.bg} ${f.color}`}>{f.icon}</div>
                 <div className="text-sm font-semibold text-[#0C0E12] mb-2 group-hover:text-[#1A56FF] transition-colors">{f.title}</div>
                 <div className="text-sm text-[#7A7F8E] leading-relaxed">{f.desc}</div>
@@ -372,33 +438,38 @@ export default function HomePage() {
       </section>
 
       {/* ── SECTORS ── */}
-      <section id="secteurs" className="py-24 px-6 md:px-12">
+      <section id="secteurs" className="py-14 md:py-24 px-6 md:px-12">
         <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
-            <div>
-              <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
-                Secteurs
-              </div>
-              <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Une plateforme<br/>Tous les secteurs</h2>
+          <div className="flex flex-col items-center text-center gap-4 mb-10 md:mb-14">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
+              Secteurs
             </div>
-            <p className="text-lg text-[#3A3D45] font-light md:max-w-xs md:text-right">Adapté à chaque métier, conçu pour la réalité marocaine.</p>
+            <h2 className="text-[28px] sm:text-[36px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Une plateforme<br/>Tous les secteurs</h2>
+            <p className="text-base md:text-lg text-[#3A3D45] font-light max-w-md">Adapté à chaque métier, conçu pour la réalité marocaine.</p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="flex flex-wrap justify-center gap-3">
             {SECTORS.map(s => (
-              <div key={s.name} className="p-5 border border-[rgba(12,14,18,0.08)] rounded-2xl hover:border-[rgba(26,86,255,0.25)] hover:bg-[#EEF2FF] hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(26,86,255,0.10)] transition-all duration-200 cursor-default group" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.04)' }}>
+              <Link key={s.slug} href={`/secteurs/${s.slug}`} className="p-5 border border-[rgba(12,14,18,0.08)] rounded-2xl hover:border-[rgba(26,86,255,0.25)] hover:bg-[#EEF2FF] hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(26,86,255,0.10)] transition-all duration-200 group w-[calc(50%-6px)] md:w-[calc(25%-9px)]" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.04)' }}>
                 <div className="w-10 h-10 rounded-xl bg-[#F7F8FA] group-hover:bg-white flex items-center justify-center text-[#3A3D45] group-hover:text-[#1A56FF] mb-3 transition-all">
                   {s.icon}
                 </div>
                 <div className="text-sm font-semibold text-[#0C0E12] group-hover:text-[#1A56FF] transition-colors mb-0.5">{s.name}</div>
-                <div className="text-[11px] text-[#B0B5C3]">{s.desc}</div>
-              </div>
+                <div className="text-[11px] text-[#B0B5C3] mb-2">{s.shortDesc}</div>
+                <div className="text-[11px] font-semibold text-[#1A56FF] opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+                  En savoir plus
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </div>
+              </Link>
             ))}
+          </div>
+          <div className="flex justify-center mt-8">
+            <Link href="/secteurs" className="text-sm font-semibold text-[#1A56FF] hover:underline">Voir tous les secteurs en détail →</Link>
           </div>
         </div>
       </section>
 
       {/* ── AVANT / APRÈS ── */}
-      <section className="py-24 px-6 md:px-12 relative overflow-hidden" style={{ background:'linear-gradient(135deg,#0C0E12 0%,#141A30 60%,#0A1020 100%)' }}>
+      <section className="py-14 md:py-24 px-6 md:px-12 relative overflow-hidden" style={{ background:'linear-gradient(135deg,#0C0E12 0%,#141A30 60%,#0A1020 100%)' }}>
         {/* Background glows */}
         <div className="absolute inset-0 pointer-events-none" aria-hidden>
           <div style={{ position:'absolute', top:'-20%', left:'10%', width:600, height:600, background:'radial-gradient(ellipse, rgba(26,86,255,0.12) 0%, transparent 60%)', borderRadius:'50%' }}/>
@@ -412,7 +483,7 @@ export default function HomePage() {
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 bg-white/10 rounded-full text-white/50 text-xs font-semibold">
               Transformation
             </div>
-            <h2 className="text-[40px] font-bold tracking-tight text-white font-display mb-3">Remplacez le chaos par la clarté</h2>
+            <h2 className="text-[28px] sm:text-[36px] md:text-[40px] font-bold tracking-tight text-white font-display mb-3">Remplacez le chaos par la clarté</h2>
             <p className="text-white/40 text-lg font-light">Tout ce que BOS remplace. Tout ce qu&apos;il apporte.</p>
           </div>
 
@@ -482,13 +553,13 @@ export default function HomePage() {
       </section>
 
       {/* ── TESTIMONIALS ── */}
-      <section className="py-24 px-6 md:px-12 bg-[#F7F8FA]">
+      <section className="py-14 md:py-24 px-6 md:px-12 bg-[#F7F8FA]">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
+          <div className="text-center mb-10 md:mb-14">
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-white border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
               Témoignages
             </div>
-            <h2 className="text-[36px] font-bold tracking-tight text-[#0C0E12] font-display">Ce que nos clients disent</h2>
+            <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold tracking-tight text-[#0C0E12] font-display">Ce que nos clients disent</h2>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
@@ -496,75 +567,212 @@ export default function HomePage() {
               { name:'Farid Alaoui', role:'Directeur, Garage Elite Rabat', initials:'FA', color:'bg-amber-100 text-amber-600', quote:'Mes clients reçoivent des rappels automatiques pour les révisions. Le taux de retour a augmenté de 35% en 3 mois.' },
               { name:'Salma Chraibi', role:'Directrice, École Innovate', initials:'SC', color:'bg-violet-100 text-violet-600', quote:'Le tableau de bord me donne une vision complète. Je sais exactement combien d\'inscrits, de prospects, et ce que ça représente en CA.' },
             ].map((t, i) => (
-              <div key={i} className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-6 flex flex-col hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(12,14,18,0.08)] transition-all duration-200" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.05)' }}>
-                <div className="flex gap-0.5 mb-4">
-                  {[...Array(5)].map((_, j) => (
-                    <svg key={j} width="14" height="14" viewBox="0 0 14 14" fill="#F59E0B"><path d="M7 1l1.5 4h4.5l-3.5 2.5 1.5 4L7 9 3 11.5l1.5-4L1 5h4.5z"/></svg>
-                  ))}
-                </div>
-                <p className="text-sm text-[#3A3D45] leading-relaxed flex-1 mb-5">&ldquo;{t.quote}&rdquo;</p>
-                <div className="flex items-center gap-3 pt-4 border-t border-[rgba(12,14,18,0.06)]">
-                  <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${t.color}`}>{t.initials}</div>
-                  <div>
-                    <div className="text-xs font-semibold text-[#0C0E12]">{t.name}</div>
-                    <div className="text-[11px] text-[#B0B5C3]">{t.role}</div>
+              <ScrollReveal key={i} delay={i * 100}>
+                <div className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-6 flex flex-col h-full hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(12,14,18,0.08)] transition-all duration-200" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.05)' }}>
+                  <div className="flex gap-0.5 mb-4">
+                    {[...Array(5)].map((_, j) => (
+                      <svg key={j} width="14" height="14" viewBox="0 0 14 14" fill="#F59E0B"><path d="M7 1l1.5 4h4.5l-3.5 2.5 1.5 4L7 9 3 11.5l1.5-4L1 5h4.5z"/></svg>
+                    ))}
+                  </div>
+                  <p className="text-sm text-[#3A3D45] leading-relaxed flex-1 mb-5">&ldquo;{t.quote}&rdquo;</p>
+                  <div className="flex items-center gap-3 pt-4 border-t border-[rgba(12,14,18,0.06)]">
+                    <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${t.color}`}>{t.initials}</div>
+                    <div>
+                      <div className="text-xs font-semibold text-[#0C0E12]">{t.name}</div>
+                      <div className="text-[11px] text-[#B0B5C3]">{t.role}</div>
+                    </div>
                   </div>
                 </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CONFIANCE / PREUVE SOCIALE ── */}
+      <section className="py-12 md:py-20 px-6 md:px-12 bg-[#F7F8FA] border-y border-[rgba(12,14,18,0.06)]">
+        <div className="max-w-5xl mx-auto">
+          <ScrollReveal>
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-white border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
+                Confiance
               </div>
+              <h2 className="text-[24px] sm:text-[30px] md:text-[36px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Conçu pour les entreprises marocaines</h2>
+            </div>
+          </ScrollReveal>
+
+          <div className="flex flex-wrap justify-center gap-4 mb-4">
+            {[
+              { v:240, prefix:'+', l:'entreprises marocaines équipées', icon:<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="6" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.5"/><path d="M1 13c0-2.761 2.239-5 5-5s5 2.239 5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="12" cy="4" r="1.5" stroke="currentColor" strokeWidth="1.5"/><path d="M15 11c0-1.657-1.343-3-3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg> },
+              { v:99.9, suffix:'%', decimals:1, l:'disponibilité garantie', icon:<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l6 2.5v4.2c0 4-2.6 6.8-6 8.3-3.4-1.5-6-4.3-6-8.3V4.5L9 2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M6.2 9l2 2 3.6-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg> },
+              { v:5, l:'secteurs couverts', icon:<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="6" height="6" rx="1.2" stroke="currentColor" strokeWidth="1.5"/><rect x="10" y="2" width="6" height="6" rx="1.2" stroke="currentColor" strokeWidth="1.5"/><rect x="2" y="10" width="6" height="6" rx="1.2" stroke="currentColor" strokeWidth="1.5"/><rect x="10" y="10" width="6" height="6" rx="1.2" stroke="currentColor" strokeWidth="1.5"/></svg> },
+            ].map(b => (
+              <div key={b.l} className="flex items-center gap-3 bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl px-5 py-3.5" style={{ boxShadow:'0 1px 3px rgba(12,14,18,0.05)' }}>
+                <span className="w-9 h-9 rounded-xl bg-[#EEF2FF] text-[#1A56FF] flex items-center justify-center flex-shrink-0">{b.icon}</span>
+                <div>
+                  <div className="text-lg font-bold text-[#0C0E12] font-display leading-none">
+                    <AnimatedCounter value={b.v} prefix={b.prefix} suffix={b.suffix} decimals={b.decimals} />
+                  </div>
+                  <div className="text-[11px] text-[#7A7F8E] mt-0.5">{b.l}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-3 mt-6">
+            {[
+              { l:'Support en français/darija', icon:<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 4a1 1 0 011-1h8a1 1 0 011 1v5.5a1 1 0 01-1 1H6l-2.5 2v-2H3a1 1 0 01-1-1V4z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/></svg> },
+              { l:'Sans engagement', icon:<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3 3 7-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg> },
+            ].map(badge => (
+              <div key={badge.l} className="inline-flex items-center gap-2 px-3.5 py-2 bg-white border border-[rgba(12,14,18,0.08)] rounded-full text-xs font-medium text-[#3A3D45]">
+                <span className="text-[#1A56FF] flex-shrink-0">{badge.icon}</span>
+                {badge.l}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SÉCURITÉ ── */}
+      <section className="py-14 md:py-24 px-6 md:px-12">
+        <div className="max-w-5xl mx-auto">
+          <ScrollReveal>
+            <div className="mb-10 md:mb-14 max-w-xl mx-auto text-center">
+              <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
+                Sécurité
+              </div>
+              <h2 className="text-[28px] sm:text-[36px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Vos données sont protégées</h2>
+              <p className="text-base md:text-lg text-[#3A3D45] font-light">Sécurité et conformité prises au sérieux, dès le premier jour.</p>
+            </div>
+          </ScrollReveal>
+          <div className="flex flex-wrap justify-center gap-4">
+            {[
+              {
+                title: 'Chiffrement de bout en bout',
+                desc: 'Connexions HTTPS/TLS et mots de passe stockés sous forme chiffrée (hash). Vos données ne circulent jamais en clair.',
+                color: 'text-blue-500', bg: 'bg-blue-50',
+                icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="4" y="9" width="12" height="9" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M6 9V6a4 4 0 018 0v3" stroke="currentColor" strokeWidth="1.5"/><circle cx="10" cy="13.5" r="1.2" fill="currentColor"/></svg>,
+              },
+              {
+                title: 'Conformité loi 09-08 & RGPD',
+                desc: 'Traitement des données conforme à la loi marocaine sur la protection des données personnelles et aux standards RGPD.',
+                color: 'text-emerald-500', bg: 'bg-emerald-50',
+                icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2l7 3v5c0 4.4-2.9 7.6-7 9-4.1-1.4-7-4.6-7-9V5l7-3z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M6.8 10l2.2 2.2 4-4.6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+              },
+              {
+                title: 'Hébergement sécurisé en Europe',
+                desc: 'Base de données hébergée chez un fournisseur cloud avec chiffrement au repos et sauvegardes régulières.',
+                color: 'text-violet-500', bg: 'bg-violet-50',
+                icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M2 7h16M5 14v2M13 14v2M4 18h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>,
+              },
+              {
+                title: 'Cloisonnement par établissement',
+                desc: 'Chaque clinique, garage ou salon n\'a accès qu\'à ses propres données. Aucune fuite croisée possible entre comptes.',
+                color: 'text-amber-500', bg: 'bg-amber-50',
+                icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5"/></svg>,
+              },
+            ].map((f, i) => (
+              <ScrollReveal key={f.title} delay={i * 80}>
+                <div className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-6 hover:border-[rgba(26,86,255,0.2)] hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(12,14,18,0.08)] transition-all duration-200 w-[300px]" style={{ boxShadow:'0 1px 2px rgba(12,14,18,0.04), 0 2px 6px rgba(12,14,18,0.03)' }}>
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${f.bg} ${f.color}`}>{f.icon}</div>
+                  <div className="text-sm font-semibold text-[#0C0E12] mb-2">{f.title}</div>
+                  <div className="text-sm text-[#7A7F8E] leading-relaxed">{f.desc}</div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ── */}
+      <section className="py-14 md:py-24 px-6 md:px-12">
+        <div className="max-w-3xl mx-auto">
+          <ScrollReveal>
+            <div className="text-center mb-8 md:mb-12">
+              <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
+                Questions fréquentes
+              </div>
+              <h2 className="text-[26px] sm:text-[32px] md:text-[40px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] font-display">Tout ce que vous devez savoir</h2>
+            </div>
+          </ScrollReveal>
+          <div className="space-y-3">
+            {[
+              { q:'Combien de temps faut-il pour démarrer ?', a:'Comptez 5 minutes : création du compte, choix du secteur, configuration de l\'assistant IA avec vos horaires et services. Aucune installation, aucun technicien requis.' },
+              { q:'Mes données sont-elles en sécurité ?', a:'Oui. Toutes les données sont hébergées en Europe, chiffrées au repos et en transit, et nous respectons les exigences RGPD ainsi que la loi marocaine 09-08 sur la protection des données personnelles.' },
+              { q:'L\'IA comprend-elle vraiment la darija ?', a:'Oui, l\'assistant IA est entraîné pour comprendre le français, l\'arabe et la darija — y compris les messages mélangeant plusieurs langues, comme le font naturellement vos clients.' },
+              { q:'Puis-je annuler à tout moment ?', a:'Aucun engagement. Vous pouvez annuler votre abonnement à tout moment depuis les paramètres, sans frais ni justification.' },
+              { q:'Le support est-il disponible en français ?', a:'Notre équipe support répond en français et en darija, par WhatsApp et email, avec un temps de réponse moyen inférieur à 2 heures en semaine.' },
+            ].map((item, i) => (
+              <ScrollReveal key={item.q} delay={i * 60}>
+                <FaqItem question={item.q} answer={item.a} />
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* ── PRICING ── */}
-      <section id="tarifs" className="py-24 px-6 md:px-12">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
-              Tarifs
-            </div>
-            <h2 className="text-[40px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Simples et transparents</h2>
-            <p className="text-lg text-[#3A3D45] font-light">Sans engagement. 14 jours d&apos;essai gratuit. Annulez à tout moment.</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-4 items-center">
-            {PLANS.map(p => (
-              <div key={p.name} className={`rounded-2xl overflow-hidden transition-all duration-200 ${p.featured ? 'ring-2 ring-[#1A56FF] ring-offset-2 scale-[1.02] hover:scale-[1.03]' : 'border border-[rgba(12,14,18,0.08)] hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(12,14,18,0.08)]'}`} style={p.featured ? { background:'#0C0E12', boxShadow:'0 16px 40px rgba(12,14,18,0.25)' } : { background:'white', boxShadow:'0 1px 3px rgba(12,14,18,0.06)' }}>
-                {p.featured && (
-                  <div className="text-center py-2 text-[11px] font-bold uppercase tracking-widest" style={{ background:'rgba(26,86,255,0.15)', color:'#6BA3FF' }}>
-                    ⭐ Le plus populaire
-                  </div>
-                )}
-                <div className="p-8">
-                  <div className={`text-xs font-semibold tracking-wider uppercase mb-1 ${p.featured ? 'text-white/40' : 'text-[#7A7F8E]'}`}>{p.name}</div>
-                  <div className={`text-xs mb-5 ${p.featured ? 'text-white/30' : 'text-[#B0B5C3]'}`}>{p.desc}</div>
-                  <div className="flex items-baseline gap-1 mb-6">
-                    <span className={`text-4xl font-bold tracking-tight font-display ${p.featured ? 'text-white' : 'text-[#0C0E12]'}`}>{p.price}</span>
-                    <span className={`text-sm ${p.featured ? 'text-white/30' : 'text-[#B0B5C3]'}`}>DH/mois</span>
-                  </div>
-                  <ul className="space-y-2.5 mb-8">
-                    {p.features.map(f => (
-                      <li key={f} className={`flex items-center gap-2.5 text-sm ${p.featured ? 'text-white/70' : 'text-[#3A3D45]'}`}>
-                        <svg className="flex-shrink-0" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                          <circle cx="8" cy="8" r="7" fill={p.featured ? 'rgba(26,86,255,0.25)' : '#EEF2FF'}/>
-                          <path d="M5 8l2 2 4-4" stroke={p.featured ? '#6BA3FF' : '#1A56FF'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link href={p.name === 'Enterprise' ? 'mailto:sales@bossystems.ma' : '/inscription'} className={`block text-center py-3 rounded-xl text-sm font-semibold transition-all ${p.featured ? 'text-white hover:opacity-90' : 'bg-[#0C0E12] text-white hover:bg-[#1e2330]'}`} style={p.featured ? { background:'linear-gradient(135deg,#1A56FF,#7C3AED)', boxShadow:'0 4px 14px rgba(26,86,255,0.4)' } : {}}>
-                    {p.cta}
-                  </Link>
-                </div>
+      <section id="tarifs" className="py-14 md:py-24 px-6 md:px-12 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none" aria-hidden>
+          <div style={{ position:'absolute', top:'10%', left:'50%', transform:'translateX(-50%)', width:900, height:500, background:'radial-gradient(ellipse, rgba(26,86,255,0.06) 0%, transparent 70%)' }} />
+        </div>
+        <div className="max-w-5xl mx-auto relative">
+          <ScrollReveal>
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#F7F8FA] border border-[rgba(12,14,18,0.08)] rounded-full text-[10px] font-semibold text-[#7A7F8E] uppercase tracking-wider">
+                Tarifs
               </div>
+              <h2 className="text-[28px] sm:text-[36px] md:text-[44px] font-bold tracking-[-0.015em] leading-[1.1] text-[#0C0E12] mb-3 font-display">Un plan pour chaque taille d&apos;équipe</h2>
+              <p className="text-base md:text-lg text-[#3A3D45] font-light">Sans engagement. 7 jours d&apos;essai gratuit. Annulez à tout moment.</p>
+            </div>
+          </ScrollReveal>
+          <div className="grid md:grid-cols-3 gap-5 items-stretch">
+            {PLANS.map((p, i) => (
+              <ScrollReveal key={p.name} delay={i * 90}>
+                <div className={`relative h-full flex flex-col rounded-[20px] overflow-hidden transition-all duration-300 ${p.featured ? 'md:-translate-y-3 md:hover:-translate-y-5 hover:-translate-y-1.5' : 'hover:-translate-y-1.5'}`} style={p.featured ? { background:'linear-gradient(160deg,#0C0E12 0%,#161B2E 100%)', boxShadow:'0 24px 56px rgba(12,14,18,0.3), 0 0 0 1px rgba(26,86,255,0.4)' } : { background:'white', boxShadow:'0 2px 8px rgba(12,14,18,0.05), 0 0 0 1px rgba(12,14,18,0.06)' }}>
+                  {p.featured && (
+                    <div className="absolute -top-px left-0 right-0 h-[3px]" style={{ background:'linear-gradient(90deg,#1A56FF,#7C3AED,#1A56FF)' }} />
+                  )}
+                  {p.featured && (
+                    <div className="flex items-center justify-center gap-1.5 py-2.5 text-[11px] font-bold uppercase tracking-widest" style={{ background:'rgba(26,86,255,0.14)', color:'#6BA3FF' }}>
+                      <svg width="11" height="11" viewBox="0 0 16 16" fill="#6BA3FF"><path d="M8 1l2 4.5 5 .7-3.6 3.5.9 5-4.3-2.3-4.3 2.3.9-5L1 6.2l5-.7L8 1z"/></svg>
+                      Le plus populaire
+                    </div>
+                  )}
+                  <div className="p-6 md:p-8 flex flex-col flex-1">
+                    <div className={`text-xs font-semibold tracking-wider uppercase mb-1 ${p.featured ? 'text-white/40' : 'text-[#7A7F8E]'}`}>{p.name}</div>
+                    <div className={`text-xs mb-6 ${p.featured ? 'text-white/30' : 'text-[#B0B5C3]'}`}>{p.desc}</div>
+                    <div className="flex items-baseline gap-1.5 mb-7">
+                      <span className={`text-[44px] font-bold tracking-tight font-display leading-none ${p.featured ? 'text-white' : 'text-[#0C0E12]'}`}>{p.price}</span>
+                      <span className={`text-sm ${p.featured ? 'text-white/30' : 'text-[#B0B5C3]'}`}>DH/mois</span>
+                    </div>
+                    <ul className="space-y-3 mb-8 flex-1">
+                      {p.features.map(f => (
+                        <li key={f} className={`flex items-center gap-2.5 text-sm ${p.featured ? 'text-white/75' : 'text-[#3A3D45]'}`}>
+                          <svg className="flex-shrink-0" width="18" height="18" viewBox="0 0 16 16" fill="none">
+                            <circle cx="8" cy="8" r="7" fill={p.featured ? 'rgba(26,86,255,0.25)' : '#EEF2FF'}/>
+                            <path d="M5 8l2 2 4-4" stroke={p.featured ? '#6BA3FF' : '#1A56FF'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                    <Link href={p.href} className={`block text-center py-3.5 rounded-xl text-sm font-semibold transition-all hover:-translate-y-px ${p.featured ? 'text-white hover:opacity-90' : 'bg-[#0C0E12] text-white hover:bg-[#1e2330]'}`} style={p.featured ? { background:'linear-gradient(135deg,#1A56FF,#7C3AED)', boxShadow:'0 8px 20px rgba(26,86,255,0.4)' } : {}}>
+                      {p.cta}
+                    </Link>
+                  </div>
+                </div>
+              </ScrollReveal>
             ))}
           </div>
-          <p className="text-center text-xs text-[#B0B5C3] mt-8">Tous les prix sont en DH HT/mois · Paiement mensuel ou annuel (−20%)</p>
+          <ScrollReveal delay={280}>
+            <p className="text-center text-xs text-[#B0B5C3] mt-10">Tous les prix sont en DH HT/mois · Paiement mensuel ou annuel (−20%) · Sans carte bancaire pour l&apos;essai</p>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* ── WHATSAPP AI ── */}
-      <section className="py-24 px-6 md:px-12 bg-[#F7F8FA]">
+      <section className="py-14 md:py-24 px-6 md:px-12 bg-[#F7F8FA]">
         <div className="max-w-5xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
 
@@ -574,7 +782,7 @@ export default function HomePage() {
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-dot" />
                 Assistant IA WhatsApp
               </div>
-              <h2 className="text-[38px] font-bold tracking-tight text-[#0C0E12] mb-5 font-display leading-tight">
+              <h2 className="text-[26px] sm:text-[32px] md:text-[38px] font-bold tracking-tight text-[#0C0E12] mb-5 font-display leading-tight">
                 Pourquoi l&apos;IA WhatsApp<br/>de BOS est différente
               </h2>
               <p className="text-[#3A3D45] text-lg font-light leading-relaxed mb-8">
@@ -708,13 +916,13 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Floating badges */}
-                <div className="absolute -right-8 top-20 bg-white rounded-2xl px-3 py-2.5 border border-[rgba(12,14,18,0.08)]" style={{ boxShadow:'0 8px 24px rgba(12,14,18,0.12)' }}>
+                {/* Floating badges — hidden on small screens to avoid overflow */}
+                <div className="hidden sm:block absolute -right-8 top-20 bg-white rounded-2xl px-3 py-2.5 border border-[rgba(12,14,18,0.08)]" style={{ boxShadow:'0 8px 24px rgba(12,14,18,0.12)' }}>
                   <div className="text-[9px] text-[#7A7F8E] font-medium">Réponse en</div>
                   <div className="text-[20px] font-bold text-[#25D366] leading-tight">2 sec</div>
                 </div>
 
-                <div className="absolute -left-8 bottom-28 bg-white rounded-2xl px-3 py-2.5 border border-[rgba(12,14,18,0.08)]" style={{ boxShadow:'0 8px 24px rgba(12,14,18,0.12)' }}>
+                <div className="hidden sm:block absolute -left-8 bottom-28 bg-white rounded-2xl px-3 py-2.5 border border-[rgba(12,14,18,0.08)]" style={{ boxShadow:'0 8px 24px rgba(12,14,18,0.12)' }}>
                   <div className="flex items-center gap-1.5 mb-0.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                     <div className="text-[9px] text-[#7A7F8E] font-medium">RDV confirmé</div>
@@ -728,8 +936,8 @@ export default function HomePage() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="py-24 px-6 md:px-12">
-        <div className="max-w-4xl mx-auto rounded-3xl p-14 text-center relative overflow-hidden" style={{ background:'linear-gradient(135deg,#0C0E12 0%,#141A30 50%,#0C1020 100%)' }}>
+      <section className="py-14 md:py-24 px-4 md:px-12">
+        <div className="max-w-4xl mx-auto rounded-3xl p-8 md:p-14 text-center relative overflow-hidden" style={{ background:'linear-gradient(135deg,#0C0E12 0%,#141A30 50%,#0C1020 100%)' }}>
           <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
             <div style={{ position:'absolute', top:'-30%', right:'-10%', width:500, height:500, background:'radial-gradient(ellipse, rgba(26,86,255,0.25) 0%, transparent 55%)', borderRadius:'50%' }}/>
             <div style={{ position:'absolute', bottom:'-30%', left:'-10%', width:400, height:400, background:'radial-gradient(ellipse, rgba(124,58,237,0.2) 0%, transparent 55%)', borderRadius:'50%' }}/>
@@ -737,10 +945,10 @@ export default function HomePage() {
           <div className="relative">
             <div className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 bg-white/10 rounded-full text-white/60 text-xs font-semibold">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Rejoignez les PME qui ont déjà automatisé
+              Rejoignez les entreprises qui ont déjà automatisé
             </div>
-            <h2 className="text-[40px] font-bold tracking-tight text-white mb-4 font-display">Prêt à automatiser<br/>votre relation client ?</h2>
-            <p className="text-white/50 mb-10 text-lg">14 jours gratuits. Sans carte bancaire. Résultats visibles dès le premier jour.</p>
+            <h2 className="text-[28px] sm:text-[36px] md:text-[40px] font-bold tracking-tight text-white mb-4 font-display">Prêt à automatiser<br/>votre relation client ?</h2>
+            <p className="text-white/50 mb-8 md:mb-10 text-base md:text-lg">7 jours gratuits. Sans carte bancaire. Résultats visibles dès le premier jour.</p>
             <Link href="/inscription" className="inline-flex items-center gap-2 px-10 py-4 bg-white text-[#0C0E12] rounded-xl text-base font-semibold hover:bg-gray-50 transition-all hover:-translate-y-0.5 hover:shadow-2xl">
               Commencer gratuitement →
             </Link>
@@ -756,54 +964,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── FOOTER ── */}
-      <footer className="border-t border-[rgba(12,14,18,0.06)] py-12 px-6 md:px-12">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-10">
-            <div className="max-w-xs">
-              <div className="flex items-center gap-2.5 mb-3">
-                <div className="w-7 h-7 bg-[#0C0E12] rounded-md flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                    <rect x="1" y="1" width="6" height="6" rx="1.5" fill="white"/>
-                    <rect x="9" y="1" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
-                    <rect x="1" y="9" width="6" height="6" rx="1.5" fill="white" opacity=".5"/>
-                    <rect x="9" y="9" width="6" height="6" rx="1.5" fill="white"/>
-                  </svg>
-                </div>
-                <span className="font-bold text-sm text-[#0C0E12] font-display">BOS SYSTEMS</span>
-              </div>
-              <p className="text-xs text-[#B0B5C3] leading-relaxed">La plateforme SaaS qui automatise la relation client des PME marocaines grâce à l&apos;IA.</p>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-sm">
-              <div>
-                <div className="text-xs font-semibold text-[#0C0E12] uppercase tracking-wider mb-3">Produit</div>
-                {[['Fonctionnalités','#fonctionnalites'],['Tarifs','#tarifs'],['Secteurs','#secteurs']].map(([l,h])=>(
-                  <a key={h} href={h} className="block text-[#7A7F8E] hover:text-[#0C0E12] transition-colors mb-2">{l}</a>
-                ))}
-              </div>
-              <div>
-                <div className="text-xs font-semibold text-[#0C0E12] uppercase tracking-wider mb-3">Compte</div>
-                {[['Se connecter','/connexion'],['Créer un compte','/inscription']].map(([l,h])=>(
-                  <Link key={h} href={h} className="block text-[#7A7F8E] hover:text-[#0C0E12] transition-colors mb-2">{l}</Link>
-                ))}
-              </div>
-              <div>
-                <div className="text-xs font-semibold text-[#0C0E12] uppercase tracking-wider mb-3">Contact</div>
-                {[['Support','mailto:support@bossystems.ma'],['Ventes','mailto:sales@bossystems.ma']].map(([l,h])=>(
-                  <a key={h} href={h} className="block text-[#7A7F8E] hover:text-[#0C0E12] transition-colors mb-2">{l}</a>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="pt-8 border-t border-[rgba(12,14,18,0.06)] flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-xs text-[#B0B5C3]">© 2025 BOS Systems — Casablanca, Maroc</div>
-            <div className="flex items-center gap-1 text-xs text-[#B0B5C3]">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              Tous les systèmes opérationnels
-            </div>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
 
     </div>
   )

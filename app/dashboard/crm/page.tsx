@@ -5,6 +5,7 @@ import { Modal } from '@/components/ui/modal'
 import { Confirm } from '@/components/ui/confirm'
 import { SkeletonRow } from '@/components/ui/skeleton'
 import { useToast } from '@/components/ui/toast'
+import { ExportPanel, downloadCSV, printAsPDF } from '@/components/ui/export-panel'
 
 interface Client {
   id: string
@@ -13,6 +14,9 @@ interface Client {
   email?: string
   status: string
   notes?: string
+  tags?: string[]
+  source?: string
+  lastContactAt?: string | null
   createdAt: string
 }
 
@@ -31,6 +35,7 @@ export default function CrmPage() {
   const [deletingId, setDeletingId] = useState(false)
   const [search, setSearch] = useState('')
   const [filterStatus, setFilterStatus] = useState('')
+  const [exporting, setExporting] = useState(false)
 
   const fetchClients = useCallback(async () => {
     const params = new URLSearchParams()
@@ -88,6 +93,40 @@ export default function CrmPage() {
   const leadCount   = clients.filter(c => c.status === 'LEAD').length
   const activeCount = clients.filter(c => c.status === 'ACTIVE').length
 
+  async function handleExport(format: 'csv' | 'pdf', range: { from?: string; to?: string }, periodText: string) {
+    setExporting(true)
+    try {
+      const params = new URLSearchParams({ limit: '5000' })
+      if (range.from) params.set('from', range.from)
+      if (range.to) params.set('to', range.to)
+      const res = await fetch(`/api/clients?${params}`)
+      if (!res.ok) throw new Error()
+      const data: Client[] = await res.json()
+
+      const headers = ['Nom', 'Téléphone', 'Email', 'Statut', 'Source', 'Tags', 'Dernier contact', 'Créé le']
+      const rows = data.map(c => [
+        c.name,
+        c.phone ?? '',
+        c.email ?? '',
+        STATUS_LABELS[c.status] ?? c.status,
+        c.source ?? '',
+        (c.tags ?? []).join(', '),
+        c.lastContactAt ? formatDate(c.lastContactAt) : '',
+        formatDate(c.createdAt),
+      ])
+
+      if (format === 'csv') {
+        downloadCSV(`clients_${new Date().toISOString().slice(0, 10)}.csv`, headers, rows)
+      } else {
+        printAsPDF('Clients CRM', periodText, headers, rows)
+      }
+    } catch {
+      toast("Erreur lors de l'export", 'error')
+    } finally {
+      setExporting(false)
+    }
+  }
+
   return (
     <div className="p-6 lg:p-8 max-w-7xl mx-auto animate-fade-in">
       {/* Header */}
@@ -96,16 +135,19 @@ export default function CrmPage() {
           <h1 className="page-title">CRM Clients</h1>
           <p className="page-subtitle">{clients.length} client{clients.length !== 1 ? 's' : ''} · {leadCount} prospect{leadCount !== 1 ? 's' : ''} · {activeCount} actif{activeCount !== 1 ? 's' : ''}</p>
         </div>
-        <button onClick={openAdd} className="btn-primary">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
-          Nouveau client
-        </button>
+        <div className="flex items-center gap-2">
+          <ExportPanel onExport={handleExport} includeAllOption exporting={exporting} />
+          <button onClick={openAdd} className="btn-primary">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+            Nouveau client
+          </button>
+        </div>
       </div>
 
       {/* Filters */}
       <div className="flex flex-wrap gap-3 mb-6">
         <div className="relative flex-1 min-w-[200px] max-w-sm">
-          <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-[#B0B5C3]" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-[#B0B5C3] dark:text-[#5A5F6B]" width="14" height="14" viewBox="0 0 14 14" fill="none">
             <circle cx="6" cy="6" r="4.5" stroke="currentColor" strokeWidth="1.3"/>
             <path d="M9.5 9.5l3 3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
           </svg>
@@ -121,7 +163,7 @@ export default function CrmPage() {
             <button
               key={s}
               onClick={() => setFilterStatus(s)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${filterStatus === s ? 'bg-[#0C0E12] text-white' : 'bg-white border border-[rgba(12,14,18,0.08)] text-[#3A3D45] hover:bg-[#F7F8FA]'}`}
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${filterStatus === s ? 'bg-[#0C0E12] dark:bg-[#1A56FF] text-white' : 'bg-white dark:bg-[#1A1D24] border border-[rgba(12,14,18,0.08)] dark:border-white/10 text-[#3A3D45] dark:text-[#9CA3AF] hover:bg-[#F7F8FA] dark:hover:bg-white/5'}`}
             >
               {s ? STATUS_LABELS[s] : 'Tous'}
             </button>
@@ -162,19 +204,19 @@ export default function CrmPage() {
                       {initials(c.name)}
                     </div>
                     <div>
-                      <div className="text-sm font-semibold text-[#0C0E12]">{c.name}</div>
-                      {c.notes && <div className="text-xs text-[#B0B5C3] truncate max-w-[160px]">{c.notes}</div>}
+                      <div className="text-sm font-semibold text-[#0C0E12] dark:text-[#F1F2F4]">{c.name}</div>
+                      {c.notes && <div className="text-xs text-[#B0B5C3] dark:text-[#5A5F6B] truncate max-w-[160px]">{c.notes}</div>}
                     </div>
                   </div>
                 </td>
-                <td className="td text-[#3A3D45]">{c.phone ?? '—'}</td>
-                <td className="td text-[#3A3D45]">{c.email ?? '—'}</td>
+                <td className="td text-[#3A3D45] dark:text-[#9CA3AF]">{c.phone ?? '—'}</td>
+                <td className="td text-[#3A3D45] dark:text-[#9CA3AF]">{c.email ?? '—'}</td>
                 <td className="td">
                   <span className={`badge text-[10px] ${STATUS_COLORS[c.status] ?? 'bg-gray-50 text-gray-600 border-gray-200'}`}>
                     {STATUS_LABELS[c.status] ?? c.status}
                   </span>
                 </td>
-                <td className="td text-[#7A7F8E]">{formatDate(c.createdAt)}</td>
+                <td className="td text-[#7A7F8E] dark:text-[#9CA3AF]">{formatDate(c.createdAt)}</td>
                 <td className="td">
                   <div className="flex items-center gap-1 justify-end">
                     <button onClick={() => openEdit(c)} className="btn-icon" title="Modifier">
@@ -195,27 +237,27 @@ export default function CrmPage() {
       <Modal open={showAdd || !!editing} onClose={closeModal} title={editing ? 'Modifier le client' : 'Nouveau client'}>
         <form onSubmit={saveClient} className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Nom complet *</label>
+            <label className="block text-xs font-medium text-[#3A3D45] dark:text-[#9CA3AF] mb-1.5">Nom complet *</label>
             <input className="input" placeholder="Mohammed Alami" value={form.name} onChange={e => setForm(f => ({...f, name: e.target.value}))} required />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Téléphone</label>
+              <label className="block text-xs font-medium text-[#3A3D45] dark:text-[#9CA3AF] mb-1.5">Téléphone</label>
               <input className="input" placeholder="06 00 00 00 00" value={form.phone} onChange={e => setForm(f => ({...f, phone: e.target.value}))} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Email</label>
+              <label className="block text-xs font-medium text-[#3A3D45] dark:text-[#9CA3AF] mb-1.5">Email</label>
               <input type="email" className="input" placeholder="email@exemple.com" value={form.email} onChange={e => setForm(f => ({...f, email: e.target.value}))} />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Statut</label>
+            <label className="block text-xs font-medium text-[#3A3D45] dark:text-[#9CA3AF] mb-1.5">Statut</label>
             <select className="select" value={form.status} onChange={e => setForm(f => ({...f, status: e.target.value}))}>
               {STATUS_OPTIONS.map(s => <option key={s} value={s}>{STATUS_LABELS[s]}</option>)}
             </select>
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#3A3D45] mb-1.5">Notes</label>
+            <label className="block text-xs font-medium text-[#3A3D45] dark:text-[#9CA3AF] mb-1.5">Notes</label>
             <textarea className="textarea" rows={3} placeholder="Notes, observations..." value={form.notes} onChange={e => setForm(f => ({...f, notes: e.target.value}))} />
           </div>
           <div className="flex gap-3 pt-1">

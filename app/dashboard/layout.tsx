@@ -2,6 +2,10 @@ import { redirect } from 'next/navigation'
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { Sidebar } from '@/components/dashboard/sidebar'
+import { MobileNav } from '@/components/dashboard/mobile-nav'
+import { MobileHeader } from '@/components/dashboard/mobile-header'
+import { ThemeProvider } from '@/components/dashboard/theme-provider'
+import { PlanModalProvider } from '@/components/dashboard/plan-modal-provider'
 
 export const dynamic = 'force-dynamic'
 
@@ -13,11 +17,19 @@ export default async function DashboardLayout({ children }: { children: React.Re
   if (!clinic) redirect('/inscription')
 
   return (
-    <div className="flex h-screen bg-[#F7F8FA] overflow-hidden">
-      <Sidebar clinicName={clinic.name} plan={clinic.plan} />
-      <main className="flex-1 overflow-auto">
-        {children}
-      </main>
-    </div>
+    <ThemeProvider>
+      <PlanModalProvider clinicName={clinic.name}>
+        <div className="flex h-screen bg-[#F7F8FA] dark:bg-[#0C0E12] overflow-hidden">
+          <Sidebar clinicName={clinic.name} plan={clinic.plan} />
+          <div className="flex-1 flex flex-col overflow-hidden">
+            <MobileHeader clinicName={clinic.name} />
+            <main className="flex-1 overflow-auto pb-16 md:pb-0">
+              {children}
+            </main>
+          </div>
+        </div>
+        <MobileNav />
+      </PlanModalProvider>
+    </ThemeProvider>
   )
 }
