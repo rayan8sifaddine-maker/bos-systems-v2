@@ -177,9 +177,9 @@ const FEATURES = [
 ]
 
 const PLANS = [
-  { name: 'Starter', price: '749', desc: 'Pour démarrer et valider', features: ['Assistant IA WhatsApp', 'Gestion des rendez-vous', 'Rappels automatiques', '200 conversations/mois', 'CRM basique', '1 utilisateur'], featured: false, cta: 'Commencer' },
-  { name: 'Pro', price: '2 749', desc: 'Pour les équipes actives', features: ['Tout Starter inclus', 'Conversations illimitées', 'Relances automatiques', 'CRM complet', 'Analytics avancés', '3 utilisateurs', 'Support prioritaire'], featured: true, cta: 'Commencer maintenant' },
-  { name: 'Enterprise', price: '4 489', desc: 'Pour les grandes structures', features: ['Tout Pro inclus', 'Équipe illimitée', 'Intégrations custom', 'API dédiée', 'SLA garanti', 'Account manager dédié', 'Onboarding personnalisé'], featured: false, cta: 'Contacter l\'équipe' },
+  { name: 'Starter', price: '749', desc: 'Pour démarrer et valider', features: ['Assistant IA WhatsApp', 'Gestion des rendez-vous', 'Rappels automatiques', '200 conversations/mois', 'CRM basique', '1 utilisateur'], featured: false, cta: 'Commencer', href: '/paiement?plan=starter' },
+  { name: 'Pro', price: '2 749', desc: 'Pour les équipes actives', features: ['Tout Starter inclus', 'Conversations illimitées', 'Relances automatiques', 'CRM complet', 'Analytics avancés', '3 utilisateurs', 'Support prioritaire'], featured: true, cta: 'Commencer maintenant', href: '/paiement?plan=pro' },
+  { name: 'Enterprise', price: '4 489', desc: 'Pour les grandes structures', features: ['Tout Pro inclus', 'Équipe illimitée', 'Intégrations custom', 'API dédiée', 'SLA garanti', 'Account manager dédié', 'Onboarding personnalisé'], featured: false, cta: 'Contacter l\'équipe', href: 'mailto:sales@bossystems.ma' },
 ]
 
 /* ─── Page ─────────────────────────────────────────────────── */
@@ -757,7 +757,7 @@ export default function HomePage() {
                         </li>
                       ))}
                     </ul>
-                    <Link href={p.name === 'Enterprise' ? 'mailto:sales@bossystems.ma' : '/inscription'} className={`block text-center py-3.5 rounded-xl text-sm font-semibold transition-all hover:-translate-y-px ${p.featured ? 'text-white hover:opacity-90' : 'bg-[#0C0E12] text-white hover:bg-[#1e2330]'}`} style={p.featured ? { background:'linear-gradient(135deg,#1A56FF,#7C3AED)', boxShadow:'0 8px 20px rgba(26,86,255,0.4)' } : {}}>
+                    <Link href={p.href} className={`block text-center py-3.5 rounded-xl text-sm font-semibold transition-all hover:-translate-y-px ${p.featured ? 'text-white hover:opacity-90' : 'bg-[#0C0E12] text-white hover:bg-[#1e2330]'}`} style={p.featured ? { background:'linear-gradient(135deg,#1A56FF,#7C3AED)', boxShadow:'0 8px 20px rgba(26,86,255,0.4)' } : {}}>
                       {p.cta}
                     </Link>
                   </div>

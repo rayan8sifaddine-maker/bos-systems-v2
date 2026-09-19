@@ -1,8 +1,7 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { signIn } from 'next-auth/react'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 
 const SECTORS = [
@@ -14,15 +13,66 @@ const SECTORS = [
   { value: 'autre',      label: 'Autre' },
 ]
 
-export default function RegisterPage() {
+const PLAN_COLORS: Record<string, { badge: string; border: string; bg: string }> = {
+  STARTER: { badge: 'bg-[#F7F8FA] text-[#3A3D45] border-[rgba(12,14,18,0.1)]', border: 'border-[rgba(12,14,18,0.1)]', bg: '' },
+  PRO: { badge: 'bg-[#EEF2FF] text-[#1A56FF] border-[rgba(26,86,255,0.2)]', border: 'border-[rgba(26,86,255,0.25)]', bg: '' },
+  ENTERPRISE: { badge: 'bg-[#F5F3FF] text-[#7C3AED] border-[rgba(124,58,237,0.2)]', border: 'border-[rgba(124,58,237,0.25)]', bg: '' },
+}
+
+const PLAN_LABELS: Record<string, string> = {
+  STARTER: 'Starter',
+  PRO: 'Pro',
+  ENTERPRISE: 'Enterprise',
+}
+
+function RegisterInner() {
   const router = useRouter()
+  const params = useSearchParams()
   const [step, setStep] = useState(1)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [showPwd, setShowPwd] = useState(false)
+
+  // License key state
+  const [licenseKey, setLicenseKey] = useState('')
+  const [keyValidating, setKeyValidating] = useState(false)
+  const [keyError, setKeyError] = useState('')
+  const [keyPlan, setKeyPlan] = useState<string | null>(null)
+
   const [form, setForm] = useState({ clinicName: '', sector: 'clinique', email: '', password: '' })
 
+  useEffect(() => {
+    const keyParam = params.get('key')
+    if (keyParam) {
+      setLicenseKey(keyParam.toUpperCase())
+      validateKey(keyParam.toUpperCase())
+    }
+  }, [])
+
   function upd(k: keyof typeof form, v: string) { setForm(f => ({...f, [k]: v})); setError('') }
+
+  async function validateKey(k?: string) {
+    const key = (k || licenseKey).trim().toUpperCase()
+    if (!key) { setKeyError('Veuillez saisir votre clé de licence.'); return }
+    setKeyValidating(true)
+    setKeyError('')
+    try {
+      const res = await fetch('/api/validate-key', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error)
+      setKeyPlan(data.plan)
+      setLicenseKey(key)
+      setStep(2)
+    } catch (e) {
+      setKeyError(e instanceof Error ? e.message : 'Clé invalide.')
+    } finally {
+      setKeyValidating(false)
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -32,7 +82,7 @@ export default function RegisterPage() {
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, licenseKey }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error)
@@ -45,6 +95,7 @@ export default function RegisterPage() {
   }
 
   const selectedSector = SECTORS.find(s => s.value === form.sector)
+  const planStyle = keyPlan ? PLAN_COLORS[keyPlan] : null
 
   return (
     <div className="min-h-screen flex">
@@ -70,27 +121,51 @@ export default function RegisterPage() {
         </div>
 
         <div className="relative">
-          <div className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 bg-white/10 rounded-full text-white/60 text-xs font-semibold">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            7 jours gratuits · Sans carte
-          </div>
-          <h2 className="text-4xl font-bold text-white mb-4 font-display leading-tight">
-            Automatisez votre<br/>
-            <span style={{ background:'linear-gradient(135deg,#6BA3FF,#A78BFA)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>
-              relation client
-            </span>
-          </h2>
-          <p className="text-white/50 text-base leading-relaxed mb-10">
-            Rejoignez les entreprises marocaines qui utilisent BOS pour automatiser leurs rendez-vous, relancer leurs clients et booster leur CA.
-          </p>
+          {keyPlan ? (
+            <>
+              <div className={`inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full text-xs font-bold border ${planStyle?.badge}`}>
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l2 4.5 5 .7-3.6 3.5.9 5-4.3-2.3-4.3 2.3.9-5L1 6.2l5-.7L8 1z"/></svg>
+                Plan {PLAN_LABELS[keyPlan]} activé
+              </div>
+              <h2 className="text-4xl font-bold text-white mb-4 font-display leading-tight">
+                Votre licence<br/>
+                <span style={{ background:'linear-gradient(135deg,#10B981,#34D399)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>
+                  est validée ✓
+                </span>
+              </h2>
+              <p className="text-white/50 text-base leading-relaxed mb-8">
+                Plus qu&apos;un instant — configurez votre établissement et créez votre accès BOS Systems.
+              </p>
+            </>
+          ) : (
+            <>
+              <div className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 bg-white/10 rounded-full text-white/60 text-xs font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                Accès par clé de licence
+              </div>
+              <h2 className="text-4xl font-bold text-white mb-4 font-display leading-tight">
+                Entrez votre<br/>
+                <span style={{ background:'linear-gradient(135deg,#6BA3FF,#A78BFA)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>
+                  clé de licence
+                </span>
+              </h2>
+              <p className="text-white/50 text-base leading-relaxed mb-10">
+                Vous avez reçu une clé de licence après votre achat. Saisissez-la pour accéder à BOS Systems.
+              </p>
+            </>
+          )}
 
           <div className="space-y-3 mb-10">
-            {[
-              'Assistant IA WhatsApp configuré en 5 min',
-              'Agenda intelligent avec rappels automatiques',
-              'Analytics et CRM complets inclus',
-              'Données 100% sécurisées, hébergées en Europe',
-            ].map(text => (
+            {(keyPlan ? [
+              'Clé de licence validée avec succès',
+              'Plan ' + (PLAN_LABELS[keyPlan] || '') + ' débloqué',
+              'Création du compte en cours…',
+            ] : [
+              'Clé reçue après votre achat sur bossystems.ma',
+              'Format : BSS-XXXX-XXXX-XXXX (Starter)',
+              'Format : BSP-XXXX-XXXX-XXXX (Pro)',
+              'Format : BSE-XXXX-XXXX-XXXX (Enterprise)',
+            ]).map(text => (
               <div key={text} className="flex items-center gap-3">
                 <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
                   <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 5-5" stroke="#10B981" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -100,7 +175,7 @@ export default function RegisterPage() {
             ))}
           </div>
 
-          <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl p-4 hover:bg-white/[0.07] transition-colors">
+          <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl p-4">
             <div className="flex -space-x-2">
               {[['YB','#3B82F6'],['FA','#F59E0B'],['SC','#8B5CF6'],['KA','#10B981']].map(([initials, bg]) => (
                 <div key={initials} className="w-8 h-8 rounded-full border-2 border-[#0C0E12] flex items-center justify-center text-[10px] font-bold text-white" style={{ background: bg }}>{initials}</div>
@@ -134,7 +209,7 @@ export default function RegisterPage() {
           <div className="bg-white border border-[rgba(12,14,18,0.07)] rounded-2xl p-8" style={{ boxShadow:'0 1px 2px rgba(12,14,18,0.04), 0 8px 24px rgba(12,14,18,0.06), 0 20px 48px rgba(12,14,18,0.06)' }}>
             {/* Progress */}
             <div className="flex gap-2 mb-6">
-              {[1,2].map(s => (
+              {[1,2,3].map(s => (
                 <div key={s} className="flex-1">
                   <div className={`h-1 rounded-full transition-all duration-500 ${s <= step ? 'bg-[#1A56FF]' : 'bg-[rgba(12,14,18,0.08)]'}`} />
                 </div>
@@ -142,90 +217,146 @@ export default function RegisterPage() {
             </div>
 
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-[10px] font-bold text-[#B0B5C3] uppercase tracking-wider">Étape {step}/2</span>
+              <span className="text-[10px] font-bold text-[#B0B5C3] uppercase tracking-wider">Étape {step}/3</span>
             </div>
-            <h1 className="text-xl font-bold text-[#0C0E12] mb-0.5 font-display tracking-tight">
-              {step === 1 ? 'Votre établissement' : 'Créez votre compte'}
-            </h1>
-            <p className="text-sm text-[#7A7F8E] mb-7">
-              {step === 1 ? 'Dites-nous en plus sur votre activité' : '7 jours gratuits, sans carte bancaire'}
-            </p>
 
-            {step === 1 ? (
-              <form onSubmit={e => { e.preventDefault(); setStep(2) }} className="space-y-5">
-                <div>
-                  <label className="block text-xs font-semibold text-[#3A3D45] mb-1.5">Nom de l&apos;établissement *</label>
-                  <input className="input" placeholder="Clinique Dr. Bennani, Garage Elite..." value={form.clinicName} onChange={e => upd('clinicName', e.target.value)} required/>
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-[#3A3D45] mb-2">Secteur d&apos;activité *</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {SECTORS.slice(0, 8).map(s => (
-                      <button key={s.value} type="button" onClick={() => upd('sector', s.value)} className={`text-xs text-left px-3 py-2.5 rounded-xl border transition-all ${form.sector === s.value ? 'border-[#1A56FF] bg-[#EEF2FF] text-[#1A56FF] font-semibold' : 'border-[rgba(12,14,18,0.08)] text-[#3A3D45] hover:border-[rgba(12,14,18,0.2)] bg-[#F7F8FA]'}`}>
-                        {s.label}
-                      </button>
-                    ))}
+            {/* ── STEP 1: License key ── */}
+            {step === 1 && (
+              <>
+                <h1 className="text-xl font-bold text-[#0C0E12] mb-0.5 font-display tracking-tight">Votre clé de licence</h1>
+                <p className="text-sm text-[#7A7F8E] mb-7">Saisissez la clé reçue après votre achat</p>
+                <div className="space-y-5">
+                  <div>
+                    <label className="block text-xs font-semibold text-[#3A3D45] mb-1.5">Clé de licence *</label>
+                    <input
+                      className="input font-mono tracking-wider uppercase"
+                      placeholder="BSS-XXXX-XXXX-XXXX ou BSP-…"
+                      value={licenseKey}
+                      onChange={e => { setLicenseKey(e.target.value.toUpperCase()); setKeyError('') }}
+                      onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); validateKey() } }}
+                      autoFocus
+                    />
+                    {keyError && (
+                      <div className="flex items-center gap-2 mt-2 text-xs text-red-600">
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="#ef4444" strokeWidth="1.2"/><path d="M6 4v3M6 8.5h.01" stroke="#ef4444" strokeWidth="1.2" strokeLinecap="round"/></svg>
+                        {keyError}
+                      </div>
+                    )}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => validateKey()}
+                    disabled={keyValidating || !licenseKey.trim()}
+                    className="w-full py-3 rounded-xl text-sm font-semibold text-white transition-all hover:-translate-y-px disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2"
+                    style={{ background:'linear-gradient(135deg,#0C0E12,#1e2330)', boxShadow:'0 4px 12px rgba(12,14,18,0.2)' }}
+                  >
+                    {keyValidating ? (
+                      <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"/>
+                    ) : (
+                      <>Valider ma clé →</>
+                    )}
+                  </button>
+                  <div className="text-center">
+                    <span className="text-xs text-[#B0B5C3]">Pas encore de clé ?{' '}</span>
+                    <Link href="/#tarifs" className="text-xs text-[#1A56FF] font-semibold hover:underline">Choisir un plan →</Link>
                   </div>
                 </div>
-                <button type="submit" disabled={!form.clinicName || !form.sector} className="w-full py-3 rounded-xl text-sm font-semibold text-white transition-all hover:-translate-y-px disabled:opacity-50 disabled:pointer-events-none" style={{ background:'linear-gradient(135deg,#0C0E12,#1e2330)', boxShadow:'0 4px 12px rgba(12,14,18,0.2)' }}>
-                  Continuer →
-                </button>
-              </form>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="flex items-center gap-3 p-3 bg-[#F7F8FA] rounded-xl border border-[rgba(12,14,18,0.06)]">
-                  <div className="w-8 h-8 bg-[#EEF2FF] rounded-lg flex items-center justify-center text-[#1A56FF] flex-shrink-0">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7.5L5 11.5 13 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs font-semibold text-[#0C0E12] truncate">{form.clinicName}</div>
-                    <div className="text-[11px] text-[#B0B5C3]">{selectedSector?.label}</div>
-                  </div>
-                  <button type="button" onClick={() => setStep(1)} className="text-xs text-[#1A56FF] hover:underline font-medium flex-shrink-0">Modifier</button>
-                </div>
+              </>
+            )}
 
-                <div>
-                  <label className="block text-xs font-semibold text-[#3A3D45] mb-1.5">Adresse email *</label>
-                  <input type="email" className="input" placeholder="votre@email.com" value={form.email} onChange={e => upd('email', e.target.value)} required autoComplete="email"/>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-[#3A3D45] mb-1.5">Mot de passe *</label>
-                  <div className="relative">
-                    <input type={showPwd ? 'text' : 'password'} className="input pr-11" placeholder="Min. 8 caractères" value={form.password} onChange={e => upd('password', e.target.value)} required minLength={8} autoComplete="new-password"/>
-                    <button type="button" onClick={() => setShowPwd(p => !p)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#B0B5C3] hover:text-[#7A7F8E]" aria-label="Afficher/masquer">
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z" stroke="currentColor" strokeWidth="1.3"/><circle cx="8" cy="8" r="2" stroke="currentColor" strokeWidth="1.3"/></svg>
-                    </button>
-                  </div>
-                  {form.password.length > 0 && (
-                    <div className="flex gap-1 mt-2">
-                      {[...Array(4)].map((_, i) => {
-                        const strength = Math.min(Math.floor(form.password.length / 2), 4)
-                        return <div key={i} className={`h-1 flex-1 rounded-full transition-all duration-300 ${i < strength ? strength < 2 ? 'bg-red-400' : strength < 3 ? 'bg-amber-400' : 'bg-emerald-400' : 'bg-[#F0F2F5]'}`} />
-                      })}
-                    </div>
-                  )}
-                </div>
-
-                {error && (
-                  <div className="flex items-center gap-2 px-3 py-2.5 bg-red-50 border border-red-100 rounded-xl text-sm text-red-600 animate-fade-in">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#ef4444" strokeWidth="1.3"/><path d="M7 4.5v3M7 9.5h.01" stroke="#ef4444" strokeWidth="1.3" strokeLinecap="round"/></svg>
-                    {error}
+            {/* ── STEP 2: Clinic info ── */}
+            {step === 2 && (
+              <>
+                {keyPlan && (
+                  <div className={`flex items-center gap-2 mb-4 px-3 py-2 rounded-xl border text-xs font-semibold ${PLAN_COLORS[keyPlan]?.badge}`}>
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6l3 3 7-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    Plan {PLAN_LABELS[keyPlan]} — clé validée
                   </div>
                 )}
-
-                <div className="flex gap-3">
-                  <button type="button" onClick={() => setStep(1)} className="px-4 py-3 rounded-xl text-sm font-medium text-[#3A3D45] border border-[rgba(12,14,18,0.12)] hover:bg-[#F7F8FA] transition-all">←</button>
-                  <button type="submit" disabled={loading} className="flex-1 py-3 rounded-xl text-sm font-semibold text-white transition-all hover:-translate-y-px disabled:opacity-60" style={{ background:'linear-gradient(135deg,#0C0E12,#1e2330)', boxShadow:'0 4px 12px rgba(12,14,18,0.2)' }}>
-                    {loading ? <span className="inline-flex items-center justify-center"><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"/></span> : 'Créer mon compte →'}
+                <h1 className="text-xl font-bold text-[#0C0E12] mb-0.5 font-display tracking-tight">Votre établissement</h1>
+                <p className="text-sm text-[#7A7F8E] mb-7">Dites-nous en plus sur votre activité</p>
+                <form onSubmit={e => { e.preventDefault(); setStep(3) }} className="space-y-5">
+                  <div>
+                    <label className="block text-xs font-semibold text-[#3A3D45] mb-1.5">Nom de l&apos;établissement *</label>
+                    <input className="input" placeholder="Clinique Dr. Bennani, Garage Elite..." value={form.clinicName} onChange={e => upd('clinicName', e.target.value)} required autoFocus/>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-[#3A3D45] mb-2">Secteur d&apos;activité *</label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {SECTORS.map(s => (
+                        <button key={s.value} type="button" onClick={() => upd('sector', s.value)} className={`text-xs text-left px-3 py-2.5 rounded-xl border transition-all ${form.sector === s.value ? 'border-[#1A56FF] bg-[#EEF2FF] text-[#1A56FF] font-semibold' : 'border-[rgba(12,14,18,0.08)] text-[#3A3D45] hover:border-[rgba(12,14,18,0.2)] bg-[#F7F8FA]'}`}>
+                          {s.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <button type="submit" disabled={!form.clinicName} className="w-full py-3 rounded-xl text-sm font-semibold text-white transition-all hover:-translate-y-px disabled:opacity-50 disabled:pointer-events-none" style={{ background:'linear-gradient(135deg,#0C0E12,#1e2330)', boxShadow:'0 4px 12px rgba(12,14,18,0.2)' }}>
+                    Continuer →
                   </button>
-                </div>
+                </form>
+              </>
+            )}
 
-                <p className="text-[11px] text-center text-[#B0B5C3]">
-                  En créant un compte, vous acceptez nos{' '}
-                  <a href="#" className="text-[#7A7F8E] hover:underline">conditions d&apos;utilisation</a>
-                </p>
-              </form>
+            {/* ── STEP 3: Account ── */}
+            {step === 3 && (
+              <>
+                <h1 className="text-xl font-bold text-[#0C0E12] mb-0.5 font-display tracking-tight">Créez votre compte</h1>
+                <p className="text-sm text-[#7A7F8E] mb-7">Dernière étape — votre accès BOS Systems</p>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="flex items-center gap-3 p-3 bg-[#F7F8FA] rounded-xl border border-[rgba(12,14,18,0.06)]">
+                    <div className="w-8 h-8 bg-[#EEF2FF] rounded-lg flex items-center justify-center text-[#1A56FF] flex-shrink-0">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7.5L5 11.5 13 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs font-semibold text-[#0C0E12] truncate">{form.clinicName}</div>
+                      <div className="text-[11px] text-[#B0B5C3]">{SECTORS.find(s => s.value === form.sector)?.label}{keyPlan ? ` · Plan ${PLAN_LABELS[keyPlan]}` : ''}</div>
+                    </div>
+                    <button type="button" onClick={() => setStep(2)} className="text-xs text-[#1A56FF] hover:underline font-medium flex-shrink-0">Modifier</button>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-[#3A3D45] mb-1.5">Adresse email *</label>
+                    <input type="email" className="input" placeholder="votre@email.com" value={form.email} onChange={e => upd('email', e.target.value)} required autoComplete="email"/>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-[#3A3D45] mb-1.5">Mot de passe *</label>
+                    <div className="relative">
+                      <input type={showPwd ? 'text' : 'password'} className="input pr-11" placeholder="Min. 8 caractères" value={form.password} onChange={e => upd('password', e.target.value)} required minLength={8} autoComplete="new-password"/>
+                      <button type="button" onClick={() => setShowPwd(p => !p)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#B0B5C3] hover:text-[#7A7F8E]" aria-label="Afficher/masquer">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z" stroke="currentColor" strokeWidth="1.3"/><circle cx="8" cy="8" r="2" stroke="currentColor" strokeWidth="1.3"/></svg>
+                      </button>
+                    </div>
+                    {form.password.length > 0 && (
+                      <div className="flex gap-1 mt-2">
+                        {[...Array(4)].map((_, i) => {
+                          const strength = Math.min(Math.floor(form.password.length / 2), 4)
+                          return <div key={i} className={`h-1 flex-1 rounded-full transition-all duration-300 ${i < strength ? strength < 2 ? 'bg-red-400' : strength < 3 ? 'bg-amber-400' : 'bg-emerald-400' : 'bg-[#F0F2F5]'}`} />
+                        })}
+                      </div>
+                    )}
+                  </div>
+
+                  {error && (
+                    <div className="flex items-center gap-2 px-3 py-2.5 bg-red-50 border border-red-100 rounded-xl text-sm text-red-600 animate-fade-in">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#ef4444" strokeWidth="1.3"/><path d="M7 4.5v3M7 9.5h.01" stroke="#ef4444" strokeWidth="1.3" strokeLinecap="round"/></svg>
+                      {error}
+                    </div>
+                  )}
+
+                  <div className="flex gap-3">
+                    <button type="button" onClick={() => setStep(2)} className="px-4 py-3 rounded-xl text-sm font-medium text-[#3A3D45] border border-[rgba(12,14,18,0.12)] hover:bg-[#F7F8FA] transition-all">←</button>
+                    <button type="submit" disabled={loading} className="flex-1 py-3 rounded-xl text-sm font-semibold text-white transition-all hover:-translate-y-px disabled:opacity-60" style={{ background:'linear-gradient(135deg,#0C0E12,#1e2330)', boxShadow:'0 4px 12px rgba(12,14,18,0.2)' }}>
+                      {loading ? <span className="inline-flex items-center justify-center"><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"/></span> : 'Créer mon compte →'}
+                    </button>
+                  </div>
+
+                  <p className="text-[11px] text-center text-[#B0B5C3]">
+                    En créant un compte, vous acceptez nos{' '}
+                    <a href="#" className="text-[#7A7F8E] hover:underline">conditions d&apos;utilisation</a>
+                  </p>
+                </form>
+              </>
             )}
 
             <p className="text-center text-sm text-[#7A7F8E] mt-6">
@@ -235,7 +366,7 @@ export default function RegisterPage() {
           </div>
 
           <div className="flex items-center justify-center gap-5 mt-5">
-            {['Sans carte bancaire','7 jours gratuits','Annulation simple'].map(t => (
+            {['Clé unique par achat','Plan activé immédiatement','Annulation simple'].map(t => (
               <div key={t} className="flex items-center gap-1 text-[11px] text-[#B0B5C3]">
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 5-5" stroke="#10B981" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 {t}
@@ -245,5 +376,13 @@ export default function RegisterPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense>
+      <RegisterInner />
+    </Suspense>
   )
 }
